@@ -1,0 +1,16 @@
+.\Obj\hmi_driver.o: ..\src\hmi_driver.c
+.\Obj\hmi_driver.o: ..\src\hmi_driver.h
+.\Obj\hmi_driver.o: ..\src\hmi_user_uart.h
+.\Obj\hmi_driver.o: ..\inc\stm32f10x_it.h
+.\Obj\hmi_driver.o: ..\..\..\Libraries\CMSIS\Core\CM3\stm32f10x.h
+.\Obj\hmi_driver.o: ..\..\..\Libraries\CMSIS\Core\CM3\core_cm3.h
+.\Obj\hmi_driver.o: D:\Keil\ARM\RV31\Inc\stdint.h
+.\Obj\hmi_driver.o: ..\..\..\Libraries\CMSIS\Core\CM3\system_stm32f10x.h
+.\Obj\hmi_driver.o: ..\inc\stm32f10x_conf.h
+.\Obj\hmi_driver.o: ..\..\..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_exti.h
+.\Obj\hmi_driver.o: ..\..\..\Libraries\CMSIS\Core\CM3\stm32f10x.h
+.\Obj\hmi_driver.o: ..\..\..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_flash.h
+.\Obj\hmi_driver.o: ..\..\..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_gpio.h
+.\Obj\hmi_driver.o: ..\..\..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rcc.h
+.\Obj\hmi_driver.o: ..\..\..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_usart.h
+.\Obj\hmi_driver.o: ..\..\..\Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h

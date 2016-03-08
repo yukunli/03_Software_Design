@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<VisualTFT Name="水分仪" OutputDirectory="output\" StartupPage="Screen0" StartupAction="" StartupActionLoop="1" DeviceType="12004" DeviceEnableControl="1" DeviceEnableTouchPane="1" DeviceEnableBuzzer="2" DeviceEnableCRC="0" DeviceBaudRate="7" DeviceCoordinateUpdateMode="4" DeviceControlNotify="2" DeviceScreenNotify="0" DeviceScreenRvs="0" DeviceBacklightAutoControl="0" DeviceBacklightTime="10" DeviceBacklightOn="200" DeviceBacklightOff="50" Version="1.0" DeviceEnableSlidingScreen="0" BacklightAutoControl="0" BacklightNotify="0" DeviceStartupVoice="0" DeviceVoiceVolume="100" DeviceLockConfig="1">
+	<Pages><Page RelativePath="Screen0.tft"/><Page RelativePath="Screen1.tft"/><Page RelativePath="Screen2.tft"/><Page RelativePath="Screen3.tft"/><Page RelativePath="Screen4.tft"/></Pages>
+	<Images/>
+	<Waves/>
+</VisualTFT>

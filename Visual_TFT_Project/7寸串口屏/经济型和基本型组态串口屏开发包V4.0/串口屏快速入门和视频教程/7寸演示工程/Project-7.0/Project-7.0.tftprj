@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<VisualTFT Name="Project-7.0" OutputDirectory="output\" StartupPage="kaiji" StartupAction="" StartupActionLoop="1" DeviceType="12004" DeviceEnableControl="1" DeviceEnableTouchPane="1" DeviceEnableBuzzer="2" DeviceEnableCRC="0" DeviceBaudRate="7" DeviceCoordinateUpdateMode="4" DeviceControlNotify="1" DeviceScreenNotify="0" DeviceScreenRvs="0" DeviceBacklightAutoControl="0" DeviceBacklightTime="10" DeviceBacklightOn="200" DeviceBacklightOff="50" Version="1.0" BacklightAutoControl="0" DeviceEnableSlidingScreen="1" BacklightNotify="0" DeviceStartupVoice="0" DeviceVoiceVolume="0" DeviceLockConfig="1">
+	<Pages><Page RelativePath="kaiji.tft"/><Page RelativePath="wenben.tft"/><Page RelativePath="tubiao.tft"/><Page RelativePath="quxian.tft"/><Page RelativePath="yibiao.tft"/><Page RelativePath="jindutiao.tft"/><Page RelativePath="duihuakuang.tft"/></Pages>
+	<Images/>
+	<Waves/>
+</VisualTFT>

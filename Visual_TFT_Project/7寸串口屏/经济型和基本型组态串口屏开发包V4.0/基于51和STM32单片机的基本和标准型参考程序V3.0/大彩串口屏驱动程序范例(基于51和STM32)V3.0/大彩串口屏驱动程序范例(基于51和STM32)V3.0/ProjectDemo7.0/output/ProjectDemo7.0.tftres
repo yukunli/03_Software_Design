@@ -1,0 +1,16 @@
+<Resource>
+    <pages>
+        <page name="Screen0" id="0" />
+    </pages>
+    <images>
+        <image id="0" url="e:\src\visualtft\branchs\v1.1\release\hmi_driver\projectdemo7.0\Images\图片背景.bmp" width="800" height="480" crop="0" effect_left="0" effect_top="0" effect_width="800" effect_height="480" size="768000" />
+        <image id="1" url="" width="323" height="48" crop="0" effect_left="0" effect_top="0" effect_width="323" effect_height="48" size="31008" />
+        <image id="2" url="" width="24" height="24" crop="0" effect_left="0" effect_top="0" effect_width="24" effect_height="24" size="1152" />
+        <image id="3" url="e:\src\visualtft\branchs\v1.1\release\hmi_driver\projectdemo7.0\Images\add_blue_up.wmf" width="77" height="74" crop="0" effect_left="0" effect_top="0" effect_width="77" effect_height="74" size="11396" />
+        <image id="4" url="e:\src\visualtft\branchs\v1.1\release\hmi_driver\projectdemo7.0\Images\add_blue_down.wmf" width="77" height="74" crop="0" effect_left="0" effect_top="0" effect_width="77" effect_height="74" size="11396" />
+        <image id="5" url="e:\src\visualtft\branchs\v1.1\release\hmi_driver\projectdemo7.0\Images\Minus_blue_up.wmf" width="77" height="74" crop="0" effect_left="0" effect_top="0" effect_width="77" effect_height="74" size="11396" />
+        <image id="6" url="e:\src\visualtft\branchs\v1.1\release\hmi_driver\projectdemo7.0\Images\Minus_blue_down.wmf" width="77" height="74" crop="0" effect_left="0" effect_top="0" effect_width="77" effect_height="74" size="11396" />
+        <image id="7" url="" width="194" height="194" crop="0" effect_left="0" effect_top="0" effect_width="194" effect_height="194" size="75272" />
+    </images>
+    <waves />
+</Resource>

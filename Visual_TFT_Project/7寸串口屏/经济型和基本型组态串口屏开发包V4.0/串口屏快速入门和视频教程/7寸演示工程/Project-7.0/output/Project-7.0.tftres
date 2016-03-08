@@ -1,0 +1,28 @@
+<Resource>
+    <pages>
+        <page name="kaiji" id="0" />
+        <page name="wenben" id="1" />
+        <page name="tubiao" id="2" />
+        <page name="quxian" id="3" />
+        <page name="yibiao" id="4" />
+        <page name="jindutiao" id="5" />
+        <page name="duihuakuang" id="6" />
+    </pages>
+    <images>
+        <image id="0" url="c:\users\liwei\desktop\数据手册最新\dacaizutaikaifabao-4.0\dacaizutaikaifabao-4.0\经济型和基本型组态串口屏开发包v4.0(含软件、手册、视频和例程等）\串口屏快速入门和视频教程\7寸演示工程\project-7.0\首页导航.jpg" width="800" height="480" crop="0" effect_left="0" effect_top="0" effect_width="800" effect_height="480" size="768000" />
+        <image id="1" url="c:\users\liwei\desktop\数据手册最新\dacaizutaikaifabao-4.0\dacaizutaikaifabao-4.0\经济型和基本型组态串口屏开发包v4.0(含软件、手册、视频和例程等）\串口屏快速入门和视频教程\7寸演示工程\project-7.0\首页导航_按钮选中效果.bmp" width="800" height="480" crop="0" effect_left="0" effect_top="0" effect_width="800" effect_height="480" size="768000" />
+        <image id="2" url="c:\users\liwei\desktop\数据手册最新\dacaizutaikaifabao-4.0\dacaizutaikaifabao-4.0\经济型和基本型组态串口屏开发包v4.0(含软件、手册、视频和例程等）\串口屏快速入门和视频教程\7寸演示工程\project-7.0\文本显示背景图.jpg" width="800" height="480" crop="0" effect_left="0" effect_top="0" effect_width="800" effect_height="480" size="768000" />
+        <image id="3" url="c:\users\liwei\desktop\数据手册最新\dacaizutaikaifabao-4.0\dacaizutaikaifabao-4.0\经济型和基本型组态串口屏开发包v4.0(含软件、手册、视频和例程等）\串口屏快速入门和视频教程\7寸演示工程\project-7.0\图标和动画背景图.jpg" width="800" height="480" crop="0" effect_left="0" effect_top="0" effect_width="800" effect_height="480" size="768000" />
+        <image id="4" url="c:\users\liwei\desktop\数据手册最新\dacaizutaikaifabao-4.0\dacaizutaikaifabao-4.0\经济型和基本型组态串口屏开发包v4.0(含软件、手册、视频和例程等）\串口屏快速入门和视频教程\7寸演示工程\project-7.0\运行图标.icon" width="62" height="82" crop="0" effect_left="0" effect_top="0" effect_width="62" effect_height="82" size="30504" />
+        <image id="5" url="c:\users\liwei\desktop\数据手册最新\dacaizutaikaifabao-4.0\dacaizutaikaifabao-4.0\经济型和基本型组态串口屏开发包v4.0(含软件、手册、视频和例程等）\串口屏快速入门和视频教程\7寸演示工程\project-7.0\运行动画gif.gif" width="320" height="151" crop="0" effect_left="0" effect_top="0" effect_width="320" effect_height="151" size="289920" delay="50" frameCount="3" />
+        <image id="6" url="c:\users\liwei\desktop\数据手册最新\dacaizutaikaifabao-4.0\dacaizutaikaifabao-4.0\经济型和基本型组态串口屏开发包v4.0(含软件、手册、视频和例程等）\串口屏快速入门和视频教程\7寸演示工程\project-7.0\图标和动画背景图_按钮选中.jpg" width="800" height="480" crop="0" effect_left="0" effect_top="0" effect_width="800" effect_height="480" size="768000" />
+        <image id="7" url="c:\users\liwei\desktop\数据手册最新\dacaizutaikaifabao-4.0\dacaizutaikaifabao-4.0\经济型和基本型组态串口屏开发包v4.0(含软件、手册、视频和例程等）\串口屏快速入门和视频教程\7寸演示工程\project-7.0\曲线背景图.jpg" width="800" height="480" crop="0" effect_left="0" effect_top="0" effect_width="800" effect_height="480" size="768000" />
+        <image id="8" url="c:\users\liwei\desktop\数据手册最新\dacaizutaikaifabao-4.0\dacaizutaikaifabao-4.0\经济型和基本型组态串口屏开发包v4.0(含软件、手册、视频和例程等）\串口屏快速入门和视频教程\7寸演示工程\project-7.0\仪表背景图.jpg" width="800" height="480" crop="0" effect_left="0" effect_top="0" effect_width="800" effect_height="480" size="768000" />
+        <image id="9" url="" width="256" height="256" crop="0" effect_left="0" effect_top="0" effect_width="256" effect_height="256" size="131072" />
+        <image id="10" url="c:\users\liwei\desktop\数据手册最新\dacaizutaikaifabao-4.0\dacaizutaikaifabao-4.0\经济型和基本型组态串口屏开发包v4.0(含软件、手册、视频和例程等）\串口屏快速入门和视频教程\7寸演示工程\project-7.0\进度条和滑块背景图.jpg" width="800" height="480" crop="0" effect_left="0" effect_top="0" effect_width="800" effect_height="480" size="768000" />
+        <image id="11" url="" width="428" height="87" crop="0" effect_left="0" effect_top="0" effect_width="428" effect_height="87" size="74472" />
+        <image id="12" url="" width="40" height="40" crop="0" effect_left="0" effect_top="0" effect_width="40" effect_height="40" size="3200" />
+        <image id="13" url="c:\users\liwei\desktop\数据手册最新\dacaizutaikaifabao-4.0\dacaizutaikaifabao-4.0\经济型和基本型组态串口屏开发包v4.0(含软件、手册、视频和例程等）\串口屏快速入门和视频教程\7寸演示工程\project-7.0\提示对话框.jpg" width="500" height="317" crop="0" effect_left="0" effect_top="0" effect_width="500" effect_height="317" size="317000" />
+    </images>
+    <waves />
+</Resource>
