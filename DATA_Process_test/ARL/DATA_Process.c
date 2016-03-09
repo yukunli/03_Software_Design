@@ -2,7 +2,6 @@
 /*
  created by li Danny
  Date:/ 2015/12/20
- 
 */
 #include "DSP2833x_Device.h"
 #include "DSP2833x_Examples.h"   // DSP2833x Examples Include File
@@ -11,23 +10,23 @@
 #include "ConstData_Table.h"
 #include "stdio.h"
 
-
 // Global variable for this example
 //3路待测信号采样序列（原始数据存放数组）
 float SampleValue1[450]={0};
 float SampleValue2[450]={0};
 float SampleValue3[450]={0};
 Uint16 array_index=0;
-volatile unsigned char Sdata[BUF_SIZE2*2]={0,0};
+volatile unsigned char Print_data[8]={0,0};
 
 //3路互相关运算结果做低通线性卷积运算的结果存放数组
 float DAL_OutPut1[BUF_SIZE1+LOWFILT_SIZE]={0};
 float DAL_OutPut2[BUF_SIZE2+LOWFILT_SIZE]={0};
 float DAL_OutPut3[BUF_SIZE3+LOWFILT_SIZE]={0};
-//3路低通线性卷积运算的结果平均值
-float Ever_VolOut1[20]={0,0};
-float Ever_VolOut2[20]={0,0};
-float Ever_VolOut3[20]={0,0};
+
+////3路低通线性卷积运算的结果平均值
+//float Ever_VolOut1[20]={0,0};
+//float Ever_VolOut2[20]={0,0};
+//float Ever_VolOut3[20]={0,0};
 
 /*****************************************************
  * 函数功能：线性卷积
@@ -91,6 +90,43 @@ void DAL_Process(float * Channel_Date,unsigned int Buf_size,float * stand_sinwav
   	//*******************************************
   	LinearConvolution(Buf_size,36,Cross_OutPut,Low_filter,DAL_OutPut);  //线性卷积
 }
+
+/*************************************************************
+ * 函数功能： 计算烧结料水分含量
+ * 入口参数： 测量通道，参比通道1，参比通道2的信号,及size, 拟合方式
+ * 返回值：   烧结料的水分百分含量
+ */
+float Moisture_FITcalcu(float* MeasureDal,Uint16 Buf_size1,float* Refer1Dal,Uint16 Buf_size2,float* Refer2Dal,Uint16 Buf_size3,char FIT_Mode)
+{
+	float Measure_Amp,Refer1_Amp,Refer2_Amp,Ratio,water_content;
+	water_content = 0;
+	Measure_Amp = Single_Amplitude(MeasureDal,Buf_size1);
+	Refer1_Amp = Single_Amplitude(Refer1Dal,Buf_size2);
+	Refer2_Amp = Single_Amplitude(Refer2Dal,Buf_size3);
+	Ratio = Measure_Amp/(Refer1_Amp+Refer2_Amp);
+	
+	Print_data[0]=(unsigned char)((Uint16)(Measure_Amp*100)>>8);
+	Print_data[1]=(unsigned char)((Uint16)(Measure_Amp*100)&0x00ff);
+	Print_data[2]=(unsigned char)((Uint16)(Refer1_Amp*100)>>8);
+	Print_data[3]=(unsigned char)((Uint16)(Refer1_Amp*100)&0x00ff);
+	Print_data[4]=(unsigned char)((Uint16)(Refer2_Amp*100)>>8);
+	Print_data[5]=(unsigned char)((Uint16)(Refer2_Amp*100)&0x00ff);
+	Print_data[6]=(unsigned char)((Uint16)(Ratio*100)>>8);
+	Print_data[7]=(unsigned char)((Uint16)(Ratio*100)&0x00ff);
+	
+	switch(FIT_Mode)
+	{
+		case '1':  // 三次拟合
+			break;
+		case '2':  // 分段线性拟合
+			break;
+		case '3':  // 指数拟合	
+			break;
+		default :
+			break;
+	}
+	return water_content;
+}
 /*
  * 函数功能: DATA trans
  * 入口参数: DAL_OutPut,
@@ -99,19 +135,21 @@ void DAL_Process(float * Channel_Date,unsigned int Buf_size,float * stand_sinwav
  {
  	int i,j;
 
- 		for(i=0;i<Buf_size;i++)
-		{
-			j=2*i;
-			Trans_result[j]=(unsigned char)((Uint16)(Trans_data[i]*10)>>8);
-			Trans_result[j+1]=(unsigned char)((Uint16)(Trans_data[i]*10)&0x00ff);	
-		}
- 
- 	
+	for(i=0;i<Buf_size;i++)
+	{
+		j=2*i;
+		Trans_result[j]=(unsigned char)((Uint16)(Trans_data[i]*10)>>8);
+		Trans_result[j+1]=(unsigned char)((Uint16)(Trans_data[i]*10)&0x00ff);	
+	}
+
  }
- /*
-  * get the voltal of the process resule
+
+/*
+  * Function： get the voltal of the process resule
+  * Inlet parameter: DAL_OutPut and the size of DAL_OutPut
+  * Outlet parameter: the amplitude of the DAL_OutPut.
   */
- float Single_Result(float * DAL_OutPut,Uint16 Buf_size )
+ float Single_Amplitude(float * DAL_OutPut,Uint16 Buf_size )
  {
  	int i;
 	float tempdata=0;
@@ -122,17 +160,7 @@ void DAL_Process(float * Channel_Date,unsigned int Buf_size,float * stand_sinwav
 	
 	return tempdata/(BUF_SIZE1-60);
  }
-/*************************************************************
- * 函数功能： 计算烧结料水分含量
- * 入口参数： 测量通道，参比通道1，参比通道2 的信号幅值
- * 返回值：   烧结料的水分
- */
- /*
-float Water_Content MoistureReckon(float Measu,float Refer1,float Refer2)
-{
-	
-}
-*/
+
 //------------------------
 //no more
 //-------------------------------------------------
