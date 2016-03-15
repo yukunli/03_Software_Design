@@ -10,7 +10,7 @@
 
 #define CRC16_ENABLE 0         /*!< 如果需要CRC16校验功能，修改此宏为1(此时需要在VisualTFT工程中配CRC校验)*/
 #define CMD_MAX_SIZE 20        /*!<单条指令大小，根据需要调整，尽量设置大一些*/
-#define QUEUE_MAX_SIZE 80   /*!< 指令接收缓冲区大小，根据需要调整，尽量设置大一些*/
+#define QUEUE_MAX_SIZE 30   /*!< 指令接收缓冲区大小，根据需要调整，尽量设置大一些*/
 
 #include "hmi_user_uart.h"
 

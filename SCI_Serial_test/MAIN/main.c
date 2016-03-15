@@ -9,6 +9,7 @@ Uint16 LoopCount;
 Uint16 ErrorCount;
 Uint16 ReceivedChar;
 char *msg;
+int interrupt_count =0;
 /**************************************************/
 interrupt void scic_isr(void);
 /*********************Ö÷³ÌÐò***********************/
@@ -52,18 +53,19 @@ void main(void)
  //   SCIC_fifo_init();	 // Initialize the SCI FIFO
     SCIC_Init();        // Initalize SCI for echoback
 
-    msg = "\r\n\n\nHello Yan Xu!\0";
+    msg = "\r\n\n\nHello yukun!\0";
     SCIC_msg(msg);
 
     msg = "\r\nYou will enter a character, and the DSP will echo it back! \n\0";
     SCIC_msg(msg);
+    msg = "\r\nEnter a character: \0";
+    SCIC_msg(msg);
 	while(1)
 	{
 	   
-	   msg = "\r\nEnter a character: \0";
-       SCIC_msg(msg);
+	   
        #if( !SCI_INTERRUPT )
-       // Wait for inc character
+       // Wait for int character
        while(ScicRegs.SCIRXST.bit.RXRDY !=1) { } // wait for XRDY =1 for empty state
 
        // Get character
@@ -91,20 +93,25 @@ void main(void)
  	rdataC=ScicRegs.SCIRXBUF.all;
  	switch (rdataC)
  	{
- 		case 1: 
- 			SCIC_msg("\r\n\n\nHello lyk!\0");
+ 		case '1': 
+ 			SCIC_msg("\r\n\nHello lyk!\0");
  			break;
- 		case 0:
+ 		case '0':
  			for(j=0;j<6;j++)
  			{
  				SCIC_xmit('D');
  				DELAY_US(10);
  			}
  			break;
- 		default: break;
+ 		default: 
+ 			msg = "\r\nEnter a character: \0";
+       		SCIC_msg(msg);
+ 			break;
  	}
+ 	interrupt_count ++;
  	ScicRegs.SCIFFRX.bit.RXFFOVRCLR=1;
  	ScicRegs.SCIFFRX.bit.RXFFINTCLR=1;
+ 	PieCtrlRegs.PIEACK.all |= 0x100;
  }	
 #endif
 

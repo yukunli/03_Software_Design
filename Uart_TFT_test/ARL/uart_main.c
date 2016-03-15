@@ -35,10 +35,9 @@ void main()
 
 		//TODO: 添加用户代码
 		//数据有更新时，每100毫秒刷新一次
-		if(update_en&&timer_tick_count-timer_tick_last_update>=TIME_100MS)
+		if(1)
 		{
-			update_en = 0;
-			timer_tick_last_update = timer_tick_count;			
+			update_en = 0;		
 
 			UpdateUI();	
 		}
@@ -293,3 +292,4 @@ void NotifyWriteFlash(uint8 status)
 {
 	//TODO: 添加用户代码
 }
+

@@ -12,8 +12,8 @@
 #include "DSP2833x_Examples.h"   // DSP2833x Examples Include File
 
 #define SCI_BAUD_9600   0 
-#define SCI_BAUD_19200  1
-#define SCI_BAUD_115200  0
+#define SCI_BAUD_19200  0
+#define SCI_BAUD_115200  1
 
 extern void SCIC_Init(void);
 extern void SCIC_xmit(int a);

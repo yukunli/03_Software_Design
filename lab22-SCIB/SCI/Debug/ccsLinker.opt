@@ -1,0 +1,17 @@
+--silicon_version=28 
+-g 
+--define="_DEBUG" --define="LARGE_MODEL" 
+--diag_warning=225 
+--large_memory_model 
+--float_support=fpu32 
+--obj_directory="E:/01_Master_project/Water_Detection_Project/04_Software_Design/lab22-SCIB/Debug" 
+-z 
+-m"E:/01_Master_project/Water_Detection_Project/04_Software_Design/lab22-SCIB/Debug/SCI.map" 
+--stack_size=1000 
+--heap_size=1000 
+--warn_sections 
+-i"D:/Program Files/Texas Instruments/ccsv4/tools/compiler/c2000/lib" -i"D:/Program Files/Texas Instruments/ccsv4/tools/compiler/c2000/include" -i"E:/01_Master_project/Water_Detection_Project/04_Software_Design/lab22-SCIB/SCI" -i"E:/01_Master_project/Water_Detection_Project/04_Software_Design/lab22-SCIB" 
+--reread_libs 
+--absolute_exe 
+--rom_model 
+"E:/01_Master_project/Water_Detection_Project/04_Software_Design/lab22-SCIB/CMD/DSP2833x_Headers_nonBIOS.cmd" "E:/01_Master_project/Water_Detection_Project/04_Software_Design/lab22-SCIB/Debug/SCI.obj" "E:/01_Master_project/Water_Detection_Project/04_Software_Design/lab22-SCIB/Debug/DSP2833x_usDelay.obj" "E:/01_Master_project/Water_Detection_Project/04_Software_Design/lab22-SCIB/Debug/DSP2833x_Xintf.obj" "E:/01_Master_project/Water_Detection_Project/04_Software_Design/lab22-SCIB/Debug/DSP2833x_SysCtrl.obj" "E:/01_Master_project/Water_Detection_Project/04_Software_Design/lab22-SCIB/Debug/DSP2833x_Spi.obj" "E:/01_Master_project/Water_Detection_Project/04_Software_Design/lab22-SCIB/Debug/DSP2833x_Sci.obj" "E:/01_Master_project/Water_Detection_Project/04_Software_Design/lab22-SCIB/Debug/DSP2833x_PieVect.obj" "E:/01_Master_project/Water_Detection_Project/04_Software_Design/lab22-SCIB/Debug/DSP2833x_PieCtrl.obj" "E:/01_Master_project/Water_Detection_Project/04_Software_Design/lab22-SCIB/Debug/DSP2833x_GlobalVariableDefs.obj" "E:/01_Master_project/Water_Detection_Project/04_Software_Design/lab22-SCIB/Debug/DSP2833x_DefaultIsr.obj" "E:/01_Master_project/Water_Detection_Project/04_Software_Design/lab22-SCIB/Debug/DSP2833x_CpuTimers.obj" "E:/01_Master_project/Water_Detection_Project/04_Software_Design/lab22-SCIB/Debug/DSP2833x_CodeStartBranch.obj" "E:/01_Master_project/Water_Detection_Project/04_Software_Design/lab22-SCIB/Debug/DSP2833x_ADC_cal.obj" -l"rts2800_fpu32.lib" "E:/01_Master_project/Water_Detection_Project/04_Software_Design/lab22-SCIB/CMD/28335_RAM_lnk.cmd" 

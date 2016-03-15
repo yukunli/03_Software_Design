@@ -966,3 +966,4 @@ void ShowKeyboard(uint8 show,uint16 x,uint16 y,uint8 type,uint8 option,uint8 max
 	TX_8(max_len);
 	END_CMD();
 }
+

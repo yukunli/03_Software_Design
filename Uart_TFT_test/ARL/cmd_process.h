@@ -52,7 +52,7 @@ typedef struct
 	uint8  cmd_tail[4];   //֡β
 }CTRL_MSG,*PCTRL_MSG;
 
-#pragma pack(pop)
+#pragma pack(pop)   
 
 void ProcessMessage( PCTRL_MSG msg, uint16 size );
 
@@ -81,3 +81,4 @@ void NotifyReadFlash(uint8 status,uint8 *_data,uint16 length);
 void NotifyWriteFlash(uint8 status);
 
 #endif
+
