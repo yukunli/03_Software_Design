@@ -9,7 +9,6 @@ Uint16 LoopCount;
 Uint16 ErrorCount;
 Uint16 ReceivedChar;
 char *msg;
-int interrupt_count =0;
 /**************************************************/
 interrupt void scic_isr(void);
 /*********************Ö÷³ÌÐò***********************/
@@ -108,7 +107,6 @@ void main(void)
        		SCIC_msg(msg);
  			break;
  	}
- 	interrupt_count ++;
  	ScicRegs.SCIFFRX.bit.RXFFOVRCLR=1;
  	ScicRegs.SCIFFRX.bit.RXFFINTCLR=1;
  	PieCtrlRegs.PIEACK.all |= 0x100;

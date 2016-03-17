@@ -85,7 +85,7 @@ void AD_Data_Shift(void)
 		SampleValue4[i] = SampleTable4[i]/32767.0*AD_PVEF;
 	}
 		
-	#if 1
+	#if 0
 	for(j=0;j<=SAMPLE_COUNT; j++ )
 	{
 		Setoff_ZoreVal += SampleValue4[i];

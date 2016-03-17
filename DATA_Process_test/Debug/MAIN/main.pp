@@ -27,3 +27,6 @@ MAIN/main.obj: E:/01_Master_project/Water_Detection_Project/04_Software_Design/D
 MAIN/main.obj: E:/01_Master_project/Water_Detection_Project/04_Software_Design/DATA_Process_test/INCLUDE/DSP2833x_DefaultISR.h
 MAIN/main.obj: E:/01_Master_project/Water_Detection_Project/04_Software_Design/DATA_Process_test/ARL/DATA_Process.h
 MAIN/main.obj: E:/01_Master_project/Water_Detection_Project/04_Software_Design/DATA_Process_test/ARL/ConstData_Table.h
+MAIN/main.obj: E:/01_Master_project/Water_Detection_Project/04_Software_Design/DATA_Process_test/ARL/SCI_Serial.h
+MAIN/main.obj: E:/01_Master_project/Water_Detection_Project/04_Software_Design/DATA_Process_test/ARL/AD7656.h
+MAIN/main.obj: E:/01_Master_project/Water_Detection_Project/04_Software_Design/DATA_Process_test/ARL/std_init.h

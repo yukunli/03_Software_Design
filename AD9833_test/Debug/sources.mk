@@ -90,6 +90,7 @@ ASM_UPPER_DEPS__QTD :=
 SUBDIRS := \
 SRC \
 MAIN \
+. \
 CMD \
 ARL \
 

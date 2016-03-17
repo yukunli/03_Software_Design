@@ -48,6 +48,9 @@
 </tool>
 <macros expandEnvironmentMacros="true"/>
 </toolChain>
+<resourceConfiguration exclude="true" id="com.ti.ccstudio.buildDefinitions.C2000.Debug.233498252./AD7656_test/CMD/F28335.cmd" name="F28335.cmd" rcbsApplicability="disable" resourcePath="/AD7656_test/CMD/F28335.cmd" toolsToInvoke="com.ti.ccstudio.buildDefinitions.C2000_5.2.exe.linkerDebug.1288899491./AD7656_test/CMD/F28335.cmd">
+<tool id="com.ti.ccstudio.buildDefinitions.C2000_5.2.exe.linkerDebug.1288899491./AD7656_test/CMD/F28335.cmd" name="C2000 Linker" superClass="com.ti.ccstudio.buildDefinitions.C2000_5.2.exe.linkerDebug.1288899491"/>
+</resourceConfiguration>
 </configuration>
 <configuration artifactExtension="out" artifactName="AD7656_test" description="" id="com.ti.ccstudio.buildDefinitions.C2000.Release.2131936019" name="Release" parent="com.ti.ccstudio.buildDefinitions.C2000.Release">
 <toolChain id="com.ti.ccstudio.buildDefinitions.C2000_5.2.exe.ReleaseToolchain.128780856" name="TI Code Generation Tools" superClass="com.ti.ccstudio.buildDefinitions.C2000_5.2.exe.ReleaseToolchain" targetTool="com.ti.ccstudio.buildDefinitions.C2000_5.2.exe.linkerRelease.249212939">

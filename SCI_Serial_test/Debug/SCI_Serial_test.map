@@ -1,10 +1,10 @@
 ******************************************************************************
              TMS320C2000 Linker PC v5.2.3                      
 ******************************************************************************
->> Linked Tue Mar 15 09:53:05 2016
+>> Linked Tue Mar 15 10:45:09 2016
 
 OUTPUT FILE NAME:   <SCI_Serial_test.out>
-ENTRY POINT SYMBOL: "_c_int00"  address: 00008628
+ENTRY POINT SYMBOL: "_c_int00"  address: 00008625
 
 
 MEMORY CONFIGURATION
@@ -15,7 +15,7 @@ PAGE 0:
   BEGIN                 00000000   00000002  00000002  00000000  RWIX
   BOOT_RSVD             00000002   0000004e  00000000  0000004e  RWIX
   RAMM0                 00000050   000003b0  00000000  000003b0  RWIX
-  RAML                  00008000   00004000  000007ca  00003836  RWIX
+  RAML                  00008000   00004000  000007c3  0000383d  RWIX
   ZONE7A                00200000   0000fc00  00000000  0000fc00  RWIX
   CSM_RSVD              0033ff80   00000076  00000000  00000076  RWIX
   CSM_PWL               0033fff8   00000008  00000000  00000008  RWIX
@@ -92,32 +92,31 @@ codestart
 
 .pinit     0    00008000    00000000     UNINITIALIZED
 
-.text      0    00008000    00000791     
+.text      0    00008000    0000078e     
                   00008000    00000323     DSP2833x_DefaultIsr.obj (.text)
                   00008323    000000f6     DSP2833x_Xintf.obj (.text)
                   00008419    000000f5     DSP2833x_SysCtrl.obj (.text)
-                  0000850e    000000a0     main.obj (.text)
-                  000085ae    0000007a     DSP2833x_CpuTimers.obj (.text)
-                  00008628    00000046     rts2800_fpu32.lib : boot.obj (.text)
-                  0000866e    00000045     DSP2833x_Sci.obj (.text)
-                  000086b3    0000003d     SCI_Serial.obj (.text)
-                  000086f0    00000028     DSP2833x_PieCtrl.obj (.text)
-                  00008718    00000020     DSP2833x_PieVect.obj (.text)
-                  00008738    0000001b     rts2800_fpu32.lib : args_main.obj (.text)
-                  00008753    00000019                       : exit.obj (.text)
-                  0000876c    00000014     DSP2833x_Adc.obj (.text)
-                  00008780    00000009     rts2800_fpu32.lib : _lock.obj (.text)
-                  00008789    00000008     DSP2833x_CodeStartBranch.obj (.text)
+                  0000850e    0000009d     main.obj (.text)
+                  000085ab    0000007a     DSP2833x_CpuTimers.obj (.text)
+                  00008625    00000046     rts2800_fpu32.lib : boot.obj (.text)
+                  0000866b    00000045     DSP2833x_Sci.obj (.text)
+                  000086b0    0000003d     SCI_Serial.obj (.text)
+                  000086ed    00000028     DSP2833x_PieCtrl.obj (.text)
+                  00008715    00000020     DSP2833x_PieVect.obj (.text)
+                  00008735    0000001b     rts2800_fpu32.lib : args_main.obj (.text)
+                  00008750    00000019                       : exit.obj (.text)
+                  00008769    00000014     DSP2833x_Adc.obj (.text)
+                  0000877d    00000009     rts2800_fpu32.lib : _lock.obj (.text)
+                  00008786    00000008     DSP2833x_CodeStartBranch.obj (.text)
 
-ramfuncs   0    00008791    0000001f     
-                  00008791    0000001b     DSP2833x_SysCtrl.obj (ramfuncs)
-                  000087ac    00000004     DSP2833x_usDelay.obj (ramfuncs)
+ramfuncs   0    0000878e    0000001f     
+                  0000878e    0000001b     DSP2833x_SysCtrl.obj (ramfuncs)
+                  000087a9    00000004     DSP2833x_usDelay.obj (ramfuncs)
 
-.cinit     0    000087b0    0000001a     
-                  000087b0    0000000a     rts2800_fpu32.lib : _lock.obj (.cinit)
-                  000087ba    0000000a                       : exit.obj (.cinit)
-                  000087c4    00000004     main.obj (.cinit)
-                  000087c8    00000002     --HOLE-- [fill = 0]
+.cinit     0    000087ad    00000016     
+                  000087ad    0000000a     rts2800_fpu32.lib : _lock.obj (.cinit)
+                  000087b7    0000000a                       : exit.obj (.cinit)
+                  000087c1    00000002     --HOLE-- [fill = 0]
 
 csm_rsvd   0    0033ff80    00000000     DSECT
 
@@ -345,12 +344,12 @@ GLOBAL SYMBOLS: SORTED ALPHABETICALLY BY Name
 address    name
 --------   ----
 00008000   .text
-00008753   C$$EXIT
+00008750   C$$EXIT
 000080e6   _ADCINT_ISR
 00380080   _ADC_cal
 00000b00   _AdcMirror
 00007100   _AdcRegs
-000085ed   _ConfigCpuTimer
+000085ea   _ConfigCpuTimer
 0000c190   _CpuTimer0
 00000c00   _CpuTimer0Regs
 0000c180   _CpuTimer1
@@ -367,7 +366,7 @@ address    name
 00008226   _DINTCH4_ISR
 00008230   _DINTCH5_ISR
 0000823a   _DINTCH6_ISR
-000087ac   _DSP28x_usDelay
+000087a9   _DSP28x_usDelay
 00000880   _DevEmuRegs
 0000842c   _DisableDog
 00001000   _DmaRegs
@@ -421,8 +420,8 @@ address    name
 000081c2   _EQEP2_INT_ISR
 00006b00   _EQep1Regs
 00006b40   _EQep2Regs
-0000870f   _EnableInterrupts
-0000c17a   _ErrorCount
+0000870c   _EnableInterrupts
+0000c17b   _ErrorCount
 00000a80   _FlashRegs
 00006f80   _GpioCtrlRegs
 00006fc0   _GpioDataRegs
@@ -433,25 +432,25 @@ address    name
 0000803c   _ILLEGAL_ISR
 00008000   _INT13_ISR
 0000800a   _INT14_ISR
-0000876c   _InitAdc
-000085ae   _InitCpuTimers
-00008791   _InitFlash
+00008769   _InitAdc
+000085ab   _InitCpuTimers
+0000878e   _InitFlash
 00008482   _InitPeripheralClocks
-000086f0   _InitPieCtrl
-00008718   _InitPieVectTable
+000086ed   _InitPieCtrl
+00008715   _InitPieVectTable
 00008434   _InitPll
-0000866e   _InitSci
-0000866f   _InitSciGpio
-00008672   _InitSciaGpio
-00008687   _InitScibGpio
-0000869d   _InitScicGpio
+0000866b   _InitSci
+0000866c   _InitSciGpio
+0000866f   _InitSciaGpio
+00008684   _InitScibGpio
+0000869a   _InitScicGpio
 00008419   _InitSysCtrl
 00008323   _InitXintf
 000083bf   _InitXintf16Gpio
 00008378   _InitXintf32Gpio
 000082f8   _LUF_ISR
 000082ee   _LVF_ISR
-0000c17b   _LoopCount
+0000c17a   _LoopCount
 000081f4   _MRINTA_ISR
 000081e0   _MRINTB_ISR
 000081fe   _MXINTA_ISR
@@ -464,12 +463,12 @@ address    name
 00000d00   _PieVectTable
 0000c000   _PieVectTableInit
 0000801e   _RTOSINT_ISR
-0000c17d   _ReceivedChar
-000086b3   _SCIC_IO_Init
-000086b6   _SCIC_Init
-000086eb   _SCIC_fifo_init
-000086d6   _SCIC_msg
-000086ca   _SCIC_xmit
+0000c17c   _ReceivedChar
+000086b0   _SCIC_IO_Init
+000086b3   _SCIC_Init
+000086e8   _SCIC_fifo_init
+000086d3   _SCIC_msg
+000086c7   _SCIC_xmit
 0000826c   _SCIRXINTA_ISR
 00008280   _SCIRXINTB_ISR
 00008258   _SCIRXINTC_ISR
@@ -514,31 +513,30 @@ address    name
 00000001   __TI_args_main
 ffffffff   ___binit__
 ffffffff   ___c_args__
-000087b0   ___cinit__
-00008791   ___etext__
+000087ad   ___cinit__
+0000878e   ___etext__
 ffffffff   ___pinit__
 00008000   ___text__
-00008738   __args_main
+00008735   __args_main
 0000c19c   __cleanup_ptr
 0000c19e   __dtors_ptr
 0000c19a   __lock
-00008788   __nop
-00008784   __register_lock
-00008780   __register_unlock
+00008785   __nop
+00008781   __register_lock
+0000877d   __register_unlock
 00000400   __stack
 0000c198   __unlock
-00008753   _abort
-00008628   _c_int00
-00008755   _exit
-0000c17c   _interrupt_count
+00008750   _abort
+00008625   _c_int00
+00008752   _exit
 0000850e   _main
 0000c17e   _msg
 00008319   _rsvd_ISR
 0000854d   _scic_isr
 ffffffff   binit
-000087b0   cinit
+000087ad   cinit
 00000000   code_start
-00008791   etext
+0000878e   etext
 ffffffff   pinit
 
 
@@ -692,41 +690,40 @@ address    name
 000084dd   _CsmUnlock
 0000850e   _main
 0000854d   _scic_isr
-000085ae   _InitCpuTimers
-000085ed   _ConfigCpuTimer
-00008628   _c_int00
-0000866e   _InitSci
-0000866f   _InitSciGpio
-00008672   _InitSciaGpio
-00008687   _InitScibGpio
-0000869d   _InitScicGpio
-000086b3   _SCIC_IO_Init
-000086b6   _SCIC_Init
-000086ca   _SCIC_xmit
-000086d6   _SCIC_msg
-000086eb   _SCIC_fifo_init
-000086f0   _InitPieCtrl
-0000870f   _EnableInterrupts
-00008718   _InitPieVectTable
-00008738   __args_main
-00008753   C$$EXIT
-00008753   _abort
-00008755   _exit
-0000876c   _InitAdc
-00008780   __register_unlock
-00008784   __register_lock
-00008788   __nop
-00008791   _InitFlash
-00008791   ___etext__
-00008791   etext
-000087ac   _DSP28x_usDelay
-000087b0   ___cinit__
-000087b0   cinit
+000085ab   _InitCpuTimers
+000085ea   _ConfigCpuTimer
+00008625   _c_int00
+0000866b   _InitSci
+0000866c   _InitSciGpio
+0000866f   _InitSciaGpio
+00008684   _InitScibGpio
+0000869a   _InitScicGpio
+000086b0   _SCIC_IO_Init
+000086b3   _SCIC_Init
+000086c7   _SCIC_xmit
+000086d3   _SCIC_msg
+000086e8   _SCIC_fifo_init
+000086ed   _InitPieCtrl
+0000870c   _EnableInterrupts
+00008715   _InitPieVectTable
+00008735   __args_main
+00008750   C$$EXIT
+00008750   _abort
+00008752   _exit
+00008769   _InitAdc
+0000877d   __register_unlock
+00008781   __register_lock
+00008785   __nop
+0000878e   _InitFlash
+0000878e   ___etext__
+0000878e   etext
+000087a9   _DSP28x_usDelay
+000087ad   ___cinit__
+000087ad   cinit
 0000c000   _PieVectTableInit
-0000c17a   _ErrorCount
-0000c17b   _LoopCount
-0000c17c   _interrupt_count
-0000c17d   _ReceivedChar
+0000c17a   _LoopCount
+0000c17b   _ErrorCount
+0000c17c   _ReceivedChar
 0000c17e   _msg
 0000c180   _CpuTimer1
 0000c188   _CpuTimer2
@@ -743,4 +740,4 @@ ffffffff   ___pinit__
 ffffffff   binit
 ffffffff   pinit
 
-[196 symbols]
+[195 symbols]

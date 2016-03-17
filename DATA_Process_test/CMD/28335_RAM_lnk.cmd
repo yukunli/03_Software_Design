@@ -41,7 +41,7 @@ PAGE 1 :
    RAML6      : origin = 0x00E000, length = 0x001000    
    RAML7      : origin = 0x00F000, length = 0x001000 
 */
-   RAMH       : origin = 0x00C000, length = 0x004000
+   RAMH       : origin = 0x00C000, length = 0x005000
    ZONE7B     : origin = 0x20FC00, length = 0x000400     /* XINTF zone 7 - data space */
 }
  

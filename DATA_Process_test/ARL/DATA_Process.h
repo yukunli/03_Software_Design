@@ -9,9 +9,6 @@
 
 // Global variable for this example
 //3路待测信号采样序列（原始数据存放数组）
-extern float SampleValue1[450];
-extern float SampleValue2[450];
-extern float SampleValue3[450];
 extern Uint16 array_index;
 extern volatile unsigned char Sdata[BUF_SIZE2*2];
 

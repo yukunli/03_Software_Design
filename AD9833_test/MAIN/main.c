@@ -5,7 +5,9 @@
 
 
 /*****************定义全局变量*********************//*************************************************/
-
+// Uint16 RamfuncsLoadStart;
+// Uint16 RamfuncsLoadEnd;
+// Uint16 RamfuncsRunStart;
 /**************************************************/
 /*********************主程序***********************/
 /**************************************************/
@@ -43,6 +45,9 @@ void main()
 // The shell ISR routines are found in DSP2833x_DefaultIsr.c.
 // This function is found in DSP2833x_PieVect.c.
    InitPieVectTable();
+   MemCopy(&RamfuncsLoadStart, &RamfuncsLoadEnd, &RamfuncsRunStart); 
+   InitFlash();
+   
    
    AD9833_configinit();
    AD9833_Reset(CSIN_Channel_1);

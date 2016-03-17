@@ -9,12 +9,9 @@
 #include "DATA_Process.h"
 #include "ConstData_Table.h"
 #include "stdio.h"
-
+#include "AD7656.h"
 // Global variable for this example
-//3路待测信号采样序列（原始数据存放数组）
-float SampleValue1[450]={0};
-float SampleValue2[450]={0};
-float SampleValue3[450]={0};
+
 Uint16 array_index=0;
 volatile unsigned char Print_data[8]={0,0};
 
@@ -59,6 +56,9 @@ void LinearConvolution(unsigned int xn,unsigned int hn,float *x,float *h,float *
 	y[LL]+=x[0]*h[0];
 }
 
+/*
+ * Function: 数字锁相放大器运算
+ */
 void DAL_Process(float * Channel_Date,unsigned int Buf_size,float * stand_sinwave,float * stand_coswave,float * Low_filter,float * DAL_OutPut)
 {
 	int k,j;

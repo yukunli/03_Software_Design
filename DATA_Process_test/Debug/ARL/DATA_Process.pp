@@ -33,3 +33,5 @@ ARL/DATA_Process.obj: ../ARL/DATA_Process.h
 ARL/DATA_Process.obj: ../ARL/ConstData_Table.h
 ARL/DATA_Process.obj: D:/Program\ Files/Texas\ Instruments/ccsv4/tools/compiler/c2000/include/stdio.h
 ARL/DATA_Process.obj: D:/Program\ Files/Texas\ Instruments/ccsv4/tools/compiler/c2000/include/stdarg.h
+ARL/DATA_Process.obj: ../ARL/AD7656.h
+ARL/DATA_Process.obj: ../ARL/std_init.h
