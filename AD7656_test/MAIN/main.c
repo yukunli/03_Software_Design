@@ -34,7 +34,7 @@ void main(void)
    
 	EALLOW;  // This is needed to write to EALLOW protected registers
 	PieVectTable.TINT0 = & ISRTimer0;
-	EDIS;    // This is needed to disable write to EALLOW protected registers
+	EDIS;    //This is needed to disable write to EALLOW protected registers
    
    
     IER |= M_INT1;
@@ -43,7 +43,6 @@ void main(void)
 	EINT; 
 	ERTM; 
 	
-   
 	OUTAD_Init(); 
 	START_SAMPLING();
 	while(1)
