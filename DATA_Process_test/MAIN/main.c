@@ -4,9 +4,6 @@
  * 
  * 
  */
-
-
-
 #include "DSP2833x_Device.h"     // DSP2833x Headerfile Include File
 #include "DSP2833x_Examples.h"   // DSP2833x Examples Include File
 #include "DATA_Process.h"
@@ -15,7 +12,7 @@
 #include "AD7656.h"
 /*****************定义全局变量*********************//*************************************************/
 Uint16 ReceivedChar;
-char *msg;
+char *mesg;
 
 /**************************************************/
 interrupt void ISRTimer0(void);
@@ -63,21 +60,18 @@ void main()
 // user code 
 	SCIC_Init();        // Initalize SCI for echoback
 	OUTAD_Init(); 
-	START_SAMPLING();
-    msg = "\r\n\n\nHello yukun!\0";
-    SCIC_msg(msg);	
-	
-    DAL_Process(SampleValue1,BUF_SIZE1,sin_wave1,cos_wave1,Low_Filter2,DAL_OutPut1 );
-	
-	
+    mesg = "welcome\0";
+    SCIC_msg(mesg);	
+//	START_SAMPLING();
 	while(1)
 	{
-		if( SampleCount_Status_Flag )
+		if( SampleCount_Status_Flag == True )
 		{
 			SampleCount_Status_Flag = False;
 			
 		 	AD_Data_Shift();
-		 	
+		 	DAL_Process(SampleValue2,BUF_SIZE1,sin_wave1,cos_wave1,Low_Filter2,DAL_OutPut1 );
+	
 		// 	START_SAMPLING();
 		 	
 		}
@@ -88,7 +82,7 @@ void main()
  */
 interrupt void ISRTimer0(void)
 {   
-	float test;	   	
+   	
    	CLR_ADCOV;   //启动转换信号
 	DELAY_US(1); //给予适当的电平延时
 	SET_ADCOV;
@@ -101,15 +95,6 @@ interrupt void ISRTimer0(void)
 		SampleTable4[SampleCount]=AD7656_BASIC & 0xFFFF; 
 		//SampleTable_None[SampleCount]=AD7656_BASIC & 0xFFFF; 
 		//SampleTable_None[SampleCount]=AD7656_BASIC & 0xFFFF;
-		
-		#if 0 //test
-		if( SampleTable2[SampleCount]& 0x8000 ) //
-		{
-			test = (float)(65535-SampleTable2[SampleCount])/32767.0*AD_CVEF; 	
-		}
-		else 
-		    test = SampleTable2[SampleCount]/32767.0*AD_PVEF;   
-		#endif
 
 		SampleCount++;
 		if( SampleCount >= SAMPLE_COUNT ) 
@@ -134,10 +119,10 @@ interrupt void ISRTimer0(void)
  	rdataC=ScicRegs.SCIRXBUF.all;
  	switch (rdataC)
  	{
- 		case '1': 
+ 		case 1: 
  			SCIC_msg("\r\n\nHello lyk!\0");
  			break;
- 		case '0':
+ 		case 0:
  			for(j=0;j<6;j++)
  			{
  				SCIC_xmit('D');
@@ -145,8 +130,8 @@ interrupt void ISRTimer0(void)
  			}
  			break;
  		default: 
- 			msg = "\r\nEnter a character: \0";
-       		SCIC_msg(msg);
+ 			//msg = "\r\nEnter a character: \0";
+       		//SCIC_msg(msg);
  			break;
  	}
  	ScicRegs.SCIFFRX.bit.RXFFOVRCLR=1;

@@ -38,7 +38,7 @@ void OUTAD_Timer_Init(void)
 {
 	InitCpuTimers();   //For this example, only initialize the Cpu Timers
 	#if(CPU_FRQ_150MHZ)
-		ConfigCpuTimer(&CpuTimer0, 100, 987); //在定时器内进行采样,100MHZ,987US,采样率1/(987us+prioed 0f AD read data)1KHz
+		ConfigCpuTimer(&CpuTimer0, 100, 9); //在定时器内进行采样,100MHZ,987US,采样率1/(987us+prioed 0f AD read data)1KHz
 	#endif
 	#if(CPU_FRQ_100MHZ)
 		ConfigCpuTimer(&CpuTimer0, 100, 987); //在定时器内进行采样,100MHZ,987US,采样率1/(987us+prioed 0f AD read data)1KHz

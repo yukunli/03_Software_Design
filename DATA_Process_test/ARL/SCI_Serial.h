@@ -17,7 +17,7 @@
 #define SCI_BAUD_115200  1
 
 extern void SCIC_Init(void);
-extern void SCIC_xmit(int a);
+extern void SCIC_xmit(char a);
 extern void SCIC_msg(char * msg);
 extern void SCIC_fifo_init(void);
 

@@ -48,17 +48,16 @@ void SCIC_Init(void)
 /*
  * Transmit a character from the SCI
  */ 
-void SCIC_xmit(int a)
+void SCIC_xmit(char a)
 {
     while (ScicRegs.SCICTL2.bit.TXRDY == 0) {}
     ScicRegs.SCITXBUF=a;
 
 }
-
-void SCIC_msg(char * msg)
+void SCIC_msg(char *msg)
 {
-    int i;
-    i = 0;
+    unsigned int i=0;
+
     while(msg[i] != '\0')
     {
         SCIC_xmit(msg[i]);

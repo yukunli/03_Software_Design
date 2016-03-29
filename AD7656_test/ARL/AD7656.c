@@ -38,7 +38,7 @@ void OUTAD_Timer_Init(void)
 {
 	InitCpuTimers();   //For this example, only initialize the Cpu Timers
 	#if(CPU_FRQ_150MHZ)
-		ConfigCpuTimer(&CpuTimer0, 100, 987); //在定时器内进行采样,100MHZ,987US,采样率1/(987us+prioed 0f AD read data)1KHz
+		ConfigCpuTimer(&CpuTimer0, 150, 9); //在定时器内进行采样,100MHZ,987US,采样率1/(987us+prioed 0f AD read data)1KHz
 	#endif
 	#if(CPU_FRQ_100MHZ)
 		ConfigCpuTimer(&CpuTimer0, 100, 987); //在定时器内进行采样,100MHZ,987US,采样率1/(987us+prioed 0f AD read data)1KHz
@@ -77,7 +77,7 @@ void AD_Data_Shift(void)
 	
 	for(i=0;i<= SAMPLE_COUNT;i++)
 	{
-		if(SampleTable4[i]&0x8000) //postive
+		if(SampleTable4[i]&0x8000)    //postive
 		{
 			SampleValue4[i] = (65535-SampleTable4[i])/32767.0*AD_CVEF;    // it should be 0 because connected to GND		
 		}
@@ -85,13 +85,11 @@ void AD_Data_Shift(void)
 		SampleValue4[i] = SampleTable4[i]/32767.0*AD_PVEF;
 	}
 		
-	#if 0
-	for(j=0;j<=SAMPLE_COUNT; j++ )
+	for(j=0;j<= SAMPLE_COUNT; j++ )
 	{
 		Setoff_ZoreVal += SampleValue4[i];
 	}
 	Setoff_ZoreVal = Setoff_ZoreVal / SAMPLE_COUNT;
-	#endif
 	
 	for(i=0;i<= SAMPLE_COUNT;i++)
 	{	
@@ -102,7 +100,7 @@ void AD_Data_Shift(void)
 		else
 			SampleValue3[i]= SampleTable3[i]/32767.0*AD_PVEF - Setoff_ZoreVal;
 		
-		if(SampleTable2[i]& 0x8000 )
+		if(SampleTable2[i] & 0x8000 )
 		{
 			SampleValue2[i] =(float)(65535-SampleTable2[i])/32767.0*AD_CVEF - Setoff_ZoreVal;
 		}
