@@ -10,10 +10,12 @@
 #include "ConstData_Table.h"
 #include "SCI_Serial.h"
 #include "AD7656.h"
+
+#define test_LED	GpioDataRegs.GPADAT.bit.GPIO0
 /*****************定义全局变量*********************//*************************************************/
 Uint16 ReceivedChar;
 char *mesg;
-
+char Timer_flag = 0;
 /**************************************************/
 interrupt void ISRTimer0(void);
 interrupt void scic_isr(void);
@@ -58,21 +60,33 @@ void main()
 	ERTM; 
 
 // user code 
+//test
+   EALLOW;
+   GpioCtrlRegs.GPAMUX1.bit.GPIO0 = 0; // GPIO0 = GPIO0
+   GpioCtrlRegs.GPADIR.bit.GPIO0 = 1; 
+   EDIS;
+ //end test
 	SCIC_Init();        // Initalize SCI for echoback
 	OUTAD_Init(); 
-    mesg = "welcome\0";
+    mesg = "welcome!\n\0";
     SCIC_msg(mesg);	
-//	START_SAMPLING();
+    START_SAMPLING();
 	while(1)
-	{
-		if( SampleCount_Status_Flag == True )
+	{	//test_LED = 0;
+		if( SampleCount_Status_Flag == False && Timer_flag == 1 )  //转换AD7656的采样 
 		{
-			SampleCount_Status_Flag = False;
-			
+			test_LED = 1;
+			GetAD_Value();
+			Timer_flag = 0;
+			test_LED = 0;
+		}
+		else if(SampleCount_Status_Flag == True)   //采样序列已满，进行下一步的处理
+		{
 		 	AD_Data_Shift();
-		 	DAL_Process(SampleValue2,BUF_SIZE1,sin_wave1,cos_wave1,Low_Filter2,DAL_OutPut1 );
-	
-		// 	START_SAMPLING();
+		 	DAL_Process(SampleValue2,BUF_SIZE1,Low_Filter2,DAL_OutPut1);
+		 	while(1);
+			//SampleCount_Status_Flag = False;
+		 	//START_SAMPLING();
 		 	
 		}
 	}
@@ -82,32 +96,14 @@ void main()
  */
 interrupt void ISRTimer0(void)
 {   
-   	
-   	CLR_ADCOV;   //启动转换信号
-	DELAY_US(1); //给予适当的电平延时
-	SET_ADCOV;
-	//GpioDataRegs.GPADAT.bit.GPIO0 = ~GpioDataRegs.GPADAT.bit.GPIO0;
-		while(AD_BUSY); //等待转换结束
-		   
-		SampleTable1[SampleCount]=AD7656_BASIC & 0xFFFF; //读取4路AD通道数据
-		SampleTable2[SampleCount]=AD7656_BASIC & 0xFFFF; 
-		SampleTable3[SampleCount]=AD7656_BASIC & 0xFFFF; 
-		SampleTable4[SampleCount]=AD7656_BASIC & 0xFFFF; 
-		//SampleTable_None[SampleCount]=AD7656_BASIC & 0xFFFF; 
-		//SampleTable_None[SampleCount]=AD7656_BASIC & 0xFFFF;
+  // 	if(Timer_flag ==1)
+   	test_LED = 1;
 
-		SampleCount++;
-		if( SampleCount >= SAMPLE_COUNT ) 
-		{
-			CLR_ADCOV; 
-			SampleCount = 0;
-			SampleCount_Status_Flag = True;
-			STOP_SAMPLING();
-		}
-	
-	PieCtrlRegs.PIEACK.all = PIEACK_GROUP1;
+   	Timer_flag = 1;
     CpuTimer0Regs.TCR.bit.TIF=1;   // 定时到了指定时间，标志位置位，清除标志      
-    CpuTimer0Regs.TCR.bit.TRB=1;  // 重载Timer0的定时数据
+//    CpuTimer0Regs.TCR.bit.TRB=1;   // 重载Timer0的定时数据
+    PieCtrlRegs.PIEACK.all = PIEACK_GROUP1;
+   	test_LED = 0;
 } 
 
 /************************************
@@ -120,7 +116,7 @@ interrupt void ISRTimer0(void)
  	switch (rdataC)
  	{
  		case 1: 
- 			SCIC_msg("\r\n\nHello lyk!\0");
+ 			SCIC_msg("\r\nHello lyk!\0");
  			break;
  		case 0:
  			for(j=0;j<6;j++)
@@ -130,8 +126,6 @@ interrupt void ISRTimer0(void)
  			}
  			break;
  		default: 
- 			//msg = "\r\nEnter a character: \0";
-       		//SCIC_msg(msg);
  			break;
  	}
  	ScicRegs.SCIFFRX.bit.RXFFOVRCLR=1;

@@ -20,11 +20,6 @@ float DAL_OutPut1[BUF_SIZE1+LOWFILT_SIZE]={0};
 float DAL_OutPut2[BUF_SIZE2+LOWFILT_SIZE]={0};
 float DAL_OutPut3[BUF_SIZE3+LOWFILT_SIZE]={0};
 
-////3路低通线性卷积运算的结果平均值
-//float Ever_VolOut1[20]={0,0};
-//float Ever_VolOut2[20]={0,0};
-//float Ever_VolOut3[20]={0,0};
-
 /*****************************************************
  * 函数功能：线性卷积
  * 函数入口：
@@ -59,33 +54,46 @@ void LinearConvolution(unsigned int xn,unsigned int hn,float *x,float *h,float *
 /*
  * Function: 数字锁相放大器运算
  */
-void DAL_Process(float * Channel_Date,unsigned int Buf_size,float * stand_sinwave,float * stand_coswave,float * Low_filter,float * DAL_OutPut)
+void DAL_Process(float * Channel_Date,unsigned int Buf_size,float * Low_filter,float * DAL_OutPut)
 {
 	int k,j;
 	float temp1,temp2;
-	float * Cross_OutPut; //3路采样序列与参考正弦序列做互相关运算的结果存放数组
-	float SampleBuffer1[450]={0};
-	float SampleBuffer2[450]={0};
-	for(k=0;k <BUF_SIZE1;k++)
+	float Cross_OutPut[BUF_SIZE1];       //3路采样序列与参考正弦序列做互相关运算的结果存放数组
+	float SampleBuffer1[BUF_SIZE1]={0};
+	float SampleBuffer2[BUF_SIZE1]={0};
+	float sinwave[BUF_SIZE1/CYCLE_NUM] = {0};
+	float coswave[BUF_SIZE1/CYCLE_NUM] = {0};
+	
+	SINCOS_TAB(sinwave,coswave,Buf_size/CYCLE_NUM);
+	/*
+	float testsinwave[BUF_SIZE1] = {0};
+	float testcoswave[BUF_SIZE1] = {0};
+	for(k = 0;k < Buf_size;k++)
+	{
+		testsinwave[k] = sinwave[k%42];
+		testcoswave[k] = coswave[k%42];
+	}
+	*/
+	for(k=0;k <Buf_size;k++)
 	{
 		temp1 = 0;
 		temp2 = 0;
-		SampleBuffer1[BUF_SIZE1-1-k] = 0;
-		SampleBuffer2[BUF_SIZE1-1-k] = 0;
-		for(j = 0;j < BUF_SIZE1-k;j++)
+		SampleBuffer1[Buf_size-1-k] = 0;
+		SampleBuffer2[Buf_size-1-k] = 0;
+		for(j = 0;j < Buf_size-k;j++)
 		{
-			temp1 += Channel_Date[j]*stand_sinwave[j+k];
-			temp2 += Channel_Date[j]*stand_coswave[j+k];
+			temp1 += Channel_Date[j]*sinwave[(j+k)%(Buf_size/CYCLE_NUM)];
+			temp2 += Channel_Date[j]*coswave[(j+k)%(Buf_size/CYCLE_NUM)];
 		}
-		SampleBuffer1[BUF_SIZE1-1-k] = temp1/(BUF_SIZE1-k);
-		SampleBuffer2[BUF_SIZE1-1-k] = temp2/(BUF_SIZE1-k);
+		SampleBuffer1[Buf_size-1-k] = temp1/(Buf_size-k);
+		SampleBuffer2[Buf_size-1-k] = temp2/(Buf_size-k);
 	}
 
-	for(k=0;k<BUF_SIZE1;k++)
+	for(k=0;k<Buf_size;k++)
 	{
-		temp1 =SampleBuffer1[BUF_SIZE1-1-k];
-		temp2 =SampleBuffer2[BUF_SIZE1-1-k];
-		Cross_OutPut[BUF_SIZE1-1-k]=2*sqrt(temp1*temp1+temp2*temp2);	 
+		temp1 =SampleBuffer1[Buf_size-1-k];
+		temp2 =SampleBuffer2[Buf_size-1-k];
+		Cross_OutPut[Buf_size-1-k]=2*sqrt(temp1*temp1+temp2*temp2);	 
 	}
   	//*******************************************
   	LinearConvolution(Buf_size,36,Cross_OutPut,Low_filter,DAL_OutPut);  //线性卷积
@@ -161,6 +169,6 @@ float Moisture_FITcalcu(float* MeasureDal,Uint16 Buf_size1,float* Refer1Dal,Uint
 	return tempdata/(BUF_SIZE1-60);
  }
 
-//------------------------
+//-------------------------------------------------
 //no more
 //-------------------------------------------------

@@ -12,7 +12,7 @@ PAGE 0 :
    BOOT_RSVD  : origin = 0x000002, length = 0x00004E     /* Part of M0, BOOT rom will use this for stack */               
    RAMM0      : origin = 0x000050, length = 0x0003B0
 
-   RAML       : origin = 0x008000, length = 0x004000
+   RAML       : origin = 0x008000, length = 0x004000    /* 0x8000~0xc000*/
    ZONE7A     : origin = 0x200000, length = 0x00FC00    /* XINTF zone 7 - program space */ 
    CSM_RSVD   : origin = 0x33FF80, length = 0x000076     /* Part of FLASHA.  Program with all 0x0000 when CSM is in use. */
    CSM_PWL    : origin = 0x33FFF8, length = 0x000008     /* Part of FLASHA.  CSM password locations in FLASHA            */
@@ -44,7 +44,7 @@ SECTIONS
    .pinit           : > RAML,      PAGE = 0
    .switch          : > RAML,      PAGE = 0
    
-   .stack           : > RAMM,      PAGE = 1
+   .stack           : > RAMH,      PAGE = 1
    .ebss            : > RAMH,      PAGE = 1
    .econst          : > RAMH,      PAGE = 1      
    .esysmem         : > RAMM,      PAGE = 1

@@ -1,6 +1,7 @@
 #ifndef CONSTDATA_TABLE_H_
 #define CONSTDATA_TABLE_H_
 
+void SINCOS_TAB(float * Sin_tab,float *Cos_tab,unsigned int cycle_point);
 
 extern float sin_wave1[390];
 extern float cos_wave1[390];

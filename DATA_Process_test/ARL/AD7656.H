@@ -6,7 +6,7 @@
 #include  "std_init.h"
 
 
-#define SAMPLE_COUNT  450
+#define SAMPLE_COUNT  420
 #define START_SAMPLING() StartCpuTimer0()
 #define STOP_SAMPLING()  StopCpuTimer0()
 
@@ -30,7 +30,7 @@ extern Uint16 SampleTable_None[SAMPLE_COUNT];
 
 extern Uint16 SampleCount;
 extern identi_bool volatile SampleCount_Status_Flag;   //it means the data array[SAMPLE_COUNT],window is full
-
+extern char first_flag;
 extern float  SampleValue1[SAMPLE_COUNT];
 extern float  SampleValue2[SAMPLE_COUNT];
 extern float  SampleValue3[SAMPLE_COUNT];
@@ -40,5 +40,6 @@ extern void AD7656_ConfigInit(void);
 extern void OUTAD_Timer_Init(void);
 extern void OUTAD_Variable_Init(void);
 extern void OUTAD_Init(void);
+extern void GetAD_Value(void);
 extern void AD_Data_Shift(void);
 #endif /*AD7656_H_*/
