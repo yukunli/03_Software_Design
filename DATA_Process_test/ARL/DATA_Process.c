@@ -59,8 +59,8 @@ void DAL_Process(float * Channel_Date,unsigned int Buf_size,float * Low_filter,f
 	int k,j;
 	float temp1,temp2;
 	float Cross_OutPut[BUF_SIZE1];       //3路采样序列与参考正弦序列做互相关运算的结果存放数组
-	float SampleBuffer1[BUF_SIZE1]={0};
-	float SampleBuffer2[BUF_SIZE1]={0};
+	float SampleBuffer1[2*BUF_SIZE1-1]={0};
+	float SampleBuffer2[2*BUF_SIZE1-1]={0};
 	float sinwave[BUF_SIZE1/CYCLE_NUM] = {0};
 	float coswave[BUF_SIZE1/CYCLE_NUM] = {0};
 	
@@ -78,8 +78,8 @@ void DAL_Process(float * Channel_Date,unsigned int Buf_size,float * Low_filter,f
 	{
 		temp1 = 0;
 		temp2 = 0;
-		SampleBuffer1[Buf_size-1-k] = 0;
-		SampleBuffer2[Buf_size-1-k] = 0;
+//		SampleBuffer1[Buf_size-1-k] = 0;
+//		SampleBuffer2[Buf_size-1-k] = 0;
 		for(j = 0;j < Buf_size-k;j++)
 		{
 			temp1 += Channel_Date[j]*sinwave[(j+k)%(Buf_size/CYCLE_NUM)];
@@ -88,15 +88,30 @@ void DAL_Process(float * Channel_Date,unsigned int Buf_size,float * Low_filter,f
 		SampleBuffer1[Buf_size-1-k] = temp1/(Buf_size-k);
 		SampleBuffer2[Buf_size-1-k] = temp2/(Buf_size-k);
 	}
-
-	for(k=0;k<Buf_size;k++)
+	
+	for(k=0;k <Buf_size;k++)
 	{
-		temp1 =SampleBuffer1[Buf_size-1-k];
-		temp2 =SampleBuffer2[Buf_size-1-k];
-		Cross_OutPut[Buf_size-1-k]=2*sqrt(temp1*temp1+temp2*temp2);	 
+		temp1 = 0;
+		temp2 = 0;
+//		SampleBuffer1[Buf_size-1-k] = 0;
+//		SampleBuffer2[Buf_size-1-k] = 0;
+		for(j = 0;j < Buf_size-k;j++)
+		{
+			temp1 += Channel_Date[j+k]*sinwave[j%(Buf_size/CYCLE_NUM)];
+			temp2 += Channel_Date[j+k]*coswave[j%(Buf_size/CYCLE_NUM)];
+		}
+		SampleBuffer1[Buf_size-1+k] = temp1/(Buf_size-k);
+		SampleBuffer2[Buf_size-1+k] = temp2/(Buf_size-k);
+	}
+	
+	for(k=0;k < 2*Buf_size -1;k++)
+	{
+		temp1 =SampleBuffer1[2*Buf_size-1-k];
+		temp2 =SampleBuffer2[2*Buf_size-1-k];
+		Cross_OutPut[2*Buf_size-1-k]=2*sqrt(temp1*temp1+temp2*temp2);	 
 	}
   	//*******************************************
-  	LinearConvolution(Buf_size,36,Cross_OutPut,Low_filter,DAL_OutPut);  //线性卷积
+  //	LinearConvolution(Buf_size,LOWFILT_SIZE,Cross_OutPut,Low_filter,DAL_OutPut);  //线性卷积
 }
 
 /*************************************************************

@@ -8,7 +8,7 @@
 #define  BUF_SIZE1   420  // Sample1 buffer size
 #define  BUF_SIZE2   350  // Sample2 buffer size
 #define  BUF_SIZE3   300  // Sample3 buffer size
-#define  LOWFILT_SIZE 36
+#define  LOWFILT_SIZE 37
 #endif
 
 // Global variable for this example

@@ -10,5 +10,5 @@ extern float cos_wave2[423];
 extern float sin_wave3[368];
 extern float cos_wave3[368];
 extern float Low_Filter1[41];
-extern float Low_Filter2[36];
+extern float Low_Filter2[37];
 #endif /*CONSTDATA_TABLE_H_*/
