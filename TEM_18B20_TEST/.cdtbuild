@@ -25,6 +25,8 @@
 <option id="com.ti.ccstudio.buildDefinitions.C2000_5.2.compilerID.FLOAT_SUPPORT.984732955" superClass="com.ti.ccstudio.buildDefinitions.C2000_5.2.compilerID.FLOAT_SUPPORT" value="com.ti.ccstudio.buildDefinitions.C2000_5.2.compilerID.FLOAT_SUPPORT.fpu32" valueType="enumerated"/>
 <option id="com.ti.ccstudio.buildDefinitions.C2000_5.2.compilerID.INCLUDE_PATH.2026924984" superClass="com.ti.ccstudio.buildDefinitions.C2000_5.2.compilerID.INCLUDE_PATH" valueType="includePath">
 <listOptionValue builtIn="false" value="&quot;${CG_TOOL_ROOT}/include&quot;"/>
+<listOptionValue builtIn="false" value="&quot;E:\01_Master_project\Water_Detection_Project\04_Software_Design\TEM_18B20_TEST\ARL&quot;"/>
+<listOptionValue builtIn="false" value="&quot;E:\01_Master_project\Water_Detection_Project\04_Software_Design\TEM_18B20_TEST\INCLUDE&quot;"/>
 <listOptionValue builtIn="false" value="&quot;C:\workspace\TEM_18B20_TEST\INCLUDE&quot;"/>
 <listOptionValue builtIn="false" value="&quot;C:\workspace\TEM_18B20_TEST\ARL&quot;"/>
 </option>

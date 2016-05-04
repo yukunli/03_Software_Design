@@ -11,8 +11,10 @@
 void TEM_18B20_IOinit(void)
 {
 	EALLOW;
-	GpioCtrlRegs.GPBMUX1.bit.TEM_IO=0;
-//	GpioCtrlRegs.GPBDIR.bit.TEM_IO=1;
+	GpioCtrlRegs.GPAMUX1.bit.TEM_IO=0;
+	GpioCtrlRegs.GPAQSEL1.bit.TEM_IO =1;
+	GpioCtrlRegs.GPACTRL.bit.QUALPRD3 =2;
+	GpioCtrlRegs.GPADIR.bit.TEM_IO=0;
 	EDIS;
 }
 //****************延时函数**************************************
@@ -29,23 +31,16 @@ void delay(  char x)
 //主控制器释放总线后到复位结束时间应为480US
 char reset(void)
 {
-    char presence=1;
-    uchar i;  
+    char presence;
     DQ_LOW();                                //主机拉至低电平                            
     DELAY_US(480);        //以上5条共延时480us
     DQ_HIGH();                                //释放总线等电阻拉高总线,并保持15~60us
-    DELAY_US(40); 
-/*                              //延时40us        
-    if(DQ==0) presence=1;                     //没有接收到应答信号，继续复位
-    else presence=0;            //接收到应答信号 
-    DELAY_US(440);                                 //以上5条共延时440us
- //   DQ_HIGH();  */
- 	for(i=0;i<16;i++)   /*延时60～240us*/
-     {
-          DELAY_US(15);
-         if(DQ==0) presence=0;
-     }
-	 DELAY_US(240);
+    DELAY_US(44); 
+                             //延时40us        
+    if(DQ==0) presence=1;           //接收到应答信号          
+    else presence=0;             //没有接收到应答信号，继续复位
+    DELAY_US(210);                                 
+    DQ_HIGH(); 
 	return presence;
   }
 //****************写18b20写字节函数*****************************
@@ -82,16 +77,16 @@ uchar read_byte()
 	 uchar  i;
 	 uchar value=0;                                //读出温度
 	 DQ_HIGH();     
-	 DELAY_US(1);
+	 DELAY_US(2);
 	 for(i=8;i>0;i--)
 	 {
 	   value>>=1; 
 	   DQ_LOW();
 	   DELAY_US(3);                                     //保持总线拉低3us
 	   DQ_HIGH();                               //拉至高电平
-	   DELAY_US(10);                                //释放总线后保持7us再读取数据
+	   DELAY_US(7);                                //释放总线后保持7us再读取数据
 	   if(DQ) value|=0x80;
-	   DELAY_US(50);                               //延时50us，保证每1位的60us延时
+	   DELAY_US(60);                               //延时50us，保证每1位的60us延时
 	  }
 	  return(value);
 }
@@ -104,21 +99,22 @@ void TEM_Getinit(void)
 //启动温度转换函数
 float  get_temp()
 { 
-	char state = 1;
+	char state = 0;
 	char i;
 	uchar  TLV=22;   //采集到的温度高8位
 	uchar  THV=22;   //采集到的温度低8位
 	float temp;
 
-	DQ_HIGH(); 
+	//DQ_HIGH(); 
 	for(i=0;i<=5;i++)
 	{
 		state = reset();    //复位等待从机应答,if run 5 times,it means the  reset failed
-		if(state == 0)
+		if(state == 1)
 			break;
 		else if(i==5)
 			return temp = 55.55;     
 	} 
+	DELAY_US(20); 
 	write_byte(0XCC);                        //忽略ROM匹配 
 	write_byte(0X44);                        //发送温度转化命令  
 
@@ -127,11 +123,12 @@ float  get_temp()
 	for(i=0;i<=5;i++)
 	{
 		state = reset();    //复位等待从机应答,if run 5 times,it means the  reset failed
-		if(state == 0)
+		if(state == 1)
 			break;
 		else if(i==5)
 			return temp = 44.44;     
 	}
+	DELAY_US(20);
 	write_byte(0XCC);                        //忽略ROM匹配 
 	write_byte(0XBE);                        //发送读温度命令
 	 

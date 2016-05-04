@@ -11,12 +11,11 @@
 #include "DSP2833x_Examples.h"   // DSP2833x Examples Include File
 
 //外部晶振30M
-# define TEM_IO    GPIO41    //GPIO is the 18b20 data io
-# define DQ        GpioDataRegs.GPBDAT.bit.TEM_IO           //定义18B20数据端口 0utput
-# define DQ_DIR    GpioCtrlRegs.GPBDIR.bit.TEM_IO    //定义18B20D口方向寄存器 
-# define DQ_HIGH() EALLOW;DQ_DIR=0;EDIS        //设置数据口为输入
-# define DQ_LOW()  EALLOW;DQ_DIR=1;EDIS; DQ=0    //设置数据口为输出
-
+# define TEM_IO    GPIO0    //GPIO is the 18b20 data io XA1--A01--XA01
+# define DQ        GpioDataRegs.GPADAT.bit.TEM_IO           //定义18B20数据端口 0utput
+# define DQ_DIR    GpioCtrlRegs.GPADIR.bit.TEM_IO    //定义18B20D口方向寄存器 
+# define DQ_HIGH() EALLOW;DQ_DIR=0; EDIS        //设置数据口为输入
+# define DQ_LOW()  EALLOW;DQ_DIR=1;EDIS; GpioDataRegs.GPACLEAR.bit.TEM_IO =1    //设置数据口为输出
 
 extern void TEM_Getinit(void);
 extern float  get_temp();
