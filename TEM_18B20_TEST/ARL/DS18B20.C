@@ -8,7 +8,7 @@
 /********************************
  * CODE
  */
-void TEM_18B20_IOinit(void)
+inline void TEM_18B20_IOinit(void)
 {
 	EALLOW;
 	GpioCtrlRegs.GPAMUX1.bit.TEM_IO=0;
@@ -17,13 +17,7 @@ void TEM_18B20_IOinit(void)
 	GpioCtrlRegs.GPADIR.bit.TEM_IO=0;
 	EDIS;
 }
-//****************延时函数**************************************
-//延时函数(延时时间为delay(100)=82.8us）
-void delay(  char x) 
-{
-   while(x>0)
-   x--;
-}
+
 
 //******************复位DS18B20函数*****************************
 //主控制器（dsPIC30F6014A）先拉低总线480us，然后释放总线回到高电平

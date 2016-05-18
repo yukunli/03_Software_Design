@@ -81,7 +81,7 @@ union ADCASEQSR_REG {
 };
 
 
-struct ADCMAXCONV_BITS {      // bits  description
+struct  {      // bits  description
     Uint16  MAX_CONV1:4;      // 3:0   Max number of conversions
     Uint16  MAX_CONV2:3;      // 6:4   Max number of conversions    
     Uint16  rsvd1:9;          // 15:7  reserved 
@@ -92,14 +92,12 @@ union ADCMAXCONV_REG {
    struct ADCMAXCONV_BITS  bit;
 };
 
-
 struct ADCCHSELSEQ1_BITS {    // bits   description
     Uint16  CONV00:4;         // 3:0    Conversion selection 00
     Uint16  CONV01:4;         // 7:4    Conversion selection 01
     Uint16  CONV02:4;         // 11:8   Conversion selection 02
     Uint16  CONV03:4;         // 15:12  Conversion selection 03
 };
-
 union  ADCCHSELSEQ1_REG{
    Uint16                    all;
    struct ADCCHSELSEQ1_BITS  bit;

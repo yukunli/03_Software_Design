@@ -21,7 +21,7 @@ float  SampleValue2[SAMPLE_COUNT];
 float  SampleValue3[SAMPLE_COUNT];
 float  SampleValue4[SAMPLE_COUNT];
 
-void AD7656_ConfigInit(void)
+inline void AD7656_ConfigInit(void)
 {
 	EALLOW;
 	GpioCtrlRegs.GPAMUX2.bit.GPIO25=0;
@@ -34,7 +34,7 @@ void AD7656_ConfigInit(void)
 	EDIS;
 } 
 
-void OUTAD_Timer_Init(void)
+inline void OUTAD_Timer_Init(void)
 {
 	InitCpuTimers();   //For this example, only initialize the Cpu Timers
 
@@ -45,7 +45,7 @@ void OUTAD_Timer_Init(void)
 /*
  * Function: 初始化与采样有关的变量
  */
-void OUTAD_Variable_Init(void)
+inline void OUTAD_Variable_Init(void)
 {
 	unsigned int i=0;
 	
@@ -128,7 +128,7 @@ void GetAD_Value(void)
  */
 void AD_Data_Shift(void)
 {
-	unsigned int i;
+	register unsigned int i;
 	float Setoff_ZoreVal = 0;
 	
 	for(i=0;i< SAMPLE_COUNT;i++)

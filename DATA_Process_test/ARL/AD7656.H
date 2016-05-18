@@ -36,9 +36,9 @@ extern float  SampleValue2[SAMPLE_COUNT];
 extern float  SampleValue3[SAMPLE_COUNT];
 extern float  SampleValue4[SAMPLE_COUNT];
 
-extern void AD7656_ConfigInit(void);
-extern void OUTAD_Timer_Init(void);
-extern void OUTAD_Variable_Init(void);
+inline void AD7656_ConfigInit(void);
+inline void OUTAD_Timer_Init(void);
+inline void OUTAD_Variable_Init(void);
 extern void OUTAD_Init(void);
 extern void GetAD_Value(void);
 extern void AD_Data_Shift(void);

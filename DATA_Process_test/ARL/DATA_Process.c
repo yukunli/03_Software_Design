@@ -56,8 +56,8 @@ void LinearConvolution(unsigned int xn,unsigned int hn,float *x,float *h,float *
  */
 void DAL_Process(float * Channel_Date,unsigned int Buf_size,float * Low_filter,float * DAL_OutPut)
 {
-	int k,j;
-	float temp1,temp2;
+	register int k,j;
+	register float temp1,temp2;
 	float Cross_OutPut[BUF_SIZE1];       //3路采样序列与参考正弦序列做互相关运算的结果存放数组
 	float SampleBuffer1[2*BUF_SIZE1-1]={0};
 	float SampleBuffer2[2*BUF_SIZE1-1]={0};
@@ -156,7 +156,7 @@ float Moisture_FITcalcu(float* MeasureDal,Uint16 Buf_size1,float* Refer1Dal,Uint
  */
  void Data_Trans(float * Trans_data,Uint16 Buf_size,char * Trans_result)
  {
- 	int i,j;
+ 	register int i,j;
 
 	for(i=0;i<Buf_size;i++)
 	{
