@@ -3,30 +3,19 @@
  *  \brief 串口屏驱动文件
  *  \version 1.0
  *  \date 2012-2015
+ *  \copyright 广州大彩光电科技有限公司
  */
 
 #ifndef _HMI_DRIVER_
 #define _HMI_DRIVER_
 
 #define CRC16_ENABLE 0         /*!< 如果需要CRC16校验功能，修改此宏为1(此时需要在VisualTFT工程中配CRC校验)*/
-#define CMD_MAX_SIZE 20        /*!<单条指令大小，根据需要调整，尽量设置大一些*/
-#define QUEUE_MAX_SIZE 30   /*!< 指令接收缓冲区大小，根据需要调整，尽量设置大一些*/
+#define CMD_MAX_SIZE 18        /*!<单条指令大小，根据需要调整，尽量设置大一些*/
+#define QUEUE_MAX_SIZE 30      /*!< 指令接收缓冲区大小，根据需要调整，尽量设置大一些*/
 
 #include "hmi_user_uart.h"
 
-/*! 
- *  \brief  检查数据是否符合CRC16校验
- *  \param buffer 待校验的数据，末尾存储CRC16
- *  \param n 数据长度，包含CRC16
- *  \return 校验通过返回1，否则返回0
- */
-uint16 CheckCRC16(uint8 *buffer,uint16 n);
 
-/*! 
- *  \brief  延时
- *  \param  n 延时时间(毫秒单位)
- */
-void DelayMS(unsigned int n);
 
 /*! 
  *  \brief  锁定设备配置，锁定之后需要解锁，才能修改波特率、触摸屏、蜂鸣器工作方式
@@ -38,13 +27,6 @@ void LockDeviceConfig(void);
  */
 void UnlockDeviceConfig(void);
 
-/*! 
- *  \brief     修改串口屏的波特率
- *  \details  波特率选项范围[0~14]，对应实际波特率
-                   {1200,2400,4800,9600,19200,38400,57600,115200,1000000,2000000,218750,437500,875000,921800,2500000}
- *  \param  option 波特率选项
- */
-void SetCommBps(uint8 option);
 
 /*! 
  *  \brief  发送握手命令
@@ -57,16 +39,11 @@ void SetHandShake(void);
  */
 void SetFcolor(uint16 color);
 
-/*! 
- *  \brief  设置背景色
- *  \param  color 背景色
- */
-void SetBcolor(uint16 color);
 
 /*! 
  *  \brief  清除画面
  */
-void GUI_CleanScreen();
+void GUI_CleanScreen(void);
 
 /*! 
  *  \brief  设置文字间隔
@@ -83,32 +60,6 @@ void SetTextSpace(uint8 x_w, uint8 y_w);
  */
 void SetFont_Region(uint8 enable,uint16 width,uint16 height );
 
-/*! 
- *  \brief  设置过滤色
- *  \param  fillcolor_dwon 颜色下界
- *  \param  fillcolor_up 颜色上界
- */
-void SetFilterColor(uint16 fillcolor_dwon, uint16 fillcolor_up);
-
-/*! 
- *  \brief  设置过滤色
- *  \param  x 位置X坐标
- *  \param  y 位置Y坐标
- *  \param  back 颜色上界
- *  \param  font 字体
- *  \param  strings 字符串内容
- */
-void DisText(uint16 x, uint16 y,uint8 back,uint8 font,uchar *strings );
-
-/*! 
- *  \brief    显示光标
- *  \param  enable 是否显示
- *  \param  x 位置X坐标
- *  \param  y 位置Y坐标
- *  \param  width 宽度
- *  \param  height 高度
- */
-void DisCursor(uint8 enable,uint16 x, uint16 y,uint8 width,uint8 height );
 
 /*! 
  *  \brief      显示全屏图片
@@ -116,29 +67,6 @@ void DisCursor(uint8 enable,uint16 x, uint16 y,uint8 width,uint8 height );
  *  \param  masken 是否启用透明掩码
  */
 void DisFull_Image(uint16 image_id,uint8 masken);
-
-/*! 
- *  \brief      指定位置显示图片
- *  \param  x 位置X坐标
- *  \param  y 位置Y坐标
- *  \param  image_id 图片索引
- *  \param  masken 是否启用透明掩码
- */
-void DisArea_Image(uint16 x,uint16 y,uint16 image_id,uint8 masken);
-
-/*! 
- *  \brief      显示裁剪图片
- *  \param  x 位置X坐标
- *  \param  y 位置Y坐标
- *  \param  image_id 图片索引
- *  \param  image_x 图片裁剪位置X坐标
- *  \param  image_y 图片裁剪位置Y坐标
- *  \param  image_l 图片裁剪长度
- *  \param  image_w 图片裁剪高度
- *  \param  masken 是否启用透明掩码
- */
-void DisCut_Image(uint16 x,uint16 y,uint16 image_id,uint16 image_x,uint16 image_y,
-                   uint16 image_l, uint16 image_w,uint8 masken);
 
 /*! 
  *  \brief      显示GIF动画
@@ -175,68 +103,6 @@ void GUI_Line(uint16 x0, uint16 y0, uint16 x1, uint16 y1);
 void GUI_ConDots(uint8 mode,uint16 *dot,uint16 dot_cnt);
 
 /*! 
- *  \brief      画空心圆
- *  \param  x0 圆心位置X坐标
- *  \param  y0 圆心位置Y坐标
- *  \param  r 半径
- */
-void GUI_Circle(uint16 x0, uint16 y0, uint16 r);
-
-/*! 
- *  \brief      画实心圆
- *  \param  x0 圆心位置X坐标
- *  \param  y0 圆心位置Y坐标
- *  \param  r 半径
- */
-void GUI_CircleFill(uint16 x0, uint16 y0, uint16 r);
-
-/*! 
- *  \brief      画弧线
- *  \param  x0 圆心位置X坐标
- *  \param  y0 圆心位置Y坐标
- *  \param  r 半径
- *  \param  sa 起始角度
- *  \param  ea 终止角度
- */
-void GUI_Arc(uint16 x,uint16 y, uint16 r,uint16 sa, uint16 ea);
-
-/*! 
- *  \brief      画空心矩形
- *  \param  x0 起始位置X坐标
- *  \param  y0 起始位置Y坐标
- *  \param  x1 结束位置X坐标
- *  \param  y1 结束位置Y坐标
- */
-void GUI_Rectangle(uint16 x0, uint16 y0, uint16 x1,uint16 y1 );
-
-/*! 
- *  \brief      画实心矩形
- *  \param  x0 起始位置X坐标
- *  \param  y0 起始位置Y坐标
- *  \param  x1 结束位置X坐标
- *  \param  y1 结束位置Y坐标
- */
-void GUI_RectangleFill(uint16 x0, uint16 y0, uint16 x1,uint16 y1 );
-
-/*! 
- *  \brief      画空心椭圆
- *  \param  x0 起始位置X坐标
- *  \param  y0 起始位置Y坐标
- *  \param  x1 结束位置X坐标
- *  \param  y1 结束位置Y坐标
- */
-void GUI_Ellipse (uint16 x0, uint16 y0, uint16 x1,uint16 y1 );
-
-/*! 
- *  \brief      画实心椭圆
- *  \param  x0 起始位置X坐标
- *  \param  y0 起始位置Y坐标
- *  \param  x1 结束位置X坐标
- *  \param  y1 结束位置Y坐标
- */
-void GUI_EllipseFill (uint16 x0, uint16 y0, uint16 x1,uint16 y1 );
-
-/*! 
  *  \brief      画线
  *  \param  x0 起始位置X坐标
  *  \param  y0 起始位置Y坐标
@@ -263,28 +129,13 @@ void SetTouchPaneOption(uint8 enbale,uint8 beep_on,uint8 work_mode,uint8 press_c
 /*! 
  *  \brief   校准触摸屏
  */
-void	CalibrateTouchPane();
+void	CalibrateTouchPane(void);
 
 /*! 
  *  \brief  触摸屏测试
  */
-void TestTouchPane();
+void TestTouchPane(void);
 
-/*! 
- *  \brief      设置当前写入图层
- *  \details  一般用于实现双缓存效果(绘图时避免闪烁)：
- *  \details  uint8 layer = 0;
- *  \details  WriteLayer(layer);    //设置写入层
- *  \details  ClearLayer(layer);    //使图层变透明
- *  \details  //添加一系列绘图指令
- *  \details  //DisText(100,100,0,4,"hello hmi!!!");
- *  \details  DisplyLayer(layer);  //切换显示层
- *  \details  layer = (layer+1)%2;  //双缓存切换
- *  \see DisplyLayer
- *  \see ClearLayer
- *  \param  layer 图层编号
- */
-void WriteLayer(uint8 layer);
 
 /*! 
  *  \brief      设置当前显示图层
@@ -329,7 +180,7 @@ void SetScreen(uint16 screen_id);
 /*! 
  *  \brief      获取当前画面
  */
-void GetScreen();
+void GetScreen(void);
 
 /*! 
  *  \brief     禁用\启用画面更新
@@ -349,14 +200,6 @@ void SetScreenUpdateEnable(uint8 enable);
  *  \param  focus 是否具有输入焦点
  */
 void SetControlFocus(uint16 screen_id,uint16 control_id,uint8 focus);
-
-/*! 
- *  \brief     显示\隐藏控件
- *  \param  screen_id 画面ID
- *  \param  control_id 控件ID
- *  \param  visible 是否显示
- */
-void SetControlVisiable(uint16 screen_id,uint16 control_id,uint8 visible);
 
 /*! 
  *  \brief     设置触摸控件使能
@@ -388,39 +231,7 @@ void SetButtonValue(uint16 screen_id,uint16 control_id,uchar value);
  *  \param  str 文本值
  */
 void SetTextValue(uint16 screen_id,uint16 control_id,uchar *str);
-
-/*! 
- *  \brief      设置进度值
- *  \param  screen_id 画面ID
- *  \param  control_id 控件ID
- *  \param  value 数值
- */
-void SetProgressValue(uint16 screen_id,uint16 control_id,uint32 value);
-
-/*! 
- *  \brief     设置仪表值
- *  \param  screen_id 画面ID
- *  \param  control_id 控件ID
- *  \param  value 数值
- */
-void SetMeterValue(uint16 screen_id,uint16 control_id,uint32 value);
-
-/*! 
- *  \brief      设置滑动条
- *  \param  screen_id 画面ID
- *  \param  control_id 控件ID
- *  \param  value 数值
- */
-void SetSliderValue(uint16 screen_id,uint16 control_id,uint32 value);
-
-/*! 
- *  \brief      设置选择控件
- *  \param  screen_id 画面ID
- *  \param  control_id 控件ID
- *  \param  item 当前选项
- */
-void SetSelectorValue(uint16 screen_id,uint16 control_id,uint8 item);
-
+ 
 /*! 
  *  \brief      开始播放动画
  *  \param  screen_id 画面ID
@@ -441,14 +252,6 @@ void AnimationStop(uint16 screen_id,uint16 control_id);
  *  \param  control_id 控件ID
  */
 void AnimationPause(uint16 screen_id,uint16 control_id);
-
-/*! 
- *  \brief     播放制定帧
- *  \param  screen_id 画面ID
- *  \param  control_id 控件ID
- *  \param  frame_id 帧ID
- */
-void AnimationPlayFrame(uint16 screen_id,uint16 control_id,uint8 frame_id);
 
 /*! 
  *  \brief     播放上一帧
@@ -517,13 +320,6 @@ void GraphSetViewport(uint16 screen_id,uint16 control_id,int16 x_offset,uint16 x
 void BatchBegin(uint16 screen_id);
 
 /*! 
- *  \brief     批量更新按钮控件
- *  \param  control_id 控件ID
- *  \param  value 数值
- */
-void BatchSetButtonValue(uint16 control_id,uint8 state);
-
-/*! 
  *  \brief     批量更新进度条控件
  *  \param  control_id 控件ID
  *  \param  value 数值
@@ -538,13 +334,6 @@ void BatchSetProgressValue(uint16 control_id,uint32 value);
 void BatchSetSliderValue(uint16 control_id,uint32 value);
 
 /*! 
- *  \brief     批量更新仪表控件
- *  \param  control_id 控件ID
- *  \param  value 数值
- */
-void BatchSetMeterValue(uint16 control_id,uint32 value);
-
-/*! 
  *  \brief     批量更新文本控件
  *  \param  control_id 控件ID
  *  \param  strings 字符串
@@ -552,72 +341,9 @@ void BatchSetMeterValue(uint16 control_id,uint32 value);
 void BatchSetText(uint16 control_id,uchar *strings);
 
 /*! 
- *  \brief     批量更新动画\图标控件
- *  \param  control_id 控件ID
- *  \param  frame_id 帧ID
- */
-void BatchSetFrame(uint16 control_id,uint16 frame_id);
-
-/*! 
  *  \brief    结束批量更新
  */
-void BatchEnd();
-
-/*! 
- *  \brief     设置倒计时控件
- *  \param  screen_id 画面ID
- *  \param  control_id 控件ID
- *  \param  timeout 倒计时(秒)
- */
-void SeTimer(uint16 screen_id,uint16 control_id,uint32 timeout);
-
-/*! 
- *  \brief     开启倒计时控件
- *  \param  screen_id 画面ID
- *  \param  control_id 控件ID
- */
-void StartTimer(uint16 screen_id,uint16 control_id);
-
-/*! 
- *  \brief     停止倒计时控件
- *  \param  screen_id 画面ID
- *  \param  control_id 控件ID
- */
-void StopTimer(uint16 screen_id,uint16 control_id);
-
-/*! 
- *  \brief     暂停倒计时控件
- *  \param  screen_id 画面ID
- *  \param  control_id 控件ID
- */
-void PauseTimer(uint16 screen_id,uint16 control_id);
-
-/*! 
- *  \brief     设置控件背景色
- *  \details  支持控件：进度条、文本
- *  \param  screen_id 画面ID
- *  \param  control_id 控件ID
- *  \param  color 背景色
- */
-void SetControlBackColor(uint16 screen_id,uint16 control_id,uint16 color);
-
-/*! 
- *  \brief     设置控件前景色
-  * \details  支持控件：进度条
- *  \param  screen_id 画面ID
- *  \param  control_id 控件ID
- *  \param  color 前景色
- */
-void SetControlForeColor(uint16 screen_id,uint16 control_id,uint16 color);
-
-/*! 
- *  \brief     显示\隐藏弹出菜单控件
- *  \param  screen_id 画面ID
- *  \param  control_id 控件ID
- *  \param  show 是否显示，为0时focus_control_id无效
- *  \param  focus_control_id 关联的文本控件(菜单控件的内容输出到文本控件)
- */
-void ShowPopupMenu(uint16 screen_id,uint16 control_id,uint8 show,uint16 focus_control_id);
+void BatchEnd(void);
 
 /*! 
  *  \brief     显示\隐藏系统键盘

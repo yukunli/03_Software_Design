@@ -5,12 +5,11 @@
 #include "LED.h"
 
 
-main(void)
+void main(void)
 {
 	int i;
 	
 	InitSysCtrl();
-	InitXintf();
 	InitXintf16Gpio();
 
 	DINT;
@@ -25,11 +24,11 @@ main(void)
 	{
 		for(i=0;i<=2000;i++);
 	
-		LED_Blue_Flash();
+		LED_Blue_Flash_Slow();
 		DELAY_US(50000);
 		DELAY_US(50000);
 		DELAY_US(5000);
-//		LED_Red_Flash();
+		LED_Red_Flash();
 		DELAY_US(50000);
 		DELAY_US(50000);
 	}

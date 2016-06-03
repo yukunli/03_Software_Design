@@ -1,3 +1,5 @@
+
+//一个FIFO结构的缓存指令队列
 #include "cmd_queue.h"
 
 typedef struct _QUEUE
@@ -84,19 +86,9 @@ qsize queue_find_cmd(qdata *buffer,qsize buf_len)
 			cmd_size = cmd_pos;
 			cmd_state = 0;
 			cmd_pos = 0;
-
-#if(CRC16_ENABLE)
-			//去掉指令头尾EE，尾FFFCFFFF共计5个字节，只计算数据部分CRC
-			if(!CheckCRC16(buffer+1,cmd_size-5))//CRC校验
-				return 0;
-
-			cmd_size -= 2;//去掉CRC16
-#endif
-
 			return cmd_size;
 		}
 	}
 
 	return 0;//没有形成完整的一帧
 }
-

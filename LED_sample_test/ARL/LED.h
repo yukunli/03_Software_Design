@@ -11,10 +11,13 @@
 
 #include "DSP2833x_Device.h"     // DSP2833x Headerfile Include File
 #include "DSP2833x_Examples.h"   // DSP2833x Examples Include File
-#include "std_init.h"
-
-#define Red_IO   GPIO2
-#define Blue_IO  GPIO3
+#include "std_int.h"
+/*
+#define LED_Yellow_On() P1OUT &= ~BIT3
+#define LED_Yellow_Off() P1OUT |= BIT3
+*/
+#define Red_IO   GPIO3
+#define Blue_IO  GPIO4
 
 #define LED_Blue_On()   GpioDataRegs.GPADAT.bit.Blue_IO=0
 #define LED_Blue_Off()  GpioDataRegs.GPADAT.bit.Blue_IO=1
@@ -41,7 +44,7 @@ extern void LED_IOinit(void);
 extern void LED_Blue_Flash(void);
 extern void LED_Blue_Flash_Slow(void);
 extern void LED_Red_Flash(void);
-extern void LED_Red_Flash_Slow(void);
+//extern void LED_Red_Flash_Slow(void);
 extern void LED_Error_Flash(void);
 
 

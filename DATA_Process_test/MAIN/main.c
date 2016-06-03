@@ -10,6 +10,7 @@
 #include "ConstData_Table.h"
 #include "SCI_Serial.h"
 #include "AD7656.h"
+#include "LED.h"
 
 #define test_LED	GpioDataRegs.GPADAT.bit.GPIO0
 /*****************定义全局变量*********************//*************************************************/
@@ -76,18 +77,17 @@ void main()
 		if( SampleCount_Status_Flag == False && Timer_flag == 1 )  //转换AD7656的采样 
 		{
 			test_LED = 1;
-			GetAD_Value();
+			GetAD_Value();  //进行点采样
 			Timer_flag = 0;
 			test_LED = 0;
 		}
 		else if(SampleCount_Status_Flag == True)   //采样序列已满，进行下一步的处理
 		{
-		 	AD_Data_Shift();
-		 	DAL_Process(SampleValue2,BUF_SIZE1,Low_Filter2,DAL_OutPut1);
+		 	AD_Data_Shift(); 	//AD采样值转换为模拟量
+		 	DAL_Process(SampleValue2,BUF_SIZE1,Low_Filter2,DAL_OutPut1);	//数字相关运算
 		 	while(1);
 			//SampleCount_Status_Flag = False;
 		 	//START_SAMPLING();
-		 	
 		}
 	}
 }

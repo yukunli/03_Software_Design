@@ -34,5 +34,3 @@ extern void queue_push(qdata _data);
 extern qsize queue_find_cmd(qdata *cmd,qsize buf_len);
 
 #endif
-
-

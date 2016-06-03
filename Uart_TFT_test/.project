@@ -17,4 +17,11 @@
 		<nature>org.eclipse.cdt.core.ccnature</nature>
 		<nature>com.ti.ccstudio.managedbuild.core.ccsNature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>NewXD510.ccxml</name>
+			<type>1</type>
+			<location>C:/Users/Administrator/user/CCSTargetConfigurations/NewXD510.ccxml</location>
+		</link>
+	</linkedResources>
 </projectDescription>

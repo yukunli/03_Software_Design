@@ -29,10 +29,10 @@ UINT8 i5=0;
 void LED_IOinit(void)
 {
 	EALLOW; 
-	GpioCtrlRegs.GPCMUX2.bit.Blue_IO=0;
-	GpioCtrlRegs.GPCDIR.bit.Blue_IO=1;
-	GpioCtrlRegs.GPCMUX2.bit.Red_IO=0;
-	GpioCtrlRegs.GPCDIR.bit.Red_IO=1;
+	GpioCtrlRegs.GPAMUX1.bit.Blue_IO=0;
+	GpioCtrlRegs.GPADIR.bit.Blue_IO=1;
+	GpioCtrlRegs.GPAMUX1.bit.Red_IO=0;
+	GpioCtrlRegs.GPADIR.bit.Red_IO=1;
 	LED_Red_Off();
 	LED_Blue_Off();
 	LED_Red_Off();

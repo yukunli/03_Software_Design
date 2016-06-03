@@ -7,12 +7,10 @@ SPACE := $(EMPTY) $(EMPTY)
 
 ORDERED_OBJS += \
 $(GEN_CMDS_QUOTED) \
-"./ARL/ulitity.obj" \
-"./ARL/uart_main.obj" \
 "./ARL/hmi_user_uart.obj" \
 "./ARL/hmi_driver.obj" \
 "./ARL/cmd_queue.obj" \
-"./ARL/SCI_Serial.obj" \
+"./ARL/cmd_process.obj" \
 "./MAIN/main.obj" \
 "./SRC/DSP2833x_usDelay.obj" \
 "./SRC/DSP2833x_Xintf.obj" \
@@ -129,30 +127,16 @@ all: Uart_TFT_test.out
 Uart_TFT_test.out: $(GEN_CMDS) $(OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: Linker'
-	$(shell echo --silicon_version=28 > ccsLinker.opt)
-	$(shell echo -g >> ccsLinker.opt)
-	$(shell echo --diag_warning=225 >> ccsLinker.opt)
-	$(shell echo --large_memory_model >> ccsLinker.opt)
-	$(shell echo --float_support=fpu32 >> ccsLinker.opt)
-	$(shell echo -z >> ccsLinker.opt)
-	$(shell echo -m"Uart_TFT_test.map" >> ccsLinker.opt)
-	$(shell echo --stack_size=1000 >> ccsLinker.opt)
-	$(shell echo --heap_size=1000 >> ccsLinker.opt)
-	$(shell echo --warn_sections >> ccsLinker.opt)
-	$(shell echo -i"D:/Program Files/Texas Instruments/ccsv4/tools/compiler/c2000/lib" -i"D:/Program Files/Texas Instruments/ccsv4/tools/compiler/c2000/include" >> ccsLinker.opt)
-	$(shell echo --reread_libs >> ccsLinker.opt)
-	$(shell echo --rom_model >> ccsLinker.opt)
-	$(shell type ccsObjs.opt >> ccsLinker.opt)
-	"D:/Program Files/Texas Instruments/ccsv4/tools/compiler/c2000/bin/cl2000" -@ccsLinker.opt -o "Uart_TFT_test.out"
+	"D:/Program Files/Texas Instruments/ccsv4/tools/compiler/c2000/bin/cl2000" --silicon_version=28 -g --diag_warning=225 --large_memory_model --float_support=fpu32 -z -m"Uart_TFT_test.map" --stack_size=1000 --heap_size=1000 --warn_sections -i"D:/Program Files/Texas Instruments/ccsv4/tools/compiler/c2000/lib" -i"D:/Program Files/Texas Instruments/ccsv4/tools/compiler/c2000/include" --reread_libs --rom_model -o "Uart_TFT_test.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
 # Other Targets
 clean:
 	-$(RM) $(C2000_EXECUTABLE_OUTPUTS__QTD) "Uart_TFT_test.out"
-	-$(RM) ".\SRC\DSP2833x_ADC_cal.obj" ".\SRC\DSP2833x_Adc.obj" ".\SRC\DSP2833x_CodeStartBranch.obj" ".\SRC\DSP2833x_CpuTimers.obj" ".\SRC\DSP2833x_DefaultIsr.obj" ".\SRC\DSP2833x_GlobalVariableDefs.obj" ".\SRC\DSP2833x_PieCtrl.obj" ".\SRC\DSP2833x_PieVect.obj" ".\SRC\DSP2833x_Sci.obj" ".\SRC\DSP2833x_SysCtrl.obj" ".\SRC\DSP2833x_Xintf.obj" ".\SRC\DSP2833x_usDelay.obj" ".\MAIN\main.obj" ".\ARL\SCI_Serial.obj" ".\ARL\cmd_queue.obj" ".\ARL\hmi_driver.obj" ".\ARL\hmi_user_uart.obj" ".\ARL\uart_main.obj" ".\ARL\ulitity.obj" 
+	-$(RM) ".\SRC\DSP2833x_ADC_cal.obj" ".\SRC\DSP2833x_Adc.obj" ".\SRC\DSP2833x_CodeStartBranch.obj" ".\SRC\DSP2833x_CpuTimers.obj" ".\SRC\DSP2833x_DefaultIsr.obj" ".\SRC\DSP2833x_GlobalVariableDefs.obj" ".\SRC\DSP2833x_PieCtrl.obj" ".\SRC\DSP2833x_PieVect.obj" ".\SRC\DSP2833x_Sci.obj" ".\SRC\DSP2833x_SysCtrl.obj" ".\SRC\DSP2833x_Xintf.obj" ".\SRC\DSP2833x_usDelay.obj" ".\MAIN\main.obj" ".\ARL\cmd_process.obj" ".\ARL\cmd_queue.obj" ".\ARL\hmi_driver.obj" ".\ARL\hmi_user_uart.obj" 
 	-$(RM) ".\SRC\DSP2833x_ADC_cal.pp" ".\SRC\DSP2833x_CodeStartBranch.pp" ".\SRC\DSP2833x_usDelay.pp" 
-	-$(RM) ".\SRC\DSP2833x_Adc.pp" ".\SRC\DSP2833x_CpuTimers.pp" ".\SRC\DSP2833x_DefaultIsr.pp" ".\SRC\DSP2833x_GlobalVariableDefs.pp" ".\SRC\DSP2833x_PieCtrl.pp" ".\SRC\DSP2833x_PieVect.pp" ".\SRC\DSP2833x_Sci.pp" ".\SRC\DSP2833x_SysCtrl.pp" ".\SRC\DSP2833x_Xintf.pp" ".\MAIN\main.pp" ".\ARL\SCI_Serial.pp" ".\ARL\cmd_queue.pp" ".\ARL\hmi_driver.pp" ".\ARL\hmi_user_uart.pp" ".\ARL\uart_main.pp" ".\ARL\ulitity.pp" 
+	-$(RM) ".\SRC\DSP2833x_Adc.pp" ".\SRC\DSP2833x_CpuTimers.pp" ".\SRC\DSP2833x_DefaultIsr.pp" ".\SRC\DSP2833x_GlobalVariableDefs.pp" ".\SRC\DSP2833x_PieCtrl.pp" ".\SRC\DSP2833x_PieVect.pp" ".\SRC\DSP2833x_Sci.pp" ".\SRC\DSP2833x_SysCtrl.pp" ".\SRC\DSP2833x_Xintf.pp" ".\MAIN\main.pp" ".\ARL\cmd_process.pp" ".\ARL\cmd_queue.pp" ".\ARL\hmi_driver.pp" ".\ARL\hmi_user_uart.pp" 
 	-@echo ' '
 
 .PHONY: all clean dependents

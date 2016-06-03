@@ -1,6 +1,3 @@
-/*
-
-*/
 
 #include "DSP2833x_Device.h"     // DSP2833x Headerfile Include File
 #include "DSP2833x_Examples.h"   // DSP2833x Examples Include File
@@ -11,11 +8,10 @@ Uint16 SampleTable1[SAMPLE_COUNT];
 Uint16 SampleTable2[SAMPLE_COUNT];
 Uint16 SampleTable3[SAMPLE_COUNT];
 Uint16 SampleTable4[SAMPLE_COUNT];
-Uint16 SampleTable_None[SAMPLE_COUNT];
 
 Uint16 SampleCount;
 identi_bool volatile SampleCount_Status_Flag; 
-char first_flag = 1;
+char   first_flag = 1;
 float  SampleValue1[SAMPLE_COUNT];
 float  SampleValue2[SAMPLE_COUNT];
 float  SampleValue3[SAMPLE_COUNT];
@@ -48,26 +44,23 @@ inline void OUTAD_Timer_Init(void)
 inline void OUTAD_Variable_Init(void)
 {
 	unsigned int i=0;
-	
 	for(i=0;i<=SAMPLE_COUNT;i++)
 	{
 		SampleTable1[i]=0; 
 		SampleTable2[i]=0;
 		SampleTable3[i]=0;
 		SampleTable4[i]=0;
-		SampleTable_None[i]=0;
 	}
 	
 	SampleCount = 0;
 	SampleCount_Status_Flag = False;
 }
 
-/*
+/**************************
  * Function: AD7656 初始化
- */
+ *************************/
 void OUTAD_Init(void)
 {
-
 	OUTAD_Timer_Init();
 	OUTAD_Variable_Init();
 	AD7656_ConfigInit();
@@ -75,34 +68,24 @@ void OUTAD_Init(void)
 	DELAY_US(100000);
 	CLEAR_ADRST; 
 	DELAY_US(1000);
-	/*
-	START_SAMPLING();
-	CLR_ADCOV;   //启动转换信号
-	while(i--);
-	SET_ADCOV;
-	while(AD_BUSY); 
-	for(i =6;i>0;i--)
-		firstvalue = AD7656_BASIC & 0xFFFF; //读取4路AD通道数据
-	CLR_ADCOV;
-	STOP_SAMPLING();
-	*/
 }
-/*
+
+/**********************************
  * Function: 对ad7656进行采样和数据读取
- */
+ *********************************/
 void GetAD_Value(void)
 {
-	char nop = 5;
+	char loop = 5;
 	CLR_ADCOV;   //启动转换信号
-	while(nop--);
+	while(loop--);
 	SET_ADCOV;
 //	DELAY_US(2); //等待转换结束
 	while(AD_BUSY); 
 	if(first_flag == 1)
 	{
-		for(nop =6;nop>0;nop--)
+		for(loop =6; loop>0; loop--)
 			SampleTable4[SampleCount] = AD7656_BASIC & 0xFFFF; //读取4路AD通道数据
-		first_flag =0;
+		first_flag = 0;
 	}
 	else if(SampleCount < SAMPLE_COUNT)
 	{
@@ -123,9 +106,9 @@ void GetAD_Value(void)
 		STOP_SAMPLING();
 	}
 }
-/*
+/**************************************
  * Function: 数字量转float， 由 SampleTable4 update SampleValue3
- */
+ *************************************/
 void AD_Data_Shift(void)
 {
 	register unsigned int i;
@@ -174,6 +157,7 @@ void AD_Data_Shift(void)
 			SampleValue1[i]= (float)SampleTable1[i]/32767.0*AD_PVEF - Setoff_ZoreVal;
 	}
 }
+
 //--------------------------------------------------------------
 // NO MORE
 //---------------------------------------------------------------

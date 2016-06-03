@@ -1,1 +1,1 @@
-"../ARL/SCI_Serial.c" "../ARL/cmd_queue.c" "../ARL/hmi_driver.c" "../ARL/hmi_user_uart.c" "../ARL/uart_main.c" "../ARL/ulitity.c" 
+"../ARL/cmd_process.c" "../ARL/cmd_queue.c" "../ARL/hmi_driver.c" "../ARL/hmi_user_uart.c" 

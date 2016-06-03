@@ -26,7 +26,6 @@ extern Uint16 SampleTable1[SAMPLE_COUNT];
 extern Uint16 SampleTable2[SAMPLE_COUNT];
 extern Uint16 SampleTable3[SAMPLE_COUNT];
 extern Uint16 SampleTable4[SAMPLE_COUNT];
-extern Uint16 SampleTable_None[SAMPLE_COUNT];
 
 extern Uint16 SampleCount;
 extern identi_bool volatile SampleCount_Status_Flag;   //it means the data array[SAMPLE_COUNT],window is full

@@ -26,4 +26,3 @@ ARL/hmi_user_uart.obj: E:/01_Master_project/Water_Detection_Project/04_Software_
 ARL/hmi_user_uart.obj: E:/01_Master_project/Water_Detection_Project/04_Software_Design/Uart_TFT_test/INCLUDE/DSP2833x_Dma_defines.h
 ARL/hmi_user_uart.obj: E:/01_Master_project/Water_Detection_Project/04_Software_Design/Uart_TFT_test/INCLUDE/DSP2833x_I2C_defines.h
 ARL/hmi_user_uart.obj: E:/01_Master_project/Water_Detection_Project/04_Software_Design/Uart_TFT_test/INCLUDE/DSP2833x_DefaultISR.h
-ARL/hmi_user_uart.obj: ../ARL/SCI_Serial.h
