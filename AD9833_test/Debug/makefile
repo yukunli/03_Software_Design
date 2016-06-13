@@ -13,14 +13,12 @@ $(GEN_CMDS_QUOTED) \
 "./SRC/DSP2833x_usDelay.obj" \
 "./SRC/DSP2833x_Xintf.obj" \
 "./SRC/DSP2833x_SysCtrl.obj" \
-"./SRC/DSP2833x_Sci.obj" \
 "./SRC/DSP2833x_PieVect.obj" \
 "./SRC/DSP2833x_PieCtrl.obj" \
 "./SRC/DSP2833x_GlobalVariableDefs.obj" \
 "./SRC/DSP2833x_DefaultIsr.obj" \
 "./SRC/DSP2833x_CpuTimers.obj" \
 "./SRC/DSP2833x_CodeStartBranch.obj" \
-"./SRC/DSP2833x_Adc.obj" \
 "./SRC/DSP2833x_ADC_cal.obj" \
 -l"libc.a" \
 "../CMD/DSP2833x_Headers_nonBIOS.cmd" \
@@ -132,9 +130,9 @@ AD9833_test.out: $(GEN_CMDS) $(OBJS)
 # Other Targets
 clean:
 	-$(RM) $(C2000_EXECUTABLE_OUTPUTS__QTD) "AD9833_test.out"
-	-$(RM) ".\SRC\DSP2833x_ADC_cal.obj" ".\SRC\DSP2833x_Adc.obj" ".\SRC\DSP2833x_CodeStartBranch.obj" ".\SRC\DSP2833x_CpuTimers.obj" ".\SRC\DSP2833x_DefaultIsr.obj" ".\SRC\DSP2833x_GlobalVariableDefs.obj" ".\SRC\DSP2833x_PieCtrl.obj" ".\SRC\DSP2833x_PieVect.obj" ".\SRC\DSP2833x_Sci.obj" ".\SRC\DSP2833x_SysCtrl.obj" ".\SRC\DSP2833x_Xintf.obj" ".\SRC\DSP2833x_usDelay.obj" ".\MAIN\main.obj" ".\DSP2833x_MemCopy.obj" ".\ARL\AD9833.obj" 
+	-$(RM) ".\SRC\DSP2833x_ADC_cal.obj" ".\SRC\DSP2833x_CodeStartBranch.obj" ".\SRC\DSP2833x_CpuTimers.obj" ".\SRC\DSP2833x_DefaultIsr.obj" ".\SRC\DSP2833x_GlobalVariableDefs.obj" ".\SRC\DSP2833x_PieCtrl.obj" ".\SRC\DSP2833x_PieVect.obj" ".\SRC\DSP2833x_SysCtrl.obj" ".\SRC\DSP2833x_Xintf.obj" ".\SRC\DSP2833x_usDelay.obj" ".\MAIN\main.obj" ".\DSP2833x_MemCopy.obj" ".\ARL\AD9833.obj" 
 	-$(RM) ".\SRC\DSP2833x_ADC_cal.pp" ".\SRC\DSP2833x_CodeStartBranch.pp" ".\SRC\DSP2833x_usDelay.pp" 
-	-$(RM) ".\SRC\DSP2833x_Adc.pp" ".\SRC\DSP2833x_CpuTimers.pp" ".\SRC\DSP2833x_DefaultIsr.pp" ".\SRC\DSP2833x_GlobalVariableDefs.pp" ".\SRC\DSP2833x_PieCtrl.pp" ".\SRC\DSP2833x_PieVect.pp" ".\SRC\DSP2833x_Sci.pp" ".\SRC\DSP2833x_SysCtrl.pp" ".\SRC\DSP2833x_Xintf.pp" ".\MAIN\main.pp" ".\DSP2833x_MemCopy.pp" ".\ARL\AD9833.pp" 
+	-$(RM) ".\SRC\DSP2833x_CpuTimers.pp" ".\SRC\DSP2833x_DefaultIsr.pp" ".\SRC\DSP2833x_GlobalVariableDefs.pp" ".\SRC\DSP2833x_PieCtrl.pp" ".\SRC\DSP2833x_PieVect.pp" ".\SRC\DSP2833x_SysCtrl.pp" ".\SRC\DSP2833x_Xintf.pp" ".\MAIN\main.pp" ".\DSP2833x_MemCopy.pp" ".\ARL\AD9833.pp" 
 	-@echo ' '
 
 .PHONY: all clean dependents

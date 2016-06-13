@@ -40,26 +40,36 @@ void main()
 
 // Initialize the PIE vector table with pointers to the shell Interrupt
 // Service Routines (ISR).
-// This will populate the entire table, even if the interrupt
-// is not used in this example.  This is useful for debug purposes.
-// The shell ISR routines are found in DSP2833x_DefaultIsr.c.
-// This function is found in DSP2833x_PieVect.c.
+
    InitPieVectTable();
    MemCopy(&RamfuncsLoadStart, &RamfuncsLoadEnd, &RamfuncsRunStart); 
    InitFlash();
    
-   
+   	EALLOW; 
+	GpioCtrlRegs.GPAMUX1.bit.GPIO4=0;
+	GpioCtrlRegs.GPADIR.bit.GPIO4=1;
+	EDIS;
+	DELAY_US(500000);
+	
    AD9833_configinit();
    AD9833_Reset(CSIN_Channel_1);
+   AD9833_Reset(CSIN_Channel_2);
+   AD9833_Reset(CSIN_Channel_3);
    delay(9000);
 
-   AD9833_Outdata(CSIN_Channel_1,CH1_OUT_FRE,0,2,0 ); //第一片9833，,6KHz,频率寄存器0，正弦波输出
+   AD9833_Outdata(CSIN_Channel_1,CH1_OUT_FRE,0,2,0 ); //第一片9833，,5KHz,频率寄存器0，正弦波输出
    delay(9000);
-  // AD9833_Reset(CSIN_Channel_1);
-
+   AD9833_Outdata(CSIN_Channel_2,CH2_OUT_FRE,0,2,0 ); //第一片9833，,6KHz,频率寄存器0，正弦波输出
+   delay(9000);
+   AD9833_Outdata(CSIN_Channel_3,CH3_OUT_FRE,0,2,0 ); //第一片9833，,7KHz,频率寄存器0，正弦波输出
 	while(1)
 	{
-	
+		GpioDataRegs.GPADAT.bit.GPIO4=0;
+		DELAY_US(500000);
+		DELAY_US(500000);
+		GpioDataRegs.GPADAT.bit.GPIO4=1;
+		DELAY_US(500000);
+		DELAY_US(500000);
 	}
 }
 

@@ -55,6 +55,9 @@
 <resourceConfiguration exclude="false" id="com.ti.ccstudio.buildDefinitions.C2000.Debug.818548031./AD9833_test/CMD/DSP2833x_Headers_nonBIOS.cmd" name="DSP2833x_Headers_nonBIOS.cmd" rcbsApplicability="disable" resourcePath="/AD9833_test/CMD/DSP2833x_Headers_nonBIOS.cmd" toolsToInvoke="com.ti.ccstudio.buildDefinitions.C2000_5.2.exe.linkerDebug.1786509963./AD9833_test/CMD/DSP2833x_Headers_nonBIOS.cmd">
 <tool id="com.ti.ccstudio.buildDefinitions.C2000_5.2.exe.linkerDebug.1786509963./AD9833_test/CMD/DSP2833x_Headers_nonBIOS.cmd" name="C2000 Linker" superClass="com.ti.ccstudio.buildDefinitions.C2000_5.2.exe.linkerDebug.1786509963"/>
 </resourceConfiguration>
+<resourceConfiguration exclude="false" id="com.ti.ccstudio.buildDefinitions.C2000.Debug.818548031./AD9833_test/CMD/F28335.cmd" name="F28335.cmd" rcbsApplicability="disable" resourcePath="/AD9833_test/CMD/F28335.cmd" toolsToInvoke="com.ti.ccstudio.buildDefinitions.C2000_5.2.exe.linkerDebug.1786509963./AD9833_test/CMD/F28335.cmd">
+<tool id="com.ti.ccstudio.buildDefinitions.C2000_5.2.exe.linkerDebug.1786509963./AD9833_test/CMD/F28335.cmd" name="C2000 Linker" superClass="com.ti.ccstudio.buildDefinitions.C2000_5.2.exe.linkerDebug.1786509963"/>
+</resourceConfiguration>
 </configuration>
 <configuration artifactExtension="out" artifactName="AD9833_test" description="" id="com.ti.ccstudio.buildDefinitions.C2000.Release.2021452794" name="Release" parent="com.ti.ccstudio.buildDefinitions.C2000.Release">
 <toolChain id="com.ti.ccstudio.buildDefinitions.C2000_5.2.exe.ReleaseToolchain.308634490" name="TI Code Generation Tools" superClass="com.ti.ccstudio.buildDefinitions.C2000_5.2.exe.ReleaseToolchain" targetTool="com.ti.ccstudio.buildDefinitions.C2000_5.2.exe.linkerRelease.910643983">
