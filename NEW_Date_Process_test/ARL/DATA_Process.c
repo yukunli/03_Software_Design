@@ -1,4 +1,3 @@
-
 /*
  created by li Danny
  Date:/ 2015/12/20
@@ -22,34 +21,35 @@ float DAL_OutPut3[BUF_SIZE3+LOWFILT_SIZE]={0};
  * 函数功能：线性卷积
  * 函数入口：
  */
-void LinearConvolution(unsigned int xn,unsigned int hn,float *x,float *h,float *y)
+void LinearConvolution(unsigned int xn,unsigned int hn,float *input,float *h,float *output)
 {
 	unsigned int i,j,m,LL;
 	unsigned int yn = 0;   //输出序列y的长度
 	yn = xn + hn -1;
 	for(i=0;i<yn;i++) 
 	{
-		y[i]=0;  //输出数组初始化
+		output[i]=0;  //输出数组初始化
 	}
 	m = yn - 1;
-	for(i=hn-1;i>0;i--)      //将*h作为被乘数
+	for(i = hn-1;i>0;i--)      //将*h作为被乘数
 	{
 		LL=m;
 		for(j=xn-1;j>0;j--)  //数组x[n]的1~(xn-1)与h[i]逐一相乘
 		{
-			y[LL]+=h[i]*x[j];
+			output[LL] += h[i]*input[j];
 			LL--;
 		}
-		y[LL]+=x[0]*h[i];
+		output[LL] += input[0]*h[i];
 		m--;
 	}
-	LL=m;
+	
+	LL = m;
 	for(j=xn-1;j>0;j--)
 	{
-		y[LL]+=h[0]*x[j];
+		output[LL]+=h[0]*input[j];
 		LL--;
 	}
-	y[LL]+=x[0]*h[0];
+	output[LL]+=input[0]*h[0];
 }
 
 /*******************************************************
@@ -119,9 +119,9 @@ void DAL_Process(float *Channel_Date, unsigned int Buf_size, float *Low_filter, 
 	
 	for(k = 0;k < 2*Buf_size-1; k++)
 	{
-		temp1 = SampleBuffer1[2*Buf_size-1-k];
-		temp2 = SampleBuffer2[2*Buf_size-1-k];
-		Cross_OutPut[2*Buf_size-1-k]=2*sqrt(temp1*temp1+temp2*temp2);	 
+		temp1 = SampleBuffer1[2*Buf_size-2-k];  //注意数组越界问题，K=0时的情况
+		temp2 = SampleBuffer2[2*Buf_size-2-k];
+		Cross_OutPut[2*Buf_size-2-k]=2*sqrt(temp1*temp1+temp2*temp2);	 
 	}
   	//*******************************************
   	LinearConvolution(Buf_size,LOWFILT_SIZE,Cross_OutPut,Low_filter,DAL_OutPut);  //线性卷积
@@ -141,15 +141,15 @@ float Moisture_FITcalcu(float* MeasureDal,Uint16 Buf_size1,float* Refer1Dal,Uint
 	Refer2_Amp = Single_Amplitude(Refer2Dal,Buf_size3);
 	Ratio = Measure_Amp/(Refer1_Amp+Refer2_Amp);
 	
-	Print_data[0]=(unsigned char)((Uint16)(Measure_Amp*100)>>8);
-	Print_data[1]=(unsigned char)((Uint16)(Measure_Amp*100)&0x00ff);
-	Print_data[2]=(unsigned char)((Uint16)(Refer1_Amp*100)>>8);
-	Print_data[3]=(unsigned char)((Uint16)(Refer1_Amp*100)&0x00ff);
-	Print_data[4]=(unsigned char)((Uint16)(Refer2_Amp*100)>>8);
-	Print_data[5]=(unsigned char)((Uint16)(Refer2_Amp*100)&0x00ff);
-	Print_data[6]=(unsigned char)((Uint16)(Ratio*100)>>8);
-	Print_data[7]=(unsigned char)((Uint16)(Ratio*100)&0x00ff);
-	
+//	Print_data[0]=(unsigned char)((Uint16)(Measure_Amp*100)>>8);
+//	Print_data[1]=(unsigned char)((Uint16)(Measure_Amp*100)&0x00ff);
+//	Print_data[2]=(unsigned char)((Uint16)(Refer1_Amp*100)>>8);
+//	Print_data[3]=(unsigned char)((Uint16)(Refer1_Amp*100)&0x00ff);
+//	Print_data[4]=(unsigned char)((Uint16)(Refer2_Amp*100)>>8);
+//	Print_data[5]=(unsigned char)((Uint16)(Refer2_Amp*100)&0x00ff);
+//	Print_data[6]=(unsigned char)((Uint16)(Ratio*100)>>8);
+//	Print_data[7]=(unsigned char)((Uint16)(Ratio*100)&0x00ff);
+
 	switch(FIT_Mode)
 	{
 		case '1':  // 三次拟合
@@ -188,12 +188,12 @@ float Moisture_FITcalcu(float* MeasureDal,Uint16 Buf_size1,float* Refer1Dal,Uint
  {
  	int i = 0;
 	float tempdata = 0;
-	for(i = 60;i <= Buf_size-20; i++)
+	for(i = 100;i <= Buf_size-20; i++)
 	{
 		tempdata += DAL_OutPut[i];		
 	}
 	
-	return tempdata/(BUF_SIZE1-60-19);
+	return tempdata/(BUF_SIZE1-100-19);
  }
 
 //-------------------------------------------------

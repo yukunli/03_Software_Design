@@ -1,14 +1,14 @@
 #ifndef DATA_PROCESS_H_
 #define DATA_PROCESS_H_
 
-#define SAME_FRE 210  //采用频率设定为210khz
+#include "ConstData_Table.h"
+#define SAME_FRE 210      //采用频率设定为210khz
 
 #if SAME_FRE == 210
-#define  CYCLE_NUM 10	  //一次操作CYCLE_NUM 个周期的数据
+#define  CYCLE_NUM   10	  // 一次操作CYCLE_NUM 个周期的数据
 #define  BUF_SIZE1   420  // Sample1 buffer size
 #define  BUF_SIZE2   350  // Sample2 buffer size
 #define  BUF_SIZE3   300  // Sample3 buffer size
-#define  LOWFILT_SIZE 37
 #endif
 
 //3路互相关运算结果做低通线性卷积运算的结果存放数组

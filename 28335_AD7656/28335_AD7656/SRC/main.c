@@ -83,8 +83,10 @@ interrupt void ISRTimer0(void)
 	testSample5[sampleCount]=AD7656_BASIC;//ad[4];
 	testSample6[sampleCount]=AD7656_BASIC;//ad[5]; 
 	sampleCount++;
-	if(sampleCount >= 100) sampleCount=0;
-
+	if(sampleCount >= 200) 
+	{
+		sampleCount=0;
+	}
     PieCtrlRegs.PIEACK.all = PIEACK_GROUP1;
     CpuTimer0Regs.TCR.bit.TIF=1; // 定时到了指定时间，标志位置位，清除标志      
     CpuTimer0Regs.TCR.bit.TRB=1;  // 重载Timer0的定时数据

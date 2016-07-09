@@ -19,8 +19,7 @@
 #define   SET_ADCOV       GpioDataRegs.GPASET.bit.GPIO25=1
 #define   CLR_ADCOV       GpioDataRegs.GPACLEAR.bit.GPIO25=1
 
-#define AD_PVEF  5000		// AD reference volte value of positive (mv)
-#define AD_CVEF	 (-5000)		// AD reference volte value of cathode (mv)
+#define AD_PVEF  20000		// AD reference volte value of positive (mv)
 
 extern Uint16 SampleCount;
 extern identi_bool volatile SampleCount_Status_Flag;   //it means the data array[SAMPLE_COUNT],window is full

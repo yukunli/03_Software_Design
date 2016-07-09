@@ -26,4 +26,5 @@ ARL/AD7656.obj: E:/01_Master_project/Water_Detection_Project/04_Software_Design/
 ARL/AD7656.obj: E:/01_Master_project/Water_Detection_Project/04_Software_Design/NEW_Date_Process_test/INCLUDE/DSP2833x_I2C_defines.h
 ARL/AD7656.obj: E:/01_Master_project/Water_Detection_Project/04_Software_Design/NEW_Date_Process_test/INCLUDE/DSP2833x_DefaultISR.h
 ARL/AD7656.obj: ../ARL/AD7656.h
-ARL/AD7656.obj: ../ARL/std_init.h
+ARL/AD7656.obj: E:/01_Master_project/Water_Detection_Project/04_Software_Design/NEW_Date_Process_test/MAIN/std_init.h
+ARL/AD7656.obj: E:/01_Master_project/Water_Detection_Project/04_Software_Design/NEW_Date_Process_test/ARL/ConstData_Table.h

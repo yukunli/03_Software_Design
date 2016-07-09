@@ -4,6 +4,7 @@
  * 
  * 
  */
+ 
 #include "DSP2833x_Device.h"     // DSP2833x Headerfile Include File
 #include "DSP2833x_Examples.h"   // DSP2833x Examples Include File
 #include "DATA_Process.h"
@@ -28,6 +29,9 @@ void InitXintf(void);
 /**************************************************/
 void main()
 {
+	float value1;
+	float value2;
+	float value3;
 // Step 1. Initialize System Control:
    InitSysCtrl();
    InitXintf();
@@ -70,7 +74,7 @@ void main()
    GpioCtrlRegs.GPADIR.bit.GPIO0 = 1; 
    EDIS;
  //end test
-	SCIC_Init();        // Initalize SCI for echoback
+	SCIC_Init();        //Initalize SCI for echoback
 	OUTAD_Init(&gSampleTable, &gSampleValue); 
     mesg = "welcome!\n\0";
     SCIC_msg(mesg);	
@@ -87,11 +91,15 @@ void main()
 		{
 			//此处打开其他中断		
 		 	AD_Data_Shift(&gSampleTable, &gSampleValue); 	//AD采样值转换为模拟量
-		 	DAL_Process((gSampleValue.SamValue3),BUF_SIZE3,Low_Filter2,DAL_OutPut3);	//数字相关运算
+		 	DAL_Process((gSampleValue.SamValue1),BUF_SIZE1,Low_Filter1,DAL_OutPut1);	//数字相关运算
+		 	DAL_Process((gSampleValue.SamValue2),BUF_SIZE2,Low_Filter1,DAL_OutPut2);	//数字相关运算
+		 	DAL_Process((gSampleValue.SamValue3),BUF_SIZE3,Low_Filter1,DAL_OutPut3);	//数字相关运算
+		 	value1 = Single_Amplitude(DAL_OutPut1,BUF_SIZE1 );
+		 	value2 = Single_Amplitude(DAL_OutPut2,BUF_SIZE2 );
+		 	value3 = Single_Amplitude(DAL_OutPut3,BUF_SIZE3 );
 		 	while(1);
 		 	
 		 	//.....
-		 	
 		 	//此处关闭其他中断
 			//SampleCount_Status_Flag = False;
 		 	//START_SAMPLING();
@@ -103,14 +111,10 @@ void main()
  */
 interrupt void ISRTimer0(void)
 {   
-  // 	if(Timer_flag ==1)
- //  	test_LED = 1;
  	PieCtrlRegs.PIEACK.all = PIEACK_GROUP1;
     CpuTimer0Regs.TCR.bit.TIF=1;   // 定时到了指定时间，标志位置位，清除标志      
     CpuTimer0Regs.TCR.bit.TRB=1;   // 重载Timer0的定时数据
-    
     Timer_flag = 1;
-//   	test_LED = 0;
 } 
 
 /************************************

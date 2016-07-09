@@ -32,4 +32,4 @@ ARL/DATA_Process.obj: D:/Program\ Files/Texas\ Instruments/ccsv4/tools/compiler/
 ARL/DATA_Process.obj: ../ARL/DATA_Process.h
 ARL/DATA_Process.obj: ../ARL/ConstData_Table.h
 ARL/DATA_Process.obj: ../ARL/AD7656.h
-ARL/DATA_Process.obj: ../ARL/std_init.h
+ARL/DATA_Process.obj: E:/01_Master_project/Water_Detection_Project/04_Software_Design/NEW_Date_Process_test/MAIN/std_init.h
