@@ -14,20 +14,20 @@
  void AD9833_configinit(void)
 {
    EALLOW;
-   GpioCtrlRegs.GPCMUX2.bit.GPIO81 = 0; // GPIO0 = GPIO0
-   GpioCtrlRegs.GPCDIR.bit.GPIO81 = 1; 
+   GpioCtrlRegs.GPAMUX2.bit.GPIO30 = 0; // GPIO0 = GPIO0
+   GpioCtrlRegs.GPADIR.bit.GPIO30 = 1; 
    
-   GpioCtrlRegs.GPBMUX1.bit.GPIO47 = 0; // GPIO1 = GPIO1
-   GpioCtrlRegs.GPBDIR.bit.GPIO47 = 1;
+   GpioCtrlRegs.GPAMUX2.bit.GPIO31 = 0; // GPIO1 = GPIO1
+   GpioCtrlRegs.GPADIR.bit.GPIO31 = 1;
    
-   GpioCtrlRegs.GPBMUX1.bit.GPIO41 = 0; // GPIO2 = GPIO2
-   GpioCtrlRegs.GPBDIR.bit.GPIO41 = 1;
+   GpioCtrlRegs.GPCMUX2.bit.GPIO82 = 0; // GPIO2 = GPIO2
+   GpioCtrlRegs.GPCDIR.bit.GPIO82 = 1;
    
-   GpioCtrlRegs.GPBMUX1.bit.GPIO43 = 0; // GPIO2 = GPIO2
-   GpioCtrlRegs.GPBDIR.bit.GPIO43 = 1;
+   GpioCtrlRegs.GPCMUX2.bit.GPIO83 = 0; // GPIO2 = GPIO2
+   GpioCtrlRegs.GPCDIR.bit.GPIO83 = 1;
    
-   GpioCtrlRegs.GPBMUX1.bit.GPIO45 = 0; // GPIO2 = GPIO2
-   GpioCtrlRegs.GPBDIR.bit.GPIO45 = 1;
+   GpioCtrlRegs.GPBMUX1.bit.GPIO39 = 0; // GPIO2 = GPIO2
+   GpioCtrlRegs.GPBDIR.bit.GPIO39 = 1;
    EDIS;
 }
 
@@ -83,6 +83,7 @@ void JudgeCS(unsigned char change)
 	if(change == 0x01)     //正弦信号通道1
 	{
 		ad9833_fsync1=0;
+		ad9833_fsync1=0;
 		ad9833_fsync2=1;
 		ad9833_fsync3=1;
 		return;
@@ -90,12 +91,14 @@ void JudgeCS(unsigned char change)
 	else if(change == 0x02)	 //正弦信号通道2
 	{
 		ad9833_fsync2=0;
+		ad9833_fsync2=0;
 		ad9833_fsync1=1;
 		ad9833_fsync3=1;
 		return;
 	}
 	else 	 				//正弦信号通道3
 	{
+		ad9833_fsync3=0;
 		ad9833_fsync3=0;
 		ad9833_fsync1=1;
 		ad9833_fsync2=1;

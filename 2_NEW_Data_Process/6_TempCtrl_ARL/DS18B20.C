@@ -114,8 +114,7 @@ float  get_temp(void)
 	write_byte(0XCC);                        //忽略ROM匹配 
 	write_byte(0X44);                        //发送温度转化命令  
 
-	DELAY_US(400000);                         //确保温度转换完成所需要的时间
-	DELAY_US(400000);                             
+	DELAY_US(200000);                         //确保温度转换完成所需要的时间                            
 	for(i = 0;i<= 5; i++)		//再次复位，等待从机应答 
 	{
 		state = reset();    //复位等待从机应答,if run 5 times,it means the  reset failed

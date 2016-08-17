@@ -1,5 +1,6 @@
 #ifndef _CMD_PROCESS_H
 #define _CMD_PROCESS_H
+
 #include "hmi_driver.h"
 #include  "std_init.h"
 #define NOTIFY_TOUCH_PRESS      0X01   //触摸屏按下通知

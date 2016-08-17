@@ -34,8 +34,8 @@ $(GEN_CMDS_QUOTED) \
 "./SRC/DSP2833x_Adc.obj" \
 "./SRC/DSP2833x_ADC_cal.obj" \
 -l"libc.a" \
-"../CMD/28335_RAM_lnk.cmd" \
 "../CMD/DSP2833x_Headers_nonBIOS.cmd" \
+"../CMD/F28335.cmd" \
 
 -include ../makefile.init
 

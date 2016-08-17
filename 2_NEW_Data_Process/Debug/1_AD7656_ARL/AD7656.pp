@@ -1,6 +1,5 @@
 # FIXED
 1_AD7656_ARL/AD7656.obj: ../1_AD7656_ARL/AD7656.c
-1_AD7656_ARL/AD7656.obj: ../1_AD7656_ARL/AD7656.h
 1_AD7656_ARL/AD7656.obj: E:/01_Master_project/Water_Detection_Project/04_Software_Design/2_NEW_Data_Process/INCLUDE/DSP2833x_Device.h
 1_AD7656_ARL/AD7656.obj: E:/01_Master_project/Water_Detection_Project/04_Software_Design/2_NEW_Data_Process/INCLUDE/DSP2833x_Adc.h
 1_AD7656_ARL/AD7656.obj: E:/01_Master_project/Water_Detection_Project/04_Software_Design/2_NEW_Data_Process/INCLUDE/DSP2833x_DevEmu.h
@@ -26,4 +25,6 @@
 1_AD7656_ARL/AD7656.obj: E:/01_Master_project/Water_Detection_Project/04_Software_Design/2_NEW_Data_Process/INCLUDE/DSP2833x_Dma_defines.h
 1_AD7656_ARL/AD7656.obj: E:/01_Master_project/Water_Detection_Project/04_Software_Design/2_NEW_Data_Process/INCLUDE/DSP2833x_I2C_defines.h
 1_AD7656_ARL/AD7656.obj: E:/01_Master_project/Water_Detection_Project/04_Software_Design/2_NEW_Data_Process/INCLUDE/DSP2833x_DefaultISR.h
+1_AD7656_ARL/AD7656.obj: ../1_AD7656_ARL/AD7656.h
 1_AD7656_ARL/AD7656.obj: E:/01_Master_project/Water_Detection_Project/04_Software_Design/2_NEW_Data_Process/A_MAIN/std_init.h
+1_AD7656_ARL/AD7656.obj: E:/01_Master_project/Water_Detection_Project/04_Software_Design/2_NEW_Data_Process/4_DataPro_ARL/ConstData_Table.h

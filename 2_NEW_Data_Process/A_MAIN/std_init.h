@@ -1,7 +1,7 @@
 #ifndef STD_INIT_H_
 #define STD_INIT_H_
 
-
+#include "ConstData_Table.h"
 #define UINT8 unsigned char
 #define UINT16 unsigned int
 #define STATUS_SUCCESS True
@@ -16,7 +16,7 @@
 #define  BUF_SIZE1   420  // Sample1 buffer size
 #define  BUF_SIZE2   350  // Sample2 buffer size
 #define  BUF_SIZE3   300  // Sample3 buffer size
-#define  LOWFILT_SIZE 37
+
 #endif
 
 typedef enum {True,False} identi_bool;
@@ -54,6 +54,7 @@ typedef struct
 	float PID_Ki;	//pid的ki参数
 	float PID_Kd;	//pid的kd参数
 }Water_Param;
+
 typedef struct
 {
 	float WaterValue;	//物料水分值
@@ -61,4 +62,11 @@ typedef struct
 	float temperature;	//温度
 }Water_Value;
 
+typedef struct
+{
+	float L19Value;
+	float L17Value;
+	float L22Value;
+	float temperature;
+}LabView_Data;
 #endif /*STD_INIT_H_*/

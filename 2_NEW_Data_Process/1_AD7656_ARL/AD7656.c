@@ -1,5 +1,7 @@
 
 
+#include "DSP2833x_Device.h"     // DSP2833x Headerfile Include File
+#include "DSP2833x_Examples.h"   // DSP2833x Examples Include File
 #include "AD7656.h"
 #include "std_init.h"
 
@@ -10,13 +12,15 @@ char  Head_pointNum = 3;
 inline void AD7656_ConfigInit(void)
 {
 	EALLOW;
-	GpioCtrlRegs.GPAMUX2.bit.GPIO25=0;
+	GpioCtrlRegs.GPAMUX2.bit.GPIO24=0;
+	GpioCtrlRegs.GPADIR.bit.GPIO24=1;		//OUTPUT
+	
+	GpioCtrlRegs.GPAMUX2.bit.GPIO25 = 0;    // XWE0
 	GpioCtrlRegs.GPADIR.bit.GPIO25=1;		//OUTPUT
-	GpioCtrlRegs.GPBMUX2.bit.GPIO61 = 0;    // XWE0
-	GpioCtrlRegs.GPBDIR.bit.GPIO61=1;		//OUTPUT
-	GpioCtrlRegs.GPBMUX2.bit.GPIO60=0;      //ADBUSY
-	GpioCtrlRegs.GPBDIR.bit.GPIO60=0;       //INPUT
-	GpioCtrlRegs.GPBQSEL2.bit.GPIO60= 0;
+	
+	GpioCtrlRegs.GPAMUX2.bit.GPIO27=0;      //ADBUSY
+	GpioCtrlRegs.GPADIR.bit.GPIO27=0;       //INPUT
+	GpioCtrlRegs.GPAQSEL2.bit.GPIO27= 0;
 	EDIS;
 } 
 
@@ -71,9 +75,9 @@ void OUTAD_Init(STRSampleTable *FourSampleTable, STRSampleValue *FourSampleValue
  *********************************/
 void GetAD_Value(STRSampleTable *FourSampleTable)
 {
-	unsigned int tem = 0;
+	int tem = 0;
 	CLR_ADCOV;   	//启动转换信号
-	DELAY_US(0.3);
+	DELAY_US(0.5);
 	SET_ADCOV;
 	while(AD_BUSY); 
 	if(Head_pointNum >= 0)  //去掉头3个点
@@ -113,12 +117,7 @@ void AD_Data_Shift(STRSampleTable *FourSampleTable, STRSampleValue *FourSampleVa
 	
 	for(i=0;i< SAMP_COUNT_MAX;i++)
 	{
-		if(FourSampleTable->SamTable4[i]&0x8000) //postive
-		{
-			FourSampleValue->SamValue4[i] = (65535-FourSampleTable->SamTable4[i])/32767.0*AD_CVEF;    // it should be 0 because connected to GND		
-		}
-		else 
-		FourSampleValue->SamValue4[i] = FourSampleTable->SamTable4[i]/32767.0*AD_PVEF;
+		FourSampleValue->SamValue4[i] = FourSampleTable->SamTable4[i]/65536.0*AD_PVEF;
 	}
 		
 	for(i=0;i< SAMP_COUNT_MAX; i++ )
@@ -127,31 +126,11 @@ void AD_Data_Shift(STRSampleTable *FourSampleTable, STRSampleValue *FourSampleVa
 	}
 	Setoff_ZoreVal = Setoff_ZoreVal / SAMP_COUNT_MAX;
 
-	
 	for(i=0;i< SAMP_COUNT_MAX;i++)
-	{	
-		if(FourSampleTable->SamTable3[i]& 0x8000 )
-		{
-			FourSampleValue->SamValue3[i] = (65535-FourSampleTable->SamTable3[i])/32767.0*AD_CVEF - Setoff_ZoreVal;
-		}
-		else
-			FourSampleValue->SamValue3[i]= FourSampleTable->SamTable3[i]/32767.0*AD_PVEF - Setoff_ZoreVal;
-		
-		if(FourSampleTable->SamTable2[i]& 0x8000 )
-		{
-			FourSampleValue->SamValue2[i] =(float)(65535-FourSampleTable->SamTable2[i])/32767.0*AD_CVEF - Setoff_ZoreVal;
-		}
-		else
-		{
-			FourSampleValue->SamValue2[i]= (float)FourSampleTable->SamTable2[i]/32767.0*AD_PVEF - Setoff_ZoreVal;
-		}
-		if(FourSampleTable->SamTable1[i]& 0x8000 )
-		{
-			FourSampleValue->SamValue1[i] = (float)(65535-FourSampleTable->SamTable1[i])/32767.0*AD_CVEF - Setoff_ZoreVal;
-		
-		}
-		else
-			FourSampleValue->SamValue1[i]= (float)FourSampleTable->SamTable1[i]/32767.0*AD_PVEF - Setoff_ZoreVal;
+	{		
+		FourSampleValue->SamValue1[i]= (float)(FourSampleTable->SamTable1[i])/65536.0*AD_PVEF - Setoff_ZoreVal;
+		FourSampleValue->SamValue2[i]= (float)(FourSampleTable->SamTable2[i])/65536.0*AD_PVEF - Setoff_ZoreVal;
+		FourSampleValue->SamValue3[i] = (float)(FourSampleTable->SamTable3[i])/65536.0*AD_PVEF - Setoff_ZoreVal;
 	}
 }
 

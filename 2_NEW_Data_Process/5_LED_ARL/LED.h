@@ -16,14 +16,27 @@
 #define LED_Yellow_On() P1OUT &= ~BIT3
 #define LED_Yellow_Off() P1OUT |= BIT3
 */
-#define Red_IO   GPIO3
-#define Blue_IO  GPIO4
+#define Red_IO   GPIO42
+#define Blue_IO  GPIO44
+#define Core_LED GPIO1
 
-#define LED_Blue_On()   GpioDataRegs.GPADAT.bit.Blue_IO=0
-#define LED_Blue_Off()  GpioDataRegs.GPADAT.bit.Blue_IO=1
+#define Fan_IO   GPIO5
+#define Bell_IO  GPIO4
 
-#define LED_Red_On()   GpioDataRegs.GPADAT.bit.Red_IO=0
-#define LED_Red_Off()  GpioDataRegs.GPADAT.bit.Red_IO=1
+#define LED_Blue_On()   GpioDataRegs.GPBDAT.bit.Blue_IO=1
+#define LED_Blue_Off()  GpioDataRegs.GPBDAT.bit.Blue_IO=0
+
+#define LED_Red_On()   GpioDataRegs.GPBDAT.bit.Red_IO=1
+#define LED_Red_Off()  GpioDataRegs.GPBDAT.bit.Red_IO=0
+
+#define LED_Core_On()   GpioDataRegs.GPADAT.bit.Core_LED=1
+#define LED_Core_Off()   GpioDataRegs.GPADAT.bit.Core_LED=0
+
+#define FAN_Start()   GpioDataRegs.GPADAT.bit.Fan_IO=1
+#define FAN_Stop()   GpioDataRegs.GPADAT.bit.Fan_IO=0
+
+#define BELL_Start()   GpioDataRegs.GPADAT.bit.Bell_IO=1
+#define BELL_Stop()   GpioDataRegs.GPADAT.bit.Bell_IO=0
 
 extern UINT8 red_light_state1 ;
 extern UINT8 i1;
@@ -47,5 +60,6 @@ extern void LED_Red_Flash(void);
 //extern void LED_Red_Flash_Slow(void);
 extern void LED_Error_Flash(void);
 
+extern void Bell_Didadi(void);
 
 #endif /*LED_H_*/

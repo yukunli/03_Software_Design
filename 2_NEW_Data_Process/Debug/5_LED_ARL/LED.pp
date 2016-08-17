@@ -27,3 +27,4 @@
 5_LED_ARL/LED.obj: E:/01_Master_project/Water_Detection_Project/04_Software_Design/2_NEW_Data_Process/INCLUDE/DSP2833x_I2C_defines.h
 5_LED_ARL/LED.obj: E:/01_Master_project/Water_Detection_Project/04_Software_Design/2_NEW_Data_Process/INCLUDE/DSP2833x_DefaultISR.h
 5_LED_ARL/LED.obj: E:/01_Master_project/Water_Detection_Project/04_Software_Design/2_NEW_Data_Process/A_MAIN/std_init.h
+5_LED_ARL/LED.obj: E:/01_Master_project/Water_Detection_Project/04_Software_Design/2_NEW_Data_Process/4_DataPro_ARL/ConstData_Table.h

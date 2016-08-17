@@ -75,9 +75,9 @@ PAGE 0:    /* Program Memory */
            /* Memory (RAM/FLASH/OTP) blocks can be moved to PAGE1 for data allocation */
 
    ZONE0       : origin = 0x004000, length = 0x001000     /* XINTF zone 0 */
-   RAML0       : origin = 0x008000, length = 0x001000     /* on-chip RAM block L0 */
-   RAML1       : origin = 0x009000, length = 0x001000     /* on-chip RAM block L1 */
-   RAML2       : origin = 0x00A000, length = 0x001000     /* on-chip RAM block L2 */
+  /* RAML0       : origin = 0x008000, length = 0x001000     /* on-chip RAM block L0 */
+  /* RAML1       : origin = 0x009000, length = 0x001000     /* on-chip RAM block L1 */
+   RAML2       : origin = 0x00A500, length = 0x000500     /* on-chip RAM block L2 */
    RAML3       : origin = 0x00B000, length = 0x001000     /* on-chip RAM block L3 */
    ZONE6       : origin = 0x0100000, length = 0x100000    /* XINTF zone 6 */ 
    ZONE7A      : origin = 0x0200000, length = 0x00FC00    /* XINTF zone 7 - program space */ 
@@ -107,11 +107,14 @@ PAGE 1 :   /* Data Memory */
    
    BOOT_RSVD   : origin = 0x000000, length = 0x000050     /* Part of M0, BOOT rom will use this for stack */
    RAMM0       : origin = 0x000050, length = 0x0003B0     /* on-chip RAM block M0 */
-   RAMM1       : origin = 0x000400, length = 0x000420     /* on-chip RAM block M1 */
-   RAML4       : origin = 0x00C000, length = 0x002900     /* on-chip RAM block L1 */
-   RAML5       : origin = 0x00E900, length = 0x000400     /* on-chip RAM block L1 */
-   RAML6       : origin = 0x00ED00, length = 0x000500     /* on-chip RAM block L1 */
-   RAML7       : origin = 0x00F300, length = 0x000900     /* on-chip RAM block L1 */
+   RAMM1       : origin = 0x000400, length = 0x0003FF     /* on-chip RAM block M1 */
+   
+   RAML0       : origin = 0x008000, length = 0x002500     /* on-chip RAM block L0 */
+   
+   RAML4       : origin = 0x00C000, length = 0x003500     /* on-chip RAM block L1 */
+   RAML5       : origin = 0x00F500, length = 0x000300     /* on-chip RAM block L1 */
+   RAML6       : origin = 0x00F800, length = 0x000200     /* on-chip RAM block L1 */
+   RAML7       : origin = 0x00FA00, length = 0x000200     /* on-chip RAM block L1 */
    ZONE7B      : origin = 0x20FC00, length = 0x000400     /* XINTF zone 7 - data space */
    FLASHB      : origin = 0x330000, length = 0x008000     /* on-chip FLASH */
 }
@@ -132,7 +135,7 @@ SECTIONS
    .text               : > FLASHA      PAGE = 0
    codestart           : > BEGIN       PAGE = 0
    ramfuncs            : LOAD = FLASHD, 
-                         RUN = RAML0, 
+                         RUN = RAML2, 
                          LOAD_START(_RamfuncsLoadStart),
                          LOAD_END(_RamfuncsLoadEnd),
                          RUN_START(_RamfuncsRunStart),
@@ -142,9 +145,9 @@ SECTIONS
    csm_rsvd            : > CSM_RSVD    PAGE = 0
    
    /* Allocate uninitalized data sections: */
-   .stack              : > RAMM1       PAGE = 1
-   .ebss               : > RAML4       PAGE = 1
-   .esysmem            : > RAMM1       PAGE = 1
+   .stack              : > RAML0       PAGE = 1	  /*系统堆栈，用于保存返回地址、函数间的参数传递、存储局部变量和保存中间结果*/
+   .ebss               : > RAML4       PAGE = 1   /*程序中的全局变量和静态变量，需要放入RAM类型存储器中*/
+   .esysmem            : > RAML0       PAGE = 1   /*用于程序中的malloc 、calloc 、和realoc 函数动态分配*/
 
    /* Initalized sections go in Flash */
    /* For SDFlash to program these, they must be allocated to page 0 */

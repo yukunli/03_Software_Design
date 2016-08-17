@@ -28,9 +28,11 @@ A_MAIN/main.obj: E:/01_Master_project/Water_Detection_Project/04_Software_Design
 A_MAIN/main.obj: E:/01_Master_project/Water_Detection_Project/04_Software_Design/2_NEW_Data_Process/4_DataPro_ARL/DATA_Process.h
 A_MAIN/main.obj: E:/01_Master_project/Water_Detection_Project/04_Software_Design/2_NEW_Data_Process/1_AD7656_ARL/AD7656.h
 A_MAIN/main.obj: E:/01_Master_project/Water_Detection_Project/04_Software_Design/2_NEW_Data_Process/A_MAIN/std_init.h
+A_MAIN/main.obj: E:/01_Master_project/Water_Detection_Project/04_Software_Design/2_NEW_Data_Process/4_DataPro_ARL/ConstData_Table.h
 A_MAIN/main.obj: E:/01_Master_project/Water_Detection_Project/04_Software_Design/2_NEW_Data_Process/3_SCI_ARL/hmi_user_uart.h
 A_MAIN/main.obj: E:/01_Master_project/Water_Detection_Project/04_Software_Design/2_NEW_Data_Process/2_AD9833_ARL/AD9833.h
 A_MAIN/main.obj: E:/01_Master_project/Water_Detection_Project/04_Software_Design/2_NEW_Data_Process/5_LED_ARL/LED.h
+A_MAIN/main.obj: E:/01_Master_project/Water_Detection_Project/04_Software_Design/2_NEW_Data_Process/6_TempCtrl_ARL/DS18B20.h
 A_MAIN/main.obj: E:/01_Master_project/Water_Detection_Project/04_Software_Design/2_NEW_Data_Process/7_FTF_ARL/cmd_process.h
 A_MAIN/main.obj: E:/01_Master_project/Water_Detection_Project/04_Software_Design/2_NEW_Data_Process/7_FTF_ARL/hmi_driver.h
 A_MAIN/main.obj: E:/01_Master_project/Water_Detection_Project/04_Software_Design/2_NEW_Data_Process/7_FTF_ARL/cmd_queue.h

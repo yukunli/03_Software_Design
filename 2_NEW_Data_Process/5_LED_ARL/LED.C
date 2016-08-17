@@ -25,16 +25,24 @@ UINT8 i5=0;
 void LED_IOinit(void)
 {
 	EALLOW; 
-	GpioCtrlRegs.GPAMUX1.bit.Blue_IO=0;
-	GpioCtrlRegs.GPADIR.bit.Blue_IO=1;
-	GpioCtrlRegs.GPAMUX1.bit.Red_IO=0;
-	GpioCtrlRegs.GPADIR.bit.Red_IO=1;
-	LED_Red_Off();
-	LED_Blue_Off();
-	LED_Red_Off();
-	LED_Blue_Off();
+	GpioCtrlRegs.GPBMUX1.bit.Blue_IO=0;
+	GpioCtrlRegs.GPBDIR.bit.Blue_IO=1;
+	GpioCtrlRegs.GPBMUX1.bit.Red_IO=0;
+	GpioCtrlRegs.GPBDIR.bit.Red_IO=1;  
+	GpioCtrlRegs.GPAMUX1.bit.Core_LED=0;
+	GpioCtrlRegs.GPADIR.bit.Core_LED=1;
 	
+	GpioCtrlRegs.GPAMUX1.bit.Fan_IO=0;
+	GpioCtrlRegs.GPADIR.bit.Fan_IO=1;
+	GpioCtrlRegs.GPAMUX1.bit.Bell_IO=0;
+	GpioCtrlRegs.GPADIR.bit.Bell_IO=1;
 	EDIS;
+	
+	LED_Red_Off();
+	LED_Blue_Off();
+	LED_Core_Off();
+	FAN_Stop();
+	BELL_Stop();
 }
 void LED_Red_Flash(void)
 {
@@ -68,7 +76,7 @@ void LED_Red_Flash_Slow(void)
 	{
 		LED_Red_Off();
 		i2++;
-		if(i2>=10)
+		if(i2>=1)
 		{
 			red_light_state2 = 1;
 			i2 = 0;
@@ -78,7 +86,7 @@ void LED_Red_Flash_Slow(void)
 	{
 		LED_Red_On();
 		i2++;
-		if(i2>=10)
+		if(i2>=1)
 		{
 			red_light_state2 = 0;
 			i2 = 0;
@@ -161,6 +169,17 @@ void LED_Blue_Flash_Slow(void)//1hz
 			i5 = 0;
 		}
 	}
+}
+
+void Bell_Didadi(void)
+{
+	BELL_Start();
+	DELAY_US(700000);
+	BELL_Stop();
+	DELAY_US(700000);
+	BELL_Start();
+	DELAY_US(700000);
+	BELL_Stop();
 }
 //End of LED Flash
 

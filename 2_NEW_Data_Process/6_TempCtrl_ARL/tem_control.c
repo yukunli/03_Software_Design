@@ -4,7 +4,7 @@
 #include "PWM_tem.h"
 #include "std_init.h"
 #include "tem_control.h"
-
+#
 /**********************************
  * define
  */
@@ -25,15 +25,7 @@ long PID_de = 0;
 /***********************************
 * CODE
 */
-/**********************************
- * fuction: 
- * parameter : get back the tem value 
- */
-float Get_Temvalue(void)
-{
-	
-	return 28.5;
-}
+
 
 /**********************************
  * funciton: get the new occupy rate to control the temperature

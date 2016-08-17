@@ -3,7 +3,7 @@
 
 #include "DSP2833x_Device.h"     // DSP2833x Headerfile Include File
 #include "DSP2833x_Examples.h"   // DSP2833x Examples Include File
-
+#include  "std_init.h"
 #define uchar    unsigned char
 #define uint8    unsigned char
 #define uint16   unsigned short int
@@ -25,6 +25,8 @@ void UartInit(uint32 Baudrate);
 * 入口参数： t  发送的字节
 * 出口参数： 无
  *****************************************************************/
-void  SendChar(uchar t);
+void SendChar(uchar t);
+void Send_msg(char *msg);
+void SendValuetoLabview(LabView_Data* Test_LabviewData);
 
 #endif

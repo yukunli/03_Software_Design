@@ -20,7 +20,7 @@
   #define CPU_CLK   100e6
 #endif
 
-#define TEM_TB_HSPCLKDIV 0x02 // 010:1/4  100:1/8  101: 1/10 110:1/12 111: 1/14
+#define TEM_TB_HSPCLKDIV 0x02    // 010:1/4  100:1/8  101: 1/10 110:1/12 111: 1/14
 #define TEM_TB_CLKDIV  0x06 		// 010:1/4, 011:1/8  110: 1/64 111: 1/128
 #define TEM_PWM_FRE   2929               // If diff freq. desired, change freq here.TPWM=1/PWM_FRE
 #define TEM_TBCLK 	  (CPU_CLK/(4*64))

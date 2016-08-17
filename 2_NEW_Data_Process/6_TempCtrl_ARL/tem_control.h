@@ -11,9 +11,6 @@
 #define OCCUPY_SETVALUE  TEM_SP/2  //the inint occupy rate is TEM_SP/2
  
 extern char  Get_new_occupyrate(float temvalue);
-extern float Get_Temvalue(void);
-
-
 
 
 #endif /*TEM_CONTROL_H_*/

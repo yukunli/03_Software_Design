@@ -12,13 +12,13 @@
 
 
 //外部晶振30M
-# define TEM_IO    GPIO60    //GPIO is the 18b20 data io XA1--A01--XA01
+# define TEM_IO    GPIO56    //GPIO is the 18b20 data io XA1--A01--XA01
 # define DQ        GpioDataRegs.GPBDAT.bit.TEM_IO           //定义18B20数据端口 0utput
 # define DQ_DIR    GpioCtrlRegs.GPBDIR.bit.TEM_IO    //定义18B20D口方向寄存器 
 # define DQ_HIGH() EALLOW;DQ_DIR=0; EDIS        //设置数据口为输入
 # define DQ_LOW()  EALLOW;DQ_DIR=1; EDIS   //设置数据口为输出
 
-extern void TEM_Getinit(void);
-extern float get_temp(void);
+void TEM_Getinit(void);
+float get_temp(void);
 
 #endif /*DS18B20_H_*/
