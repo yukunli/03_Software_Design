@@ -36,6 +36,10 @@ void LED_IOinit(void)
 	GpioCtrlRegs.GPADIR.bit.Fan_IO=1;
 	GpioCtrlRegs.GPAMUX1.bit.Bell_IO=0;
 	GpioCtrlRegs.GPADIR.bit.Bell_IO=1;
+	
+	GpioCtrlRegs.GPAMUX2.bit.SIN_IO=0;
+	GpioCtrlRegs.GPADIR.bit.SIN_IO=1;
+	
 	EDIS;
 	
 	LED_Red_Off();
@@ -43,6 +47,7 @@ void LED_IOinit(void)
 	LED_Core_Off();
 	FAN_Stop();
 	BELL_Stop();
+	SIN_Off();
 }
 void LED_Red_Flash(void)
 {

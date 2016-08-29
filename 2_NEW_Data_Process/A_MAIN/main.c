@@ -13,14 +13,15 @@
 #include "cmd_process.h"
 #include "cmd_queue.h"
 /*****************定义全局变量*********************/
-STRSampleTable gSampleTable; //全局 sample Table
-STRSampleValue gSampleValue; //全局 Sample Value
-STRDalOutPut   gDalOutPut;   //全局 DalOutPut
+STRSampleTable gSampleTable;  //全局 sample Table
+STRSampleValue gSampleValue;  //全局 Sample Value
+STRDalOutPut   gDalOutPut;    //全局 DalOutPut
 uint8 cmd_buffer[CMD_MAX_SIZE];
 Water_Param gSystem_WaterParam = {12.0,1,1.66,22.3,0};  //与串口屏交互的系统水分仪参数
 Water_Value gSystem_WaterValue = {5.20, 5.21, 32.76};
 LabView_Data Test_gSystem_LabviewData = {1.11,1.11,1.11,25.0};
 unsigned char Timer_flag = 0;
+float Cross_OutPut[2*BUF_SIZE1-1] = {0};
 /**************************************************/
 interrupt void ISRTimer0(void);
 interrupt void scic_isr(void);
@@ -30,15 +31,12 @@ void InitXintf(void);
 void main()
 {    
 	/*****************临时的全局变量******************************/
-	float L17AmpValue = 0;
-	float L19AmpValue = 0;
-	float L22AmpValue = 0;
 	qsize  size = 0;
 // Step 1. Initialize System Control:
 	InitSysCtrl();
 	InitXintf();
 // Step 2. Initalize GPIO:
-	InitXintf16Gpio();	//zq
+	//InitXintf16Gpio();	//zq
 
 // Step 3. Clear all interrupts and initialize PIE vector table:
 	DINT;
@@ -73,23 +71,23 @@ void main()
 
 	//LED初始化
 	LED_IOinit();
-	/*
+	
 	//初始化AD9833正弦发生器
 	AD9833_configinit();
 	AD9833_Reset(CSIN_Channel_1);
 	AD9833_Reset(CSIN_Channel_2);
 	AD9833_Reset(CSIN_Channel_3);
-	delay(1000);  //必须保证足够的延时
+	delay(1000);  		//必须保证足够的延时
 	//初始化SCIC（UART_C）
 	UartInit(115200);        // Initalize SCI for echoback, 波特率是115200
-	*/	
+		
 	//初始化AD7656
 	OUTAD_Init(&gSampleTable, &gSampleValue); 
 	
 	//FTF屏指令缓存区清空
 	//queue_reset();
 	
-	 /*
+	
 	//启动AD9833正弦激励信号输出
 	AD9833_Outdata(CSIN_Channel_1,CH1_OUT_FRE,0,2,0 ); //第一片9833，,5KHz,频率寄存器0，正弦波输出
     delay(200);      
@@ -115,28 +113,36 @@ void main()
     START_SAMPLING();
 	while(1)
 	{	
-		LED_Core_On();
+		//LED_Core_On();
 		
-		if( SampleCount_Status_Flag == False && Timer_flag == 1 )  //转换AD7656的采样 
+		if( Timer_flag == 1 && SampleCount_Status_Flag == False)  //转换AD7656的采样 
 		{
 			//进行点采样
 			GetAD_Value(&gSampleTable);  
-			Timer_flag = 0; 
+			Timer_flag = 0;
+			SIN_Off(); 
 		}
 		else if(SampleCount_Status_Flag == True)   //采样序列已满，进行下一步的处理
 		{
 			//此处打开其他中断
+			Timer_flag = 0;
 			IER |= M_INT8; 	//使能SCI_C中断
 					
 		 	AD_Data_Shift(&gSampleTable, &gSampleValue); 	//AD采样值转换为模拟量
-		 	DAL_Process((gSampleValue.SamValue1),BUF_SIZE1,gDalOutPut.DAL_OutPut1);	//数字相关运算
-		 	DAL_Process((gSampleValue.SamValue2),BUF_SIZE2,gDalOutPut.DAL_OutPut2);	//数字相关运算
-		 	DAL_Process((gSampleValue.SamValue3),BUF_SIZE3,gDalOutPut.DAL_OutPut3);	//数字相关运算
+		 	
+		 	DAL_Process((gSampleValue.SamValue1),BUF_SIZE1,Cross_OutPut);	//数字相关运算
+		 	LinearConvolution(BUF_SIZE1,LOWFILT_SIZE,Cross_OutPut,Low_Filter1,gDalOutPut.DAL_OutPut1);  //线性卷积
+		 	
+		 	DAL_Process((gSampleValue.SamValue2),BUF_SIZE2,Cross_OutPut);	//数字相关运算
+		 	LinearConvolution(BUF_SIZE2,LOWFILT_SIZE,Cross_OutPut,Low_Filter1,gDalOutPut.DAL_OutPut2);  //线性卷积
+		 	
+		 	DAL_Process((gSampleValue.SamValue3),BUF_SIZE3,Cross_OutPut);	//数字相关运算
+		 	LinearConvolution(BUF_SIZE3,LOWFILT_SIZE,Cross_OutPut,Low_Filter1,gDalOutPut.DAL_OutPut3);  //线性卷积
 		 	
 		 	//计算单路通道的信号幅值
-		 	L17AmpValue = Single_AmpValue(gDalOutPut.DAL_OutPut1,BUF_SIZE1 );
-		 	L19AmpValue = Single_AmpValue(gDalOutPut.DAL_OutPut2,BUF_SIZE2 );
-		 	L22AmpValue = Single_AmpValue(gDalOutPut.DAL_OutPut3,BUF_SIZE3 );
+		 	Test_gSystem_LabviewData.L17Value = Single_AmpValue(gDalOutPut.DAL_OutPut1,BUF_SIZE1 );
+		 	Test_gSystem_LabviewData.L19Value = Single_AmpValue(gDalOutPut.DAL_OutPut2,BUF_SIZE2 );
+		 	Test_gSystem_LabviewData.L22Value = Single_AmpValue(gDalOutPut.DAL_OutPut3,BUF_SIZE3 );
 		 	
 		 	//利用拟合公式计算当前瞬时水分值
 			gSystem_WaterValue.SoonWaterValue = 0.22;
@@ -177,11 +183,12 @@ void main()
  * Interrupt _ timer
  *********************************/
 interrupt void ISRTimer0(void)
-{   
+{   SIN_On();
  	PieCtrlRegs.PIEACK.all = PIEACK_GROUP1;
-    CpuTimer0Regs.TCR.bit.TIF=1;   // 定时到了指定时间，标志位置位，清除标志      
+    CpuTimer0Regs.TCR.bit.TIF=1;   // 定时到了指定时间，标志位置位，清除标志 
+    Timer_flag = 1;     
     CpuTimer0Regs.TCR.bit.TRB=1;   // 重载Timer0的定时数据   
-    Timer_flag = 1;
+    
 } 
 
 /************************************

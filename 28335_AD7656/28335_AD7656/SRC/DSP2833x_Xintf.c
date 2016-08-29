@@ -141,7 +141,6 @@ void InitXintf(void)
 // InitXintf32Gpio();
 
    asm(" RPT #7 || NOP");
-
 }
 
 void InitXintf32Gpio()

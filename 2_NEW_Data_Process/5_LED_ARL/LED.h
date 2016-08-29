@@ -16,12 +16,13 @@
 #define LED_Yellow_On() P1OUT &= ~BIT3
 #define LED_Yellow_Off() P1OUT |= BIT3
 */
-#define Red_IO   GPIO42
-#define Blue_IO  GPIO44
-#define Core_LED GPIO1
+#define Red_IO   GPIO42   //位于DSP控制板上
+#define Blue_IO  GPIO44	  //位于DSP控制板上
+#define Core_LED GPIO1    //位于dsp核心板上
 
-#define Fan_IO   GPIO5
-#define Bell_IO  GPIO4
+#define Fan_IO   GPIO5    //位于DSP控制板上
+#define Bell_IO  GPIO4    //位于DSP控制板上
+#define SIN_IO   GPIO29   //位于信号激励板上
 
 #define LED_Blue_On()   GpioDataRegs.GPBDAT.bit.Blue_IO=1
 #define LED_Blue_Off()  GpioDataRegs.GPBDAT.bit.Blue_IO=0
@@ -37,6 +38,10 @@
 
 #define BELL_Start()   GpioDataRegs.GPADAT.bit.Bell_IO=1
 #define BELL_Stop()   GpioDataRegs.GPADAT.bit.Bell_IO=0
+
+#define SIN_On()   GpioDataRegs.GPADAT.bit.SIN_IO=1
+#define SIN_Off()   GpioDataRegs.GPADAT.bit.SIN_IO=0
+
 
 extern UINT8 red_light_state1 ;
 extern UINT8 i1;

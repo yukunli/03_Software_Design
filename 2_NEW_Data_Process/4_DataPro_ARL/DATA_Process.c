@@ -18,7 +18,7 @@
  * 函数功能：线性卷积
  * 函数入口：
  */
-void LinearConvolution(unsigned int xn,unsigned int hn,float *x,const float *h,float *y)
+void LinearConvolution(const unsigned int xn,const unsigned int hn,float *x,const float *h,float *y)
 {
 	unsigned int i = 0,j = 0,m = 0,LL = 0;
 	unsigned int yn = 0;   //输出序列y的长度
@@ -67,11 +67,12 @@ void SINCOS_TAB(float * Sin_tab,float *Cos_tab,unsigned int cycle_point)
  * 函数名： DAL_Process
  * 函数功能: 数字锁相放大器运算，只针对一个通道进行运算
  ****************************************************/
-void DAL_Process(float *Channel_Date, unsigned int Buf_size, float *DAL_OutPut)
+void DAL_Process(float *Channel_Date, const unsigned int Buf_size, float *Cross_OutPut)
 {
 	unsigned int k = 0,j = 0;
 	float temp1 = 0,temp2 = 0;
-	float Cross_OutPut[2*BUF_SIZE1-1];       //3路采样序列与参考正弦序列做互相关运算的结果存放数组
+	
+	//float Cross_OutPut[2*BUF_SIZE1-1];       //3路采样序列与参考正弦序列做互相关运算的结果存放数组
 	float SampleBuffer1[2*BUF_SIZE1-1]={0};
 	float SampleBuffer2[2*BUF_SIZE1-1]={0};
 	float sinwave[BUF_SIZE1/CYCLE_NUM] = {0};
@@ -92,6 +93,7 @@ void DAL_Process(float *Channel_Date, unsigned int Buf_size, float *DAL_OutPut)
 		Send_msg("\n malloc failed!\n");
 	}
 	*/
+	//产生一个周期的参考序列
 	SINCOS_TAB(sinwave,coswave,Buf_size/CYCLE_NUM);
 	
 	for(k = 0; k < Buf_size; k++)
@@ -131,8 +133,8 @@ void DAL_Process(float *Channel_Date, unsigned int Buf_size, float *DAL_OutPut)
 	free(SampleBuffer1);
 	free(SampleBuffer1);
 	free(Cross_OutPut);*/
-  	//*******************************************
-  	LinearConvolution(Buf_size,LOWFILT_SIZE,Cross_OutPut,Low_Filter1,DAL_OutPut);  //线性卷积
+  	//低通滤波器
+  	//LinearConvolution(Buf_size,LOWFILT_SIZE,Cross_OutPut,Low_Filter1,DAL_OutPut);  //线性卷积
 }
 
 /*************************************************************
@@ -192,16 +194,15 @@ float Moisture_FITcalcu(float* MeasureDal,Uint16 Buf_size1,float* Refer1Dal,Uint
   * Inlet parameter: DAL_OutPut and the size of DAL_OutPut
   * Outlet parameter: the amplitude of the DAL_OutPut.
   ****************************************************/
- float Single_AmpValue(float * DAL_OutPut,Uint16 Buf_size )
+ float Single_AmpValue(float * DAL_OutPut,const Uint16 Buf_size )
  {
  	int i = 0;
 	float tempdata = 0;
-	for(i = 60;i <= Buf_size-20; i++)
+	for(i = 100;i <= Buf_size-60; i++)
 	{
 		tempdata += DAL_OutPut[i];		
 	}
-	
-	return tempdata/(BUF_SIZE1-60-19);  //取第60个数到倒数19个数的平均值
+	return tempdata/(Buf_size-100-59);  //取第60个数到倒数19个数的平均值
  }
 
 //-------------------------------------------------

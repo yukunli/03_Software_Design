@@ -9,17 +9,18 @@
 #define START_SAMPLING() StartCpuTimer0()
 #define STOP_SAMPLING()  StopCpuTimer0()
 
-#define	  AD7656_BASIC    (*((volatile  Uint16 *)0x200000))
+#define	  AD7656_BASIC    (*((volatile  Uint16  *)0x200000))
 //#define	  AD7656_rst      (*((volatile  Uint16 *)0x200008))
 
 #define   AD_BUSY         GpioDataRegs.GPADAT.bit.GPIO27
+
 #define   SET_ADRST       GpioDataRegs.GPASET.bit.GPIO25=1
 #define   CLEAR_ADRST     GpioDataRegs.GPACLEAR.bit.GPIO25=1
 
 #define   SET_ADCOV       GpioDataRegs.GPASET.bit.GPIO24=1
 #define   CLR_ADCOV       GpioDataRegs.GPACLEAR.bit.GPIO24=1
 
-#define AD_PVEF  20		// AD reference volte value of positive (mv)
+#define   AD_PVEF  10		  // AD reference volte value of positive (mv)
 
 extern Uint16 SampleCount;
 extern identi_bool volatile SampleCount_Status_Flag;   //it means the data array[SAMPLE_COUNT],window is full

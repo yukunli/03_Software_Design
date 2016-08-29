@@ -4,9 +4,12 @@
 
 #define	  AD7656_BASIC    (*((volatile  Uint16 *)0x200000))
 //#define	  AD7656_rst      (*((volatile  Uint16 *)0x200008))
+
 #define   AD_BUSY         GpioDataRegs.GPBDAT.bit.GPIO60
+
 #define   SET_ADRST       GpioDataRegs.GPBSET.bit.GPIO61=1
 #define   CLEAR_ADRST     GpioDataRegs.GPBCLEAR.bit.GPIO61=1
+
 #define   SET_ADCLK       GpioDataRegs.GPASET.bit.GPIO25=1
 #define   CLR_ADCLK       GpioDataRegs.GPACLEAR.bit.GPIO25=1
 Uint16 ad[6];
@@ -23,8 +26,10 @@ void ADInit(void)
 	EALLOW;
 	GpioCtrlRegs.GPAMUX2.bit.GPIO25=0;
 	GpioCtrlRegs.GPADIR.bit.GPIO25=1;
+	
 	GpioCtrlRegs.GPBMUX2.bit.GPIO61 = 0;  // XWE0
 	GpioCtrlRegs.GPBDIR.bit.GPIO61=1;
+	
 	GpioCtrlRegs.GPBMUX2.bit.GPIO60=0; //ADBUSY
 	GpioCtrlRegs.GPBDIR.bit.GPIO60=0;//INPUT
 	GpioCtrlRegs.GPBQSEL2.bit.GPIO60= 0;

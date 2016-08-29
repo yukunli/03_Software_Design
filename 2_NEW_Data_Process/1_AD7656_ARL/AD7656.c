@@ -27,8 +27,8 @@ inline void AD7656_ConfigInit(void)
 inline void OUTAD_Timer_Init(void)
 {
 	InitCpuTimers();   //For this example, only initialize the Cpu Timers
-	//理想&CpuTimer0, 150, 4.762
-	ConfigCpuTimer(&CpuTimer0, 150, 4.7619);   //在定时器内进行采样,采样率1/(1.76us+prioed 0f AD read data约3us)=210KHz
+	//理想&CpuTimer0, 150, 4.7619 采样频率 = 4.76u/150M
+	ConfigCpuTimer(&CpuTimer0, 150, 4.275);   //在定时器内进行采样,采样率1/(1.76us+prioed 0f AD read data约3us)=210KHz
 }
 
 /*
@@ -77,12 +77,12 @@ void GetAD_Value(STRSampleTable *FourSampleTable)
 {
 	int tem = 0;
 	CLR_ADCOV;   	//启动转换信号
-	DELAY_US(0.5);
+	DELAY_US(0.3);
 	SET_ADCOV;
 	while(AD_BUSY); 
 	if(Head_pointNum >= 0)  //去掉头3个点
 	{
-		for(tem = 6; tem > 0; tem--)
+		for(tem = 4; tem > 0; tem--)
 			FourSampleTable->SamTable4[SampleCount] = AD7656_BASIC; //读取4路AD通道数据
 		Head_pointNum --;
 		SampleCount = 0;
@@ -93,8 +93,6 @@ void GetAD_Value(STRSampleTable *FourSampleTable)
 		FourSampleTable->SamTable2[SampleCount] = AD7656_BASIC; 
 		FourSampleTable->SamTable3[SampleCount] = AD7656_BASIC; 
 		FourSampleTable->SamTable4[SampleCount] = AD7656_BASIC; 
-		tem = AD7656_BASIC;
-		tem = AD7656_BASIC;
 		SampleCount  ++;
 		return;
 	}
@@ -126,10 +124,16 @@ void AD_Data_Shift(STRSampleTable *FourSampleTable, STRSampleValue *FourSampleVa
 	}
 	Setoff_ZoreVal = Setoff_ZoreVal / SAMP_COUNT_MAX;
 
-	for(i=0;i< SAMP_COUNT_MAX;i++)
+	for(i=0;i< BUF_SIZE1;i++)
 	{		
 		FourSampleValue->SamValue1[i]= (float)(FourSampleTable->SamTable1[i])/65536.0*AD_PVEF - Setoff_ZoreVal;
+	}
+	for(i=0;i< BUF_SIZE2;i++)
+	{
 		FourSampleValue->SamValue2[i]= (float)(FourSampleTable->SamTable2[i])/65536.0*AD_PVEF - Setoff_ZoreVal;
+	}
+	for(i=0;i< BUF_SIZE3;i++)
+	{
 		FourSampleValue->SamValue3[i] = (float)(FourSampleTable->SamTable3[i])/65536.0*AD_PVEF - Setoff_ZoreVal;
 	}
 }

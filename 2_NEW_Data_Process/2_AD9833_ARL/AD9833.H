@@ -7,9 +7,9 @@
 #define  ad9833_fsync2  GpioDataRegs.GPCDAT.bit.GPIO83
 #define  ad9833_fsync3  GpioDataRegs.GPBDAT.bit.GPIO39
 
-#define CH1_OUT_FRE  1000.0
-#define CH2_OUT_FRE  2000.0
-#define CH3_OUT_FRE  3000.0
+#define CH1_OUT_FRE  5000.0
+#define CH2_OUT_FRE  6000.0
+#define CH3_OUT_FRE  7000.0
 
 #define CSIN_Channel_1 0x01
 #define CSIN_Channel_2 0x02
