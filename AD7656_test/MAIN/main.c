@@ -66,7 +66,7 @@ interrupt void ISRTimer0(void)
 {   
 	float test;	   	
    	CLR_ADCOV;   //启动转换信号
-	DELAY_US(1); //给予适当的电平延时
+	DELAY_US(0.3); //给予适当的电平延时
 	SET_ADCOV;
 	DELAY_US(1);
 	//GpioDataRegs.GPADAT.bit.GPIO0 = ~GpioDataRegs.GPADAT.bit.GPIO0;

@@ -62,7 +62,7 @@ void OUTAD_Init(STRSampleTable *FourSampleTable, STRSampleValue *FourSampleValue
 	AD7656_ConfigInit();
 	SET_ADRST;  
 	CLR_ADCOV;   //启动转换信号CLR_ADCOV
-	DELAY_US(100000);
+	DELAY_US(10000);
 	CLEAR_ADRST; 
 	SET_ADCOV;
 	DELAY_US(1000);
@@ -77,7 +77,7 @@ void GetAD_Value(STRSampleTable *FourSampleTable)
 {
 	int tem = 0;
 	CLR_ADCOV;   	//启动转换信号
-	DELAY_US(0.3);
+	DELAY_US(0.2);
 	SET_ADCOV;
 	while(AD_BUSY); 
 	if(Head_pointNum >= 0)  //去掉头3个点

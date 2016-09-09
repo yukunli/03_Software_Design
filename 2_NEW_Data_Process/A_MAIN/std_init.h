@@ -40,9 +40,9 @@ typedef struct STRSampleValue
 //3路互相关运算结果做低通线性卷积运算的结果存放数组
 typedef struct 
 {
-	float DAL_OutPut1[BUF_SIZE1+LOWFILT_SIZE-1];
-    float DAL_OutPut2[BUF_SIZE2+LOWFILT_SIZE-1];
-	float DAL_OutPut3[BUF_SIZE3+LOWFILT_SIZE-1];
+	float DAL_OutPut1[2*BUF_SIZE1+LOWFILT_SIZE-1];
+    float DAL_OutPut2[2*BUF_SIZE2+LOWFILT_SIZE-1];
+	float DAL_OutPut3[2*BUF_SIZE3+LOWFILT_SIZE-1];
 }STRDalOutPut;
 
 
@@ -69,4 +69,5 @@ typedef struct
 	float L22Value;
 	float temperature;
 }LabView_Data;
+
 #endif /*STD_INIT_H_*/

@@ -126,7 +126,7 @@ void main()
 		{
 			//此处打开其他中断
 			Timer_flag = 0;
-			IER |= M_INT8; 	//使能SCI_C中断
+			IER |= M_INT8; 		//使能SCI_C中断
 					
 		 	AD_Data_Shift(&gSampleTable, &gSampleValue); 	//AD采样值转换为模拟量
 		 	
@@ -140,9 +140,9 @@ void main()
 		 	LinearConvolution(BUF_SIZE3,LOWFILT_SIZE,Cross_OutPut,Low_Filter1,gDalOutPut.DAL_OutPut3);  //线性卷积
 		 	
 		 	//计算单路通道的信号幅值
-		 	Test_gSystem_LabviewData.L17Value = Single_AmpValue(gDalOutPut.DAL_OutPut1,BUF_SIZE1 );
-		 	Test_gSystem_LabviewData.L19Value = Single_AmpValue(gDalOutPut.DAL_OutPut2,BUF_SIZE2 );
-		 	Test_gSystem_LabviewData.L22Value = Single_AmpValue(gDalOutPut.DAL_OutPut3,BUF_SIZE3 );
+		 	Test_gSystem_LabviewData.L17Value = Single_AmpValue(gDalOutPut.DAL_OutPut1,2*BUF_SIZE1 );
+		 	Test_gSystem_LabviewData.L19Value = Single_AmpValue(gDalOutPut.DAL_OutPut2,2*BUF_SIZE2 );
+		 	Test_gSystem_LabviewData.L22Value = Single_AmpValue(gDalOutPut.DAL_OutPut3,2*BUF_SIZE3 );
 		 	
 		 	//利用拟合公式计算当前瞬时水分值
 			gSystem_WaterValue.SoonWaterValue = 0.22;
@@ -169,8 +169,7 @@ void main()
 			}				
 			UpdateUI(&gSystem_WaterValue);
 			*/
-		 	while(1);
-		 	
+		 	//while(1);
 		 	
 		 	//此处关闭其他中断
 		 	IER &= ~M_INT8; 	//禁止SCI_C中断
