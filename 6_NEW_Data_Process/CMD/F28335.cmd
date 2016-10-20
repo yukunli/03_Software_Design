@@ -77,8 +77,8 @@ PAGE 0:    /* Program Memory */
    ZONE0       : origin = 0x004000, length = 0x001000     /* XINTF zone 0 */
   /* RAML0       : origin = 0x008000, length = 0x001000     /* on-chip RAM block L0 */
   /* RAML1       : origin = 0x009000, length = 0x001000     /* on-chip RAM block L1 */
-   RAML2       : origin = 0x00A500, length = 0x000500     /* on-chip RAM block L2 */
-   RAML3       : origin = 0x00B000, length = 0x001000     /* on-chip RAM block L3 */
+   RAML2       : origin = 0x009A00, length = 0x00500     /* on-chip RAM block L2 */
+  /* RAML3       : origin = 0x00B000, length = 0x001000     /* on-chip RAM block L3 */
    ZONE6       : origin = 0x0100000, length = 0x100000    /* XINTF zone 6 */ 
    ZONE7A      : origin = 0x0200000, length = 0x00FC00    /* XINTF zone 7 - program space */ 
    FLASHH      : origin = 0x300000, length = 0x008000     /* on-chip FLASH */
@@ -109,13 +109,13 @@ PAGE 1 :   /* Data Memory */
    RAMM0       : origin = 0x000050, length = 0x0003B0     /* on-chip RAM block M0 */
    RAMM1       : origin = 0x000400, length = 0x0003FF     /* on-chip RAM block M1 */
    
-   RAML0       : origin = 0x008000, length = 0x002500     /* on-chip RAM block L0 */
+   RAML0       : origin = 0x008000, length = 0x001500     /* on-chip RAM block L0 */
    
-   RAML4       : origin = 0x00C000, length = 0x003500     /* on-chip RAM block L1 */
-   RAML5       : origin = 0x00F500, length = 0x000300     /* on-chip RAM block L1 */
-   RAML6       : origin = 0x00F800, length = 0x000200     /* on-chip RAM block L1 */
-   RAML7       : origin = 0x00FA00, length = 0x000200     /* on-chip RAM block L1 */
-   ZONE7B      : origin = 0x20FC00, length = 0x000400     /* XINTF zone 7 - data space */
+   RAML4       : origin = 0x009F00, length = 0x005000     /* on-chip RAM block L1 */
+   RAML5       : origin = 0x00EF00, length = 0x000300     /* on-chip RAM block L1 */
+   RAML6       : origin = 0x00F200, length = 0x000300     /* on-chip RAM block L1 */
+   RAML7       : origin = 0x00F500, length = 0x000400     /* on-chip RAM block L1 */
+   ZONE7B      : origin = 0x20F900, length = 0x000400     /* XINTF zone 7 - data space */
    FLASHB      : origin = 0x330000, length = 0x008000     /* on-chip FLASH */
 }
 

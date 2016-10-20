@@ -141,10 +141,10 @@ endif
 all: 4_NEW_Data_Process.out
 
 dependents:
-	-cd E:/01_Master_project/Water_Detection_Project/04_Software_Design/3_NEW_Data_Process && $(MAKE) all
+	-cd E:/01_Master_project/Water_Detection_Project/04_Software_Design/3_NEW_Data_Process/Debug && $(MAKE) all
 
 # Tool invocations
-4_NEW_Data_Process.out: $(GEN_CMDS) $(LIB_SRCS) $(OBJS)
+4_NEW_Data_Process.out: $(GEN_CMDS) $(LIB_SRCS) $(OBJS) E:/01_Master_project/Water_Detection_Project/04_Software_Design/3_NEW_Data_Process/Debug/3_New_Data_Process.out
 	@echo 'Building target: $@'
 	@echo 'Invoking: Linker'
 	$(shell echo --silicon_version=28 > ccsLinker.opt)
@@ -176,5 +176,6 @@ clean:
 
 .PHONY: all clean dependents
 .SECONDARY:
+E:/01_Master_project/Water_Detection_Project/04_Software_Design/3_NEW_Data_Process/Debug/3_New_Data_Process.out:
 
 -include ../makefile.targets

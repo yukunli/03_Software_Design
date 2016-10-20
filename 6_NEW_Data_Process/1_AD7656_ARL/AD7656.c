@@ -28,7 +28,7 @@ inline void OUTAD_Timer_Init(void)
 {
 	InitCpuTimers();   //For this example, only initialize the Cpu Timers
 	//理想&CpuTimer0, 150, 4.7619 采样频率 = 4.76u/150M  4.275
-	ConfigCpuTimer(&CpuTimer0, 150, 4.275);   //在定时器内进行采样,采样率1/(1.76us+prioed 0f AD read data约3us)=210KHz
+	ConfigCpuTimer(&CpuTimer0, 150, 8.333);   //在定时器内进行采样,采样率1/(1.76us+prioed 0f AD read data约3us)=210KHz
 }
 
 /*
@@ -43,9 +43,21 @@ void OUTAD_Variable_Init(STRSampleTable *FourSampleTable, STRSampleValue *FourSa
 		FourSampleTable->SamTable2[i] = 0;
 		FourSampleTable->SamTable3[i] = 0;
 		FourSampleTable->SamTable4[i] = 0;
+	}
+	for(i = 0; i < BUF_SIZE1; i++)
+	{
 		FourSampleValue->SamValue1[i] = 0;
+	}
+	for(i = 0; i < BUF_SIZE2; i++)
+	{
 		FourSampleValue->SamValue2[i] = 0;
+	}
+	for(i = 0; i < BUF_SIZE3; i++)
+	{
 		FourSampleValue->SamValue3[i] = 0;
+	}
+	for(i = 0; i < BUF_SIZE4; i++)
+	{
 		FourSampleValue->SamValue4[i] = 0;
 	}
 	SampleCount = 0;
@@ -84,7 +96,7 @@ void GetAD_Value(STRSampleTable *FourSampleTable)
 	if(Head_pointNum >= 0)  //去掉头3个点
 	{
 		for(tem = 4; tem > 0; tem--)
-			FourSampleTable->SamTable4[SampleCount] = AD7656_BASIC; //读取4路AD通道数据
+			FourSampleTable->SamTable4[SampleCount] = AD7656_BASIC; //读取4路AD通道数据  
 		Head_pointNum --;
 		SampleCount = 0;
 	}
@@ -114,28 +126,29 @@ void AD_Data_Shift(STRSampleTable *FourSampleTable, STRSampleValue *FourSampleVa
 	register unsigned int i  = 0;
 	float Setoff_ZoreVal = 0;
 	
-	for(i=0;i< SAMP_COUNT_MAX;i++)
+	for(i=0;i< BUF_SIZE4;i++)
 	{
 		FourSampleValue->SamValue4[i] = FourSampleTable->SamTable4[i]/65536.0*AD_PVEF;
 	}
 		
-	for(i=0;i< SAMP_COUNT_MAX; i++ )
+	for(i=0;i< BUF_SIZE4; i++ )
 	{
 		Setoff_ZoreVal += FourSampleValue->SamValue4[i];
 	}
-	Setoff_ZoreVal = Setoff_ZoreVal / SAMP_COUNT_MAX;
+	Setoff_ZoreVal = Setoff_ZoreVal / (BUF_SIZE4);
 
 	for(i=0;i< BUF_SIZE1;i++)
 	{		
 		FourSampleValue->SamValue1[i]= (float)(FourSampleTable->SamTable1[i])/65536.0*AD_PVEF - Setoff_ZoreVal;
-	}
-	for(i=0;i< BUF_SIZE2;i++)
-	{
-		FourSampleValue->SamValue2[i]= (float)(FourSampleTable->SamTable2[i])/65536.0*AD_PVEF - Setoff_ZoreVal;
-	}
-	for(i=0;i< BUF_SIZE3;i++)
-	{
-		FourSampleValue->SamValue3[i] = (float)(FourSampleTable->SamTable3[i])/65536.0*AD_PVEF - Setoff_ZoreVal;
+		if(i< BUF_SIZE3)
+		{
+			FourSampleValue->SamValue2[i]= (float)(FourSampleTable->SamTable2[i])/65536.0*AD_PVEF - Setoff_ZoreVal;
+			FourSampleValue->SamValue3[i] = (float)(FourSampleTable->SamTable3[i])/65536.0*AD_PVEF - Setoff_ZoreVal;
+		}
+		else if( i>= BUF_SIZE3 && i< BUF_SIZE2)
+		{
+			FourSampleValue->SamValue2[i]= (float)(FourSampleTable->SamTable2[i])/65536.0*AD_PVEF - Setoff_ZoreVal;
+		}
 	}
 }
 

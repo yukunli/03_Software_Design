@@ -33,6 +33,10 @@ void UartInit(uint32 BaudRate)
 	    	ScicRegs.SCIHBAUD    =0x0000;  // 115200 baud,actual baud=19211,Error=0.75% @LSPCLK = 37.5MHz.
 	      	ScicRegs.SCILBAUD    =0x0028;
 	      	break;
+	    case 256000 :
+	    	ScicRegs.SCIHBAUD    =0x0000;  // 115200 baud,actual baud=19211,Error=0.75% @LSPCLK = 37.5MHz.
+	      	ScicRegs.SCILBAUD    =0x0012;
+	      	break;
 	    default : break;
 	}
 	ScicRegs.SCICTL1.all =0x23;  // Relinquish SCI from Reset
@@ -66,7 +70,7 @@ void Send_msg(char *msg)
  * 入口参数： float 模拟量数值  L19 L17 L22 TEMP
  * 如发送的值为：1.223，则一次发送1 2 2 3
  *            1.23， 则依次发送 1 2 3 0
- *            12.33，则依次发送12 3 3  0 
+ *            12.33，则依次发送12 3 3 0 
  * ***************************************************************/
 void SendValuetoLabview(LabView_Data* Test_LabviewData)
 {
@@ -100,6 +104,47 @@ void SendValuetoLabview(LabView_Data* Test_LabviewData)
 	for(k=0;k<20;k++)
 	{
 		SendChar(aa[k]);
+	}
+}
+
+void SendValuetoPython(STRSampleValue* Test_Pyton)
+{
+	int int_value = 0;
+	int k = 0;
+	int i = 0;
+	uchar aa[6] = {0};
+	for (i = 0;i<BUF_SIZE1;i++)
+	{
+		int_value = Test_Pyton->SamValue1[i]*1000; //数值的最小分辨率为1mv
+		aa[0] = int_value&0x00ff;
+		aa[1] = (int_value&0xff00)>>8;
+		if(i>BUF_SIZE2)
+		{ 
+			aa[2] = 0x00;
+			aa[3] = 0x00;
+		} 
+		else
+		{ 
+			int_value = Test_Pyton->SamValue2[i]*1000; //数值的最小分辨率为1mv
+			aa[2] = int_value&0x00ff;
+			aa[3] = (int_value&0xff00)>>8;
+		} 
+		if(i>BUF_SIZE3)
+		{
+			aa[4] = 0x00;
+			aa[5] = 0x00;
+		}
+		else
+		{
+			int_value = Test_Pyton->SamValue3[i]*1000; //数值的最小分辨率为1mv
+			aa[4] = int_value & 0x00ff;
+			aa[5] = (int_value & 0xff00)>>8;
+		}
+		for(k=0;k<6;k++)
+		{
+			SendChar(aa[k]);
+		}
+		SendChar('\n');
 	}
 }
 

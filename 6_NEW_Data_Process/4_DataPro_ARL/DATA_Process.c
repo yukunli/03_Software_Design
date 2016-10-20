@@ -16,31 +16,39 @@
 
 /*****************************************************
  * 函数功能：求信号幅值
- * 函数入口：
+ * 函数入口：滑动窗口的形式
  */
 float Calcu_AMP(float * Samplelist,Uint16 Buf_size)
 {
-	float maxvalue[11] = {0,0,0,0,0,0,0,0,0,0,0};
-	float minvalue[11] = {0,0,0,0,0,0,0,0,0,0,0};
-	static unsigned char lenth = 5;
+	float maxvalue[51];
+	float minvalue[51];
+	static unsigned char lenth = 7;
 	unsigned int index = 0;
-	unsigned int i = 0,k = 0;
+	unsigned char i = 0,k = 0;
 	float maxsum = 0;
 	float minsum = 0;
-	
-	for(index = 0; index<Buf_size-lenth; index++)
+	for(index = 0; index < 51; index++ )
 	{
-		if((Samplelist[index+2] > Samplelist[index+0]) && (Samplelist[index+2] > Samplelist[index+1])&& (Samplelist[index+2] > Samplelist[index+3])&& (Samplelist[index+2] > Samplelist[index+4]) )
+		maxvalue[index] = 0;
+		minvalue[index] = 0;
+	}
+	for(index = 0; index < Buf_size-lenth; index++)
+	{
+		if((Samplelist[index+3] > Samplelist[index+0]) && (Samplelist[index+3] > Samplelist[index+6])&& 
+		(Samplelist[index+3] > Samplelist[index+1])&& (Samplelist[index+3] > Samplelist[index+5]) &&  
+		(Samplelist[index+3] > Samplelist[index+2])&& (Samplelist[index+3] > Samplelist[index+4]))
 		{
-			maxvalue[i] = Samplelist[index+2];
+			maxvalue[i] = Samplelist[index+3];
 			i++;
-			index +=10;
+			index +=4;
 		}
-		else if( (Samplelist[index+2] < Samplelist[index+0]) && (Samplelist[index+2] < Samplelist[index+1])&& (Samplelist[index+2] < Samplelist[index+3])&& (Samplelist[index+2] < Samplelist[index+4]))
+		else if( (Samplelist[index+3] < Samplelist[index+0]) && (Samplelist[index+3] < Samplelist[index+6])&& 
+		(Samplelist[index+3] < Samplelist[index+1])&& (Samplelist[index+3] < Samplelist[index+5]) &&
+		(Samplelist[index+3] < Samplelist[index+2])&& (Samplelist[index+3] < Samplelist[index+4]))
 		{
-			minvalue[k] = Samplelist[index+2];
+			minvalue[k] = Samplelist[index+3];
 			k++;
-			index +=10;
+			index +=4;
 		}
 	}
 	//处理minvalue和maxvalue

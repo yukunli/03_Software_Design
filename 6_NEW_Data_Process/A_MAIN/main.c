@@ -15,7 +15,7 @@
 /*****************定义全局变量*********************/
 STRSampleTable gSampleTable;  //全局 sample Table
 STRSampleValue gSampleValue;  //全局 Sample Value
-uint8 cmd_buffer[CMD_MAX_SIZE];
+//uint8 cmd_buffer[CMD_MAX_SIZE];
 Water_Param gSystem_WaterParam = {12.0,1,1.66,22.3,0};  //与串口屏交互的系统水分仪参数
 Water_Value gSystem_WaterValue = {5.20, 5.21, 32.76};
 LabView_Data Test_gSystem_LabviewData = {1.11,1.11,1.11,25.0};
@@ -32,9 +32,9 @@ void main()
 	qsize  size = 0;
 	unsigned int Count = 0;
 	unsigned int i = 0;
-	float L17Value[100] = {0};
-	float L19Value[100] = {0};
-	float L22Value[100] = {0};
+	float L17Value[50] = {0};
+	float L19Value[50] = {0};
+	float L22Value[50] = {0};
 	float sum17Value = 0;
 	float sum19Value = 0;
 	float sum22Value = 0;
@@ -85,7 +85,7 @@ void main()
 	AD9833_Reset(CSIN_Channel_3);
 	delay(1000);  		//必须保证足够的延时
 	//初始化SCIC（UART_C）
-	UartInit(115200);        // Initalize SCI for echoback, 波特率是115200
+	UartInit(256000);        // Initalize SCI for echoback, 波特率是115200
 		
 	//初始化AD7656
 	OUTAD_Init(&gSampleTable, &gSampleValue); 
@@ -95,12 +95,12 @@ void main()
 	
 	
 	//启动AD9833正弦激励信号输出
-	AD9833_Outdata(CSIN_Channel_1,CH1_OUT_FRE,0,2,0 ); //第一片9833，,5KHz,频率寄存器0，正弦波输出
-    delay(200);      
+	AD9833_Outdata(CSIN_Channel_1,CH1_OUT_FRE,0,2,0 ); //第一片9833，,4KHz,频率寄存器0，正弦波输出
+    delay(400);      
     AD9833_Outdata(CSIN_Channel_2,CH2_OUT_FRE,0,2,0 ); //第二片9833，,6KHz,频率寄存器0，正弦波输出
-    delay(200);
-    AD9833_Outdata(CSIN_Channel_3,CH3_OUT_FRE,0,2,0 ); //第三片9833，,7KHz,频率寄存器0，正弦波输出
-    delay(100);
+    delay(400);
+    AD9833_Outdata(CSIN_Channel_3,CH3_OUT_FRE,0,2,0 ); //第三片9833，,8KHz,频率寄存器0，正弦波输出
+    delay(400);
     /*
     // 蜂鸣器示响
     Bell_Didadi();
@@ -115,6 +115,10 @@ void main()
     //启动风扇
     FAN_Start();
     */
+    Send_msg("SendChar(0x64)\n\n");
+    SendChar(0x64);
+    Send_msg("SendChar('d')\n\n");
+    SendChar('d');
 	//启动AD7656采样
     START_SAMPLING();
 	while(1)
@@ -134,22 +138,27 @@ void main()
 			IER |= M_INT8; 	//使能SCI_C中断
 					
 		 	AD_Data_Shift(&gSampleTable, &gSampleValue); 	//AD采样值转换为模拟量
+		 	#if 0
+		 	SendValuetoPython( &gSampleValue );
+		 	#endif
+		 	#if 1
 		 	//计算单路通道的信号幅值
 		 	L17Value[Count] = Calcu_AMP(gSampleValue.SamValue1,BUF_SIZE1);
 		 	L19Value[Count] = Calcu_AMP(gSampleValue.SamValue2,BUF_SIZE2);
 		 	L22Value[Count] = Calcu_AMP(gSampleValue.SamValue3,BUF_SIZE3);
 		 	Count++;
-		 	if(Count == 100)
+		 	DELAY_US(Count);
+		 	if(Count == 50)
 		 	{
-		 		for(i = 0; i < 100; i++)
+		 		for(i = 0; i < 50; i++)
 		 		{
 		 			sum17Value  += L17Value[i];
 		 			sum19Value  += L19Value[i];
 		 			sum22Value  += L22Value[i];
 		 		}
-		 		Test_gSystem_LabviewData.L17Value = sum17Value/100;
-		 		Test_gSystem_LabviewData.L19Value = sum19Value/100;
-		 		Test_gSystem_LabviewData.L22Value = sum22Value/100;
+		 		Test_gSystem_LabviewData.L17Value = sum17Value/50;
+		 		Test_gSystem_LabviewData.L19Value = sum19Value/50;
+		 		Test_gSystem_LabviewData.L22Value = sum22Value/50;
 		 		Count = 0;
 		 		sum17Value = 0;
 		 		sum19Value = 0;
@@ -157,10 +166,9 @@ void main()
 		 		//将单路通道的信号幅值发到Labview(或PC端)
 		 		SendValuetoLabview(&Test_gSystem_LabviewData);
 		 	}
-		 	 
-		 	
 		 	//利用拟合公式计算当前瞬时水分值
 			gSystem_WaterValue.SoonWaterValue = 0.22;
+			#endif
 			
 		 	//Red LED 闪烁
 		 	LED_Red_Flash();
@@ -169,7 +177,7 @@ void main()
 		 	LED_Blue_Flash();
 		 	
 		 	// 温度采集
-		 	Test_gSystem_LabviewData.temperature = get_temp();
+		 	//Test_gSystem_LabviewData.temperature = get_temp();
 		 	
 		 	// PID温度调节控制
 		 	

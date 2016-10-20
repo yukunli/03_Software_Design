@@ -5,6 +5,6 @@
 --large_memory_model 
 --float_support=fpu32 
 --preproc_with_compile 
---preproc_dependency="4_DataPro_ARL/DATA_Process.pp" 
---obj_directory="4_DataPro_ARL" 
-"../4_DataPro_ARL/DATA_Process.c" 
+--preproc_dependency="1_AD7656_ARL/AD7656.pp" 
+--obj_directory="1_AD7656_ARL" 
+"../1_AD7656_ARL/AD7656.c" 

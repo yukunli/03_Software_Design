@@ -28,5 +28,5 @@ void UartInit(uint32 Baudrate);
 void SendChar(uchar t);
 void Send_msg(char *msg);
 void SendValuetoLabview(LabView_Data* Test_LabviewData);
-
+void SendValuetoPython(STRSampleValue* Test_Pyton);
 #endif

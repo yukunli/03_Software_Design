@@ -9,14 +9,14 @@
 
 #define SAMP_COUNT_MAX  421
 
-#define SAME_FRE 210  //采用频率设定为120khz
+#define SAME_FRE 120  //采用频率设定为120khz
 
 
-#define  CYCLE_NUM 10	  //一次操作CYCLE_NUM 个周期的数据
+#define  CYCLE_NUM   10	  //一次操作CYCLE_NUM 个周期的数据
 #define  BUF_SIZE1   420  // Sample1 buffer size
-#define  BUF_SIZE2   350  // Sample2 buffer size
-#define  BUF_SIZE3   300  // Sample3 buffer size
-
+#define  BUF_SIZE2   420  // Sample2 buffer size
+#define  BUF_SIZE3   420  // Sample3 buffer size
+#define  BUF_SIZE4   300  // Sample3 buffer size
 
 typedef enum {True,False} identi_bool;
 
@@ -30,19 +30,11 @@ typedef struct STRSampleTable
 
 typedef struct STRSampleValue
 {
-	float SamValue1[SAMP_COUNT_MAX];
-	float SamValue2[SAMP_COUNT_MAX];
-	float SamValue3[SAMP_COUNT_MAX];
-	float SamValue4[SAMP_COUNT_MAX];
+	float SamValue1[BUF_SIZE1];
+	float SamValue2[BUF_SIZE2];
+	float SamValue3[BUF_SIZE3];
+	float SamValue4[BUF_SIZE4];
 }STRSampleValue;
-
-//3路互相关运算结果做低通线性卷积运算的结果存放数组
-typedef struct 
-{
-	float DAL_OutPut1[2*BUF_SIZE1+LOWFILT_SIZE-1];
-    float DAL_OutPut2[2*BUF_SIZE2+LOWFILT_SIZE-1];
-	float DAL_OutPut3[2*BUF_SIZE3+LOWFILT_SIZE-1];
-}STRDalOutPut;
 
 
 typedef struct
