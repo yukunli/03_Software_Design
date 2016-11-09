@@ -65,7 +65,7 @@ void OUTAD_Init(STRSampleTable *FourSampleTable, STRSampleValue *FourSampleValue
 	DELAY_US(100000);
 	CLEAR_ADRST; 
 	SET_ADCOV;
-	DELAY_US(1000);
+	DELAY_US(10000);
 }
 
 /**********************************
@@ -77,9 +77,9 @@ void GetAD_Value(STRSampleTable *FourSampleTable)
 {
 	int tem = 0;
 	CLR_ADCOV;   	//启动转换信号
-	DELAY_US(0.2);
+	DELAY_US(0.3);
 	SET_ADCOV;
-	DELAY_US(3);
+	DELAY_US(3.5);
 	while(AD_BUSY); 
 	if(Head_pointNum >= 0)  //去掉头3个点
 	{
@@ -90,9 +90,12 @@ void GetAD_Value(STRSampleTable *FourSampleTable)
 	}
 	else if(SampleCount < SAMP_COUNT_MAX)
 	{
-		FourSampleTable->SamTable1[SampleCount] = AD7656_BASIC; //读取4路AD通道数据
-		FourSampleTable->SamTable2[SampleCount] = AD7656_BASIC; 
+		FourSampleTable->SamTable1[SampleCount] = AD7656_BASIC;  //读取4路AD通道数据
+		DELAY_US(0.1);
+		FourSampleTable->SamTable2[SampleCount] = AD7656_BASIC;
+		DELAY_US(0.1); 
 		FourSampleTable->SamTable3[SampleCount] = AD7656_BASIC; 
+		DELAY_US(0.1);
 		FourSampleTable->SamTable4[SampleCount] = AD7656_BASIC; 
 		SampleCount  ++;
 		return;
@@ -103,7 +106,7 @@ void GetAD_Value(STRSampleTable *FourSampleTable)
 		STOP_SAMPLING();
 		SampleCount = 0;
 		SampleCount_Status_Flag = True;
-		Head_pointNum = 2;
+		Head_pointNum = 3;
 	}
 }
 /**************************************
@@ -111,31 +114,32 @@ void GetAD_Value(STRSampleTable *FourSampleTable)
  *************************************/
 void AD_Data_Shift(STRSampleTable *FourSampleTable, STRSampleValue *FourSampleValue)
 {
-	register unsigned int i  = 0;
+    unsigned int i  = 0;
 	float Setoff_ZoreVal = 0;
+	double const Trans_para = AD_PVEF/65536.0;
 	
-	for(i=0;i< SAMP_COUNT_MAX;i++)
+	for(i=0;i< BUF_SIZE4;i++)
 	{
-		FourSampleValue->SamValue4[i] = FourSampleTable->SamTable4[i]*0.0003051758;
+		FourSampleValue->SamValue4[i] = FourSampleTable->SamTable4[i]*Trans_para;
 	}
 		
-	for(i=0;i< SAMP_COUNT_MAX; i++ )
+	for(i=0;i< BUF_SIZE4; i++ )
 	{
 		Setoff_ZoreVal += FourSampleValue->SamValue4[i];
 	}
-	Setoff_ZoreVal = Setoff_ZoreVal / SAMP_COUNT_MAX;
-
+	Setoff_ZoreVal = Setoff_ZoreVal / BUF_SIZE4 ;
+	
 	for(i=0;i< BUF_SIZE1;i++)
 	{		
-		FourSampleValue->SamValue1[i]= (float)(FourSampleTable->SamTable1[i])*0.0003051758- Setoff_ZoreVal;
+		FourSampleValue->SamValue1[i]= (FourSampleTable->SamTable1[i])*Trans_para- Setoff_ZoreVal;
 	}
 	for(i=0;i< BUF_SIZE2;i++)
 	{
-		FourSampleValue->SamValue2[i]= (float)(FourSampleTable->SamTable2[i])*0.0003051758 - Setoff_ZoreVal;
+		FourSampleValue->SamValue2[i]= (FourSampleTable->SamTable2[i])*Trans_para - Setoff_ZoreVal;
 	}
 	for(i=0;i< BUF_SIZE3;i++)
 	{
-		FourSampleValue->SamValue3[i] = (float)(FourSampleTable->SamTable3[i])*0.0003051758 - Setoff_ZoreVal;
+		FourSampleValue->SamValue3[i] = (FourSampleTable->SamTable3[i])*Trans_para - Setoff_ZoreVal;
 	}
 }
 

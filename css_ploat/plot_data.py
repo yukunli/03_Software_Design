@@ -39,10 +39,10 @@ def ploat_data(filestr):
         plt.show()
         del datalist
 
-ploat_data('sample1')   #
-ploat_data('sample2') #
-ploat_data('sample3') #
-ploat_data('dout1')
-ploat_data('dout2')
-ploat_data('dout3')
+ploat_data('468kcombin')   #
+##ploat_data('sample2') #
+##ploat_data('sample3') #
+##ploat_data('dout1')
+##ploat_data('dout2')
+##ploat_data('dout3')
 

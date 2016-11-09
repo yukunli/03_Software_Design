@@ -5,6 +5,6 @@
 --large_memory_model 
 --float_support=fpu32 
 --preproc_with_compile 
---preproc_dependency="1_AD7656_ARL/AD7656.pp" 
---obj_directory="1_AD7656_ARL" 
-"../1_AD7656_ARL/AD7656.c" 
+--preproc_dependency="A_MAIN/main.pp" 
+--obj_directory="A_MAIN" 
+"../A_MAIN/main.c" 

@@ -32,4 +32,3 @@
 6_TempCtrl_ARL/PWM_tem.obj: D:/Program\ Files/Texas\ Instruments/ccsv4/tools/compiler/c2000/include/linkage.h
 6_TempCtrl_ARL/PWM_tem.obj: D:/Program\ Files/Texas\ Instruments/ccsv4/tools/compiler/c2000/include/float.h
 6_TempCtrl_ARL/PWM_tem.obj: D:/Program\ Files/Texas\ Instruments/ccsv4/tools/compiler/c2000/include/cpp_inline_math.h
-6_TempCtrl_ARL/PWM_tem.obj: E:/01_Master_project/Water_Detection_Project/04_Software_Design/5_NEW_Data_Process/INCLUDE/C28x_FPU_FastRTS.h

@@ -26,14 +26,13 @@ A_MAIN/main.obj: E:/01_Master_project/Water_Detection_Project/04_Software_Design
 A_MAIN/main.obj: E:/01_Master_project/Water_Detection_Project/04_Software_Design/5_NEW_Data_Process/INCLUDE/DSP2833x_I2C_defines.h
 A_MAIN/main.obj: E:/01_Master_project/Water_Detection_Project/04_Software_Design/5_NEW_Data_Process/INCLUDE/DSP2833x_DefaultISR.h
 A_MAIN/main.obj: E:/01_Master_project/Water_Detection_Project/04_Software_Design/5_NEW_Data_Process/4_DataPro_ARL/DATA_Process.h
+A_MAIN/main.obj: E:/01_Master_project/Water_Detection_Project/04_Software_Design/5_NEW_Data_Process/4_DataPro_ARL/ConstData_Table.h
 A_MAIN/main.obj: E:/01_Master_project/Water_Detection_Project/04_Software_Design/5_NEW_Data_Process/1_AD7656_ARL/AD7656.h
 A_MAIN/main.obj: E:/01_Master_project/Water_Detection_Project/04_Software_Design/5_NEW_Data_Process/A_MAIN/std_init.h
-A_MAIN/main.obj: E:/01_Master_project/Water_Detection_Project/04_Software_Design/5_NEW_Data_Process/4_DataPro_ARL/ConstData_Table.h
 A_MAIN/main.obj: D:/Program\ Files/Texas\ Instruments/ccsv4/tools/compiler/c2000/include/math.h
 A_MAIN/main.obj: D:/Program\ Files/Texas\ Instruments/ccsv4/tools/compiler/c2000/include/linkage.h
 A_MAIN/main.obj: D:/Program\ Files/Texas\ Instruments/ccsv4/tools/compiler/c2000/include/float.h
 A_MAIN/main.obj: D:/Program\ Files/Texas\ Instruments/ccsv4/tools/compiler/c2000/include/cpp_inline_math.h
-A_MAIN/main.obj: E:/01_Master_project/Water_Detection_Project/04_Software_Design/5_NEW_Data_Process/INCLUDE/C28x_FPU_FastRTS.h
 A_MAIN/main.obj: E:/01_Master_project/Water_Detection_Project/04_Software_Design/5_NEW_Data_Process/3_SCI_ARL/hmi_user_uart.h
 A_MAIN/main.obj: E:/01_Master_project/Water_Detection_Project/04_Software_Design/5_NEW_Data_Process/2_AD9833_ARL/AD9833.h
 A_MAIN/main.obj: E:/01_Master_project/Water_Detection_Project/04_Software_Design/5_NEW_Data_Process/5_LED_ARL/LED.h

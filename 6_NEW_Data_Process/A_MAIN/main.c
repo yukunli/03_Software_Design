@@ -32,6 +32,7 @@ void main()
 	qsize  size = 0;
 	unsigned int Count = 0;
 	unsigned int i = 0;
+	float CrossData[ 520] = {0};
 	float L17Value[50] = {0};
 	float L19Value[50] = {0};
 	float L22Value[50] = {0};
@@ -141,13 +142,22 @@ void main()
 		 	#if 0
 		 	SendValuetoPython( &gSampleValue );
 		 	#endif
+		 	
 		 	#if 1
 		 	//计算单路通道的信号幅值
-		 	L17Value[Count] = Calcu_AMP(gSampleValue.SamValue1,BUF_SIZE1);
-		 	L19Value[Count] = Calcu_AMP(gSampleValue.SamValue2,BUF_SIZE2);
-		 	L22Value[Count] = Calcu_AMP(gSampleValue.SamValue3,BUF_SIZE3);
+		 	LinearConvolution(BUF_SIZE1,PBFILT_SIZE1,gSampleValue.SamValue1, PassB_Filter1,CrossData);
+		 	//FIR_Filter(BUF_SIZE1,gSampleValue.SamValue1,PBFILT_SIZE1, PassB_Filter1, CrossData);
+		 	L17Value[Count] = Calcu_AMP(CrossData,BUF_SIZE1,PBFILT_SIZE1);
+		 	
+	 	    LinearConvolution(BUF_SIZE2,PBFILT_SIZE2,gSampleValue.SamValue2, PassB_Filter2,CrossData);
+		 	//FIR_Filter(BUF_SIZE2,gSampleValue.SamValue2,PBFILT_SIZE2, PassB_Filter2, CrossData);
+		 	L19Value[Count] = Calcu_AMP(CrossData,BUF_SIZE2,PBFILT_SIZE2);
+		 	
+		 	LinearConvolution(BUF_SIZE3,PBFILT_SIZE3,gSampleValue.SamValue3, PassB_Filter3,CrossData);
+		 	//FIR_Filter(BUF_SIZE3,gSampleValue.SamValue3,PBFILT_SIZE3, PassB_Filter3, CrossData);
+		 	L22Value[Count] = Calcu_AMP(CrossData,BUF_SIZE3,PBFILT_SIZE3);
+		 	
 		 	Count++;
-		 	DELAY_US(Count);
 		 	if(Count == 50)
 		 	{
 		 		for(i = 0; i < 50; i++)
@@ -164,6 +174,8 @@ void main()
 		 		sum19Value = 0;
 		 		sum22Value = 0;
 		 		//将单路通道的信号幅值发到Labview(或PC端)
+		 		//将温度参数先用来显示比值
+		 		Test_gSystem_LabviewData.temperature = (Test_gSystem_LabviewData.L17Value +Test_gSystem_LabviewData.L22Value)/Test_gSystem_LabviewData.L19Value;
 		 		SendValuetoLabview(&Test_gSystem_LabviewData);
 		 	}
 		 	//利用拟合公式计算当前瞬时水分值
@@ -205,11 +217,12 @@ void main()
  * Interrupt _ timer
  *********************************/
 interrupt void ISRTimer0(void)
-{   SIN_On();
+{   
 	Timer_flag = 1; 
  	PieCtrlRegs.PIEACK.all = PIEACK_GROUP1;
-    CpuTimer0Regs.TCR.bit.TIF=1;   // 定时到了指定时间，标志位置位，清除标志     
-    CpuTimer0Regs.TCR.bit.TRB=1;   // 重载Timer0的定时数据   
+    CpuTimer0Regs.TCR.bit.TIF = 1;   // 定时到了指定时间，标志位置位，清除标志     
+    CpuTimer0Regs.TCR.bit.TRB = 1;   // 重载Timer0的定时数据 
+    SIN_On(); 
 } 
 
 /************************************

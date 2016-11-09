@@ -5,6 +5,7 @@
 #include "DSP2833x_Device.h"     // DSP2833x Headerfile Include File
 #include "DSP2833x_Examples.h"   // DSP2833x Examples Include File
 #include "DATA_Process.h"
+#include "ConstData_Table.h"
 #include "AD7656.h"
 #include "hmi_user_uart.h"
 #include "AD9833.h"
@@ -31,12 +32,12 @@ void InitXintf(void);
 void main()
 {    
 	/*****************临时的全局变量******************************/
-	qsize  size = 0;
+	//qsize  size = 0;
 	unsigned int Count = 0;
 	unsigned int i = 0;
-	float L17Value[100] = {0};
-	float L19Value[100] = {0};
-	float L22Value[100] = {0};
+	float L17Value[50] = {0};
+	float L19Value[50] = {0};
+	float L22Value[50] = {0};
 	float sum17Value = 0;
 	float sum19Value = 0;
 	float sum22Value = 0;
@@ -88,21 +89,19 @@ void main()
 	delay(1000);  		//必须保证足够的延时
 	//初始化SCIC（UART_C）
 	UartInit(115200);        // Initalize SCI for echoback, 波特率是115200
+	//FTF屏指令缓存区清空
+	//queue_reset();
 		
 	//初始化AD7656
 	OUTAD_Init(&gSampleTable, &gSampleValue); 
 	
-	//FTF屏指令缓存区清空
-	//queue_reset();
-	
-	
 	//启动AD9833正弦激励信号输出
-	AD9833_Outdata(CSIN_Channel_1,CH1_OUT_FRE,0,2,0 ); //第一片9833，,5KHz,频率寄存器0，正弦波输出
-    delay(200);      
+	AD9833_Outdata(CSIN_Channel_1,CH1_OUT_FRE,0,2,0 ); //第一片9833，,4KHz,频率寄存器0，正弦波输出
+    delay(300);      
     AD9833_Outdata(CSIN_Channel_2,CH2_OUT_FRE,0,2,0 ); //第二片9833，,6KHz,频率寄存器0，正弦波输出
-    delay(200);
-    AD9833_Outdata(CSIN_Channel_3,CH3_OUT_FRE,0,2,0 ); //第三片9833，,7KHz,频率寄存器0，正弦波输出
-    delay(100);
+    delay(300);
+    AD9833_Outdata(CSIN_Channel_3,CH3_OUT_FRE,0,2,0 ); //第三片9833，,8KHz,频率寄存器0，正弦波输出
+    delay(300);
     /*
     // 蜂鸣器示响
     Bell_Didadi();
@@ -117,6 +116,9 @@ void main()
     //启动风扇
     FAN_Start();
     */
+    SINCOS_TAB(sin_wave1,cos_wave1,30);
+    SINCOS_TAB(sin_wave2,cos_wave2,20);
+    SINCOS_TAB(sin_wave3,cos_wave3,15);
 	//启动AD7656采样
     START_SAMPLING();
 	while(1)
@@ -134,34 +136,34 @@ void main()
 			//此处打开其他中断
 			Timer_flag = 0;
 			IER |= M_INT8; 	//使能SCI_C中断
-					
+					 
 		 	AD_Data_Shift(&gSampleTable, &gSampleValue); 	//AD采样值转换为模拟量
 		 	
-		 	DAL_Process((gSampleValue.SamValue1),BUF_SIZE1,Cross_OutPut);	//数字相关运算
+		 	DAL_Process((gSampleValue.SamValue1),BUF_SIZE1,30,sin_wave1,cos_wave1,Cross_OutPut);	//数字相关运算
 		 	LinearConvolution(BUF_SIZE1,LOWFILT_SIZE,Cross_OutPut,Low_Filter1,gDalOutPut.DAL_OutPut1);  //线性卷积
 		 	
-		 	DAL_Process((gSampleValue.SamValue2),BUF_SIZE2,Cross_OutPut);	//数字相关运算
+		 	DAL_Process((gSampleValue.SamValue2),BUF_SIZE2,20,sin_wave2,cos_wave2,Cross_OutPut);	//数字相关运算
 		 	LinearConvolution(BUF_SIZE2,LOWFILT_SIZE,Cross_OutPut,Low_Filter1,gDalOutPut.DAL_OutPut2);  //线性卷积
 		 	
-		 	DAL_Process((gSampleValue.SamValue3),BUF_SIZE3,Cross_OutPut);	//数字相关运算
+		 	DAL_Process((gSampleValue.SamValue3),BUF_SIZE3,15,sin_wave3,cos_wave3,Cross_OutPut);	//数字相关运算
 		 	LinearConvolution(BUF_SIZE3,LOWFILT_SIZE,Cross_OutPut,Low_Filter1,gDalOutPut.DAL_OutPut3);  //线性卷积
 		 	
 		 	//计算单路通道的信号幅值
-		 	L17Value[Count] = Single_AmpValue(gDalOutPut.DAL_OutPut1,2*BUF_SIZE1+LOWFILT_SIZE-1 );
-		 	L19Value[Count] = Single_AmpValue(gDalOutPut.DAL_OutPut2,2*BUF_SIZE2+LOWFILT_SIZE-1 );
-		 	L22Value[Count] = Single_AmpValue(gDalOutPut.DAL_OutPut3,2*BUF_SIZE3+LOWFILT_SIZE-1 );
+		 	L17Value[Count] = Single_AmpValue(gDalOutPut.DAL_OutPut1,2*BUF_SIZE1 + LOWFILT_SIZE-2 );
+		 	L19Value[Count] = Single_AmpValue(gDalOutPut.DAL_OutPut2,2*BUF_SIZE2 + LOWFILT_SIZE-2 );
+		 	L22Value[Count] = Single_AmpValue(gDalOutPut.DAL_OutPut3,2*BUF_SIZE3 + LOWFILT_SIZE-2 );
 		 	Count++;
-		 	if(Count == 50)
+		 	if(Count == 20)
 		 	{
-		 		for(i = 0; i < 50; i++)
+		 		for(i = 0; i < 20; i++)
 		 		{
 		 			sum17Value  += L17Value[i];
 		 			sum19Value  += L19Value[i];
 		 			sum22Value  += L22Value[i];
 		 		}
-		 		Test_gSystem_LabviewData.L17Value = sum17Value/50;
-		 		Test_gSystem_LabviewData.L19Value = sum19Value/50;
-		 		Test_gSystem_LabviewData.L22Value = sum22Value/50;
+		 		Test_gSystem_LabviewData.L17Value = sum17Value/20;
+		 		Test_gSystem_LabviewData.L19Value = sum19Value/20;
+		 		Test_gSystem_LabviewData.L22Value = sum22Value/20;
 		 		Count = 0;
 		 		sum17Value = 0;
 		 		sum19Value = 0;

@@ -25,14 +25,15 @@
 4_DataPro_ARL/DATA_Process.obj: E:/01_Master_project/Water_Detection_Project/04_Software_Design/5_NEW_Data_Process/INCLUDE/DSP2833x_Dma_defines.h
 4_DataPro_ARL/DATA_Process.obj: E:/01_Master_project/Water_Detection_Project/04_Software_Design/5_NEW_Data_Process/INCLUDE/DSP2833x_I2C_defines.h
 4_DataPro_ARL/DATA_Process.obj: E:/01_Master_project/Water_Detection_Project/04_Software_Design/5_NEW_Data_Process/INCLUDE/DSP2833x_DefaultISR.h
-4_DataPro_ARL/DATA_Process.obj: D:/Program\ Files/Texas\ Instruments/ccsv4/tools/compiler/c2000/include/stdlib.h
+4_DataPro_ARL/DATA_Process.obj: D:/Program\ Files/Texas\ Instruments/ccsv4/tools/compiler/c2000/include/math.h
 4_DataPro_ARL/DATA_Process.obj: D:/Program\ Files/Texas\ Instruments/ccsv4/tools/compiler/c2000/include/linkage.h
+4_DataPro_ARL/DATA_Process.obj: D:/Program\ Files/Texas\ Instruments/ccsv4/tools/compiler/c2000/include/float.h
+4_DataPro_ARL/DATA_Process.obj: D:/Program\ Files/Texas\ Instruments/ccsv4/tools/compiler/c2000/include/cpp_inline_math.h
+4_DataPro_ARL/DATA_Process.obj: D:/Program\ Files/Texas\ Instruments/ccsv4/tools/compiler/c2000/include/stdlib.h
 4_DataPro_ARL/DATA_Process.obj: D:/Program\ Files/Texas\ Instruments/ccsv4/tools/compiler/c2000/include/stdlibf.h
+4_DataPro_ARL/DATA_Process.obj: E:/01_Master_project/Water_Detection_Project/04_Software_Design/5_NEW_Data_Process/2_AD9833_ARL/AD9833.H
 4_DataPro_ARL/DATA_Process.obj: ../4_DataPro_ARL/DATA_Process.h
 4_DataPro_ARL/DATA_Process.obj: ../4_DataPro_ARL/ConstData_Table.h
 4_DataPro_ARL/DATA_Process.obj: E:/01_Master_project/Water_Detection_Project/04_Software_Design/5_NEW_Data_Process/A_MAIN/std_init.h
 4_DataPro_ARL/DATA_Process.obj: D:/Program\ Files/Texas\ Instruments/ccsv4/tools/compiler/c2000/include/math.h
-4_DataPro_ARL/DATA_Process.obj: D:/Program\ Files/Texas\ Instruments/ccsv4/tools/compiler/c2000/include/float.h
-4_DataPro_ARL/DATA_Process.obj: D:/Program\ Files/Texas\ Instruments/ccsv4/tools/compiler/c2000/include/cpp_inline_math.h
-4_DataPro_ARL/DATA_Process.obj: E:/01_Master_project/Water_Detection_Project/04_Software_Design/5_NEW_Data_Process/INCLUDE/C28x_FPU_FastRTS.h
 4_DataPro_ARL/DATA_Process.obj: E:/01_Master_project/Water_Detection_Project/04_Software_Design/5_NEW_Data_Process/3_SCI_ARL/hmi_user_uart.h

@@ -8,7 +8,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import math
 import matplotlib
-
+import random
 
 global datalist
 datalist=[]
@@ -106,17 +106,17 @@ def OccureDate():
     global fz2
     global Fs
     f = Frehz        #信号频率Hz
-    A = 200         #信号的幅值（mv）
+    A = 1        #信号的幅值（mv）
     fs=Fs           #采样频率 hz
     
     N = Buf_size    #采样点数
     xx = []  
     n = [2*math.pi*f*t/fs for t in range(N)]  
-    x = [A*math.sin(i+1.57) for i in n]
+    x = [A*math.sin(i) for i in n]
     print"原始信号x[]：\n"
     drawpicture(x,N)
-    x1 = [500*math.sin(i*10)-30 for i in n]
-    
+    x1 = [50*math.sin(i*10)-30 for i in n]
+    x11= [random.gauss(0,0.2) for i in range(N)]
     #另一路正弦信号
     n2 = [2*math.pi*fz1*t/fs for t in range(N)]  
     x2 = [500*math.sin(i) for i in n2]
@@ -125,7 +125,7 @@ def OccureDate():
     x3 = [300*math.sin(i) for i in n3]
     drawpicture(x1,N)
     for i in range(len(x)):
-        xx.append(x[i] + x1[i])   ##+ x2[i]+ x3[i]
+        xx.append(x[i] + x11[i])   ##+ x2[i]+ x3[i]
     print "加噪声后的待测信号xx[]:\n"
     datalist = xx
 
@@ -198,10 +198,13 @@ def LinearConvolution(CrossDate,LOWFILT_SIZE,filter_xishu,Outputdata):
 def SinCosTab(SincosFre,buf_size):
     global Fs
     cycle_point = Fs/SincosFre   #获得一个周期的信号采样点，采用频率为Fs
+    
     for i in range(0,cycle_point):
+            
         theta = i* 6.283185/cycle_point   
         sinwave.append(math.sin(theta)+0.0)
         coswave.append(math.cos(theta)+0.0)
+        
     for i in range(buf_size):
         longsinwave.append(sinwave[(i)%(cycle_point)])
         longcoswave.append(coswave[(i)%(cycle_point)])
@@ -260,9 +263,9 @@ if __name__ == '__main__' :
         SampleBuffer2 = [ initial_value for i in range(Buf_size)]
     
 ##------------------------------
-##        OccureDate()
+        OccureDate()
 ##------------------------------    
-        read_singledata('sample2')
+##        read_singledata('sample2')
 ##------------------------------
         drawsamplevalue(datalist)
         DalProcess(Buf_size,datalist)
@@ -275,6 +278,8 @@ if __name__ == '__main__' :
         for i in range(100,len(DAL_OutPut)-100):
                 sumnum += DAL_OutPut[i]
         print sumnum/(len(DAL_OutPut)-200)
+
+        
 
 
 

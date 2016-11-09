@@ -278,11 +278,11 @@ if __name__ == '__main__' :
         global Fs
         sumnum = 0
         
-        Buf_size = 420
+        Buf_size = 300
         Frehz = 5000
         fz1 = 50
         fz2 = 100
-        Fs = 210000
+        Fs = 120000
         initial_value = 0
         Channel_Date = [ initial_value for i in range(2*Buf_size-1)]
         Cross_OutPut = [ initial_value for i in range(2*Buf_size-1)]
@@ -290,13 +290,13 @@ if __name__ == '__main__' :
         SampleBuffer2 = [ initial_value for i in range(2*Buf_size-1)]
     
 ##------------------------------
-##        OccureDate()
+        OccureDate()
 ##------------------------------    
-        read_singledata('sample1')
+##        read_singledata('sample1')
 ##------------------------------
         drawsamplevalue(datalist)
         DalProcess(Buf_size,datalist)
-    
+        drawsamplevalue(longsinwave)
 ##  print "long sinwave: \n"
 ##  drawpicture(longsinwave)
 ##  print "longcoswave: \n"

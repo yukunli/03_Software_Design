@@ -9,14 +9,15 @@
 
 #define SAMP_COUNT_MAX  421
 
-#define SAME_FRE 120  //采用频率设定为120khz
+#define SAME_FRE 156250  //采用频率设定为156.25khz
 
 
 #define  CYCLE_NUM   10	  //一次操作CYCLE_NUM 个周期的数据
+
 #define  BUF_SIZE1   420  // Sample1 buffer size
-#define  BUF_SIZE2   420  // Sample2 buffer size
-#define  BUF_SIZE3   420  // Sample3 buffer size
-#define  BUF_SIZE4   300  // Sample3 buffer size
+#define  BUF_SIZE2   350  // Sample2 buffer size
+#define  BUF_SIZE3   300  // Sample3 buffer size
+#define  BUF_SIZE4   200  // Sample3 buffer size
 
 typedef enum {True,False} identi_bool;
 

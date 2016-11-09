@@ -3,22 +3,20 @@
 
 #include "ConstData_Table.h"
 #include <math.h>
-#include "C28x_FPU_FastRTS.h"
+//#include "C28x_FPU_FastRTS.h"
 #define UINT8 unsigned char
 #define UINT16 unsigned int
 #define STATUS_SUCCESS True
 #define STATUS_FAIL False
 
-#define SAMP_COUNT_MAX  301
+#define SAMP_COUNT_MAX  421
 
 #define SAME_FRE 120  //采用频率设定为120khz
 
-
-#define  CYCLE_NUM 10	  //一次操作CYCLE_NUM 个周期的数据
-#define  BUF_SIZE1   300  // Sample1 buffer size
-#define  BUF_SIZE2   200  // Sample2 buffer size
-#define  BUF_SIZE3   150  // Sample3 buffer size
-
+#define  BUF_SIZE1   420  // Sample1 buffer size
+#define  BUF_SIZE2   300  // Sample2 buffer size
+#define  BUF_SIZE3   330  // Sample3 buffer size
+#define  BUF_SIZE4   100  // Sample3 buffer size
 
 typedef enum {True,False} identi_bool;
 
@@ -32,10 +30,10 @@ typedef struct STRSampleTable
 
 typedef struct STRSampleValue
 {
-	float SamValue1[SAMP_COUNT_MAX];
-	float SamValue2[SAMP_COUNT_MAX];
-	float SamValue3[SAMP_COUNT_MAX];
-	float SamValue4[SAMP_COUNT_MAX];
+	float SamValue1[BUF_SIZE1];
+	float SamValue2[BUF_SIZE2];
+	float SamValue3[BUF_SIZE3];
+	float SamValue4[BUF_SIZE4];
 }STRSampleValue;
 
 //3路互相关运算结果做低通线性卷积运算的结果存放数组
