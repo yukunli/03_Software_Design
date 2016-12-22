@@ -90,7 +90,7 @@ void GetAD_Value(STRSampleTable *FourSampleTable)
 	CLR_ADCOV;   	//启动转换信号
 	DELAY_US(0.1);
 	SET_ADCOV;
-	DELAY_US(2);
+	DELAY_US(3);
 	while(AD_BUSY); 
 	if(Head_pointNum >= 0)  //去掉头3个点
 	{
@@ -101,15 +101,15 @@ void GetAD_Value(STRSampleTable *FourSampleTable)
 		Head_pointNum --;
 		SampleCount = 0;
 	}
-	else if((SampleCount < SAMP_COUNT_MAX) || (SampleCount > SAMP_COUNT_MAX))
+	else if(SampleCount < SAMP_COUNT_MAX)
 	{
 		//SIN_Off();
 		FourSampleTable->SamTable1[SampleCount] = AD7656_BASIC; //读取4路AD通道数据
-		tem++;
+		//tem++;
 		FourSampleTable->SamTable2[SampleCount] = AD7656_BASIC; 
-		tem++;
+		//tem++;
 		FourSampleTable->SamTable3[SampleCount] = AD7656_BASIC;
-		tem++;
+		//tem++;
 		FourSampleTable->SamTable4[SampleCount] = AD7656_BASIC; 
 		SampleCount ++;
 		return;

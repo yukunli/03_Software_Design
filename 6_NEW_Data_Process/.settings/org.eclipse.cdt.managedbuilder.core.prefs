@@ -1,4 +1,4 @@
-#Wed Sep 07 19:34:03 CST 2016
+#Mon Nov 28 09:51:29 CST 2016
 com.ti.ccstudio.buildDefinitions.C2000.Debug.935724631/internalBuilder/enabled=false
 com.ti.ccstudio.buildDefinitions.C2000.Debug.935724631/internalBuilder/ignoreErr=true
 com.ti.ccstudio.buildDefinitions.C2000.Release.471210368/internalBuilder/enabled=false
@@ -6,3 +6,4 @@ com.ti.ccstudio.buildDefinitions.C2000.Release.471210368/internalBuilder/ignoreE
 eclipse.preferences.version=1
 environment/project=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<environment/>\r\n
 environment/project/com.ti.ccstudio.buildDefinitions.C2000.Debug.935724631=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<environment/>\r\n
+environment/project/com.ti.ccstudio.buildDefinitions.C2000.Release.471210368=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<environment/>\r\n

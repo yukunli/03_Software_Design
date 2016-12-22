@@ -7,7 +7,7 @@
 #define STATUS_SUCCESS True
 #define STATUS_FAIL False
 
-#define SAMP_COUNT_MAX  421
+#define SAMP_COUNT_MAX  420
 
 #define SAME_FRE 156250  //采用频率设定为156.25khz
 
@@ -40,12 +40,20 @@ typedef struct STRSampleValue
 
 typedef struct
 {
-	float Water_b;  //截距参数
-	float Water_k;	//斜率参数
-	float PID_Kp;	//pid的kp参数
-	float PID_Ki;	//pid的ki参数
+	float Water_k;  //斜率参数
+	float Water_b;	//截距参数
+	float PID_Kp;	//pid的ki参数
+	float PID_Ki;	//pid的kp参数
 	float PID_Kd;	//pid的kd参数
 }Water_Param;
+typedef struct
+{
+	float Fit_a;    //一个参数
+	float Fit_b;	//第二参数
+	float Fit_c;	//第三参数
+	float Fit_d;	//第四参数
+	float T_value;  //三路信号的比值
+}Fit_Param;
 
 typedef struct
 {
@@ -59,6 +67,7 @@ typedef struct
 	float L17Value;
 	float L19Value;
 	float L22Value;
-	float temperature;
-}LabView_Data;
+	float temperature;   //温度
+	float T_value;    //三路信号的比值
+}Instant_Data;
 #endif /*STD_INIT_H_*/

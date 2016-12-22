@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<VisualTFT Name="Project_black_01" OutputDirectory="output\" StartupPage="Screen0" StartupAction="" StartupActionLoop="1" DeviceType="12004" DeviceEnableControl="1" DeviceEnableTouchPane="1" DeviceEnableBuzzer="2" DeviceEnableCRC="0" DeviceBaudRate="7" DeviceCoordinateUpdateMode="4" DeviceControlNotify="2" DeviceScreenNotify="0" DeviceScreenRvs="0" DeviceBacklightAutoControl="0" DeviceBacklightTime="26" DeviceBacklightOn="200" DeviceBacklightOff="57" DeviceBacklightNotify="0" DeviceLockConfig="1" DeviceStartupVoice="0" DeviceVoiceVolume="100" CompatibleScreenRotate="1" AddResourceFloder="1" Version="1.0" DeviceEnableSlidingScreen="0" BacklightAutoControl="0" BacklightNotify="0">
+	<Pages><Page RelativePath="Screen0.tft"/><Page RelativePath="Screen1.tft"/><Page RelativePath="Screen2.tft"/><Page RelativePath="Screen3.tft"/></Pages>
+	<Images><Image RelativePath="main_png\main\幻灯片4.PNG" Download="0"/><Image RelativePath="Screen2.bmp" Download="0"/><Image RelativePath="Screen4.bmp" Download="0"/></Images>
+	<Waves/>
+</VisualTFT>

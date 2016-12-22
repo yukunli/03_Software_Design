@@ -5,6 +5,6 @@
 --large_memory_model 
 --float_support=fpu32 
 --preproc_with_compile 
---preproc_dependency="A_MAIN/main.pp" 
---obj_directory="A_MAIN" 
-"../A_MAIN/main.c" 
+--preproc_dependency="7_FTF_ARL/hmi_driver.pp" 
+--obj_directory="7_FTF_ARL" 
+"../7_FTF_ARL/hmi_driver.c" 

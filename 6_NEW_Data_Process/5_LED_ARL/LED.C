@@ -49,6 +49,22 @@ void LED_IOinit(void)
 	BELL_Stop();
 	SIN_Off();
 }
+void FanIO_init(void)
+{
+	EALLOW; 
+	GpioCtrlRegs.GPAMUX1.bit.Fan_IO=0;
+	GpioCtrlRegs.GPADIR.bit.Fan_IO=1;
+	
+	EDIS;
+}
+void BellIO_init(void)
+{
+	EALLOW; 
+	GpioCtrlRegs.GPAMUX1.bit.Bell_IO=0;
+	GpioCtrlRegs.GPADIR.bit.Bell_IO=1;
+	EDIS;
+
+}
 void LED_Red_Flash(void)
 {
 

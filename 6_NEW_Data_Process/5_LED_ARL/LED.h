@@ -30,8 +30,8 @@
 #define LED_Red_On()   GpioDataRegs.GPBDAT.bit.Red_IO=1
 #define LED_Red_Off()  GpioDataRegs.GPBDAT.bit.Red_IO=0
 
-#define LED_Core_On()   GpioDataRegs.GPADAT.bit.Core_LED=1
-#define LED_Core_Off()   GpioDataRegs.GPADAT.bit.Core_LED=0
+#define LED_Core_On()   GpioDataRegs.GPADAT.bit.Core_LED=0
+#define LED_Core_Off()   GpioDataRegs.GPADAT.bit.Core_LED=1
 
 #define FAN_Start()   GpioDataRegs.GPADAT.bit.Fan_IO=1
 #define FAN_Stop()   GpioDataRegs.GPADAT.bit.Fan_IO=0
@@ -59,6 +59,8 @@ extern UINT8 blue_light_state5 ;
 extern UINT8 i5;
 //void LED_Yellow_Flash(void);
 extern void LED_IOinit(void);
+extern void FanIO_init(void);
+extern void BellIO_init(void);
 extern void LED_Blue_Flash(void);
 extern void LED_Blue_Flash_Slow(void);
 extern void LED_Red_Flash(void);

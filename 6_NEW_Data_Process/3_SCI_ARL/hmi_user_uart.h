@@ -17,16 +17,20 @@
 * 入口参数： 无
 * 出口参数： 无
 ****************************************************************************/
-void UartInit(uint32 Baudrate);
-
+void UartCInit(uint32 Baudrate);
+void UartBInit(uint32 BaudRate);
 /*****************************************************************
 * 名    称： SendChar()
 * 功    能： 发送1个字节
-* 入口参数： t  发送的字节
+* 入口参数： t发送的字节
 * 出口参数： 无
  *****************************************************************/
 void SendChar(uchar t);
 void Send_msg(char *msg);
-void SendValuetoLabview(LabView_Data* Test_LabviewData);
-void SendValuetoPython(STRSampleValue* Test_Pyton);
+
+void  Send_Uartb_Char(uchar t);
+void Send_Uartb_msg(char *msg);
+
+void SendValuetoLabview(Instant_Data* Test_InstantData);
+//void SendValuetoPython(STRSampleValue* Test_Pyton);
 #endif

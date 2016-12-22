@@ -14,7 +14,6 @@
 
 // Global variable for this example
 
-
 /*****************************************************
  * 函数功能：Filter FIR
  * 函数入口：信号的长度
@@ -26,35 +25,22 @@
  void FIR_Filter(const unsigned int xn,const float*x, const unsigned int hn, const float*h, float * y)
  {
  	float temp = 0;
- 	unsigned int yn = 0;
+ 	//unsigned int yn = 0;
  	unsigned int i = 0,j = 0;
- 	yn = xn+hn-1;
- 	
- 	for(i = 0;i<hn;i++)
+ 	//yn = xn+hn-1;
+ 	for(i = 0; i< xn; i++)
  	{
- 		y[i] = 0;
- 	}
- 	
- 	for(i = hn-1; i< yn; i++)
- 	{
- 		for(j = 0;j<hn; j++)
+ 		temp = 0;
+ 		for(j = 0;j< hn; j++)
  		{
- 			if((i-j)< xn)
+ 			if(i >= j)
  			{
- 				temp += h[j]*(x[i-j]);
- 			}
- 			else
- 			{
- 				temp +=0;
- 			}
- 			
+ 				temp += h[j]*x[i-j];
+ 			}			
  		}
- 		y[yn-i] = temp;
- 	}
- 	
+ 		y[i] = temp;
+ 	}	
  }
- 
- 
 /*****************************************************
  * 函数功能：线性卷积
  * 函数入口：信号的长度
@@ -105,14 +91,14 @@ void LinearConvolution(const unsigned int buf_size,const unsigned int hn,float *
  */
 float Calcu_AMP(float * Samplelist,Uint16 Buf_size,const Uint16 Filer_size)
 {
-	float maxvalue[21] = {0};
-	float minvalue[21] = {0};
-	static unsigned char lenth = 7;  //比较窗的长度为7， 
+	float maxvalue[15] = {0};
+	float minvalue[15] = {0};
+	static unsigned char lenth = 5;  // 比较窗的长度为5， 
 	unsigned int index = 0;
 	unsigned int i = 0,k = 0;
 	float maxsum = 0;
 	float minsum = 0;
-	unsigned char pp_num = 21;  //maxvalue数组的长度
+	unsigned char pp_num = 15;  //maxvalue数组的长度
 	//初始化数组 maxvalue 和 minvalue
 	for(index = 0; index < pp_num; index++ )
 	{
@@ -120,23 +106,25 @@ float Calcu_AMP(float * Samplelist,Uint16 Buf_size,const Uint16 Filer_size)
 		minvalue[index] = 0;
 	}
 	//求输入序列的峰峰值电压，去掉序列头部和尾部长度为 Filer_size 的数据
-	for(index = Filer_size; index < Buf_size-lenth-Filer_size; index++)
+	for(index = Filer_size; index < Buf_size-lenth; index++)
 	{
-		if((Samplelist[index+3] > Samplelist[index+0]) && (Samplelist[index+3] > Samplelist[index+6])&& 
-		(Samplelist[index+3] > Samplelist[index+1])&& (Samplelist[index+3] > Samplelist[index+5]) &&  
-		(Samplelist[index+3] > Samplelist[index+2])&& (Samplelist[index+3] > Samplelist[index+4]))
+		if((Samplelist[index+2] > Samplelist[index+0]) && (Samplelist[index+2] > Samplelist[index+4])&& 
+		(Samplelist[index+2] > Samplelist[index+1])&& (Samplelist[index+2] > Samplelist[index+3])  )
 		{
-			maxvalue[i] = Samplelist[index+3];
+			maxvalue[i] = Samplelist[index+2];
 			i++;
-			index +=4;
+			index +=3;
+			if(i>= pp_num)
+				break;
 		}
-		else if( (Samplelist[index+3] < Samplelist[index+0]) && (Samplelist[index+3] < Samplelist[index+6])&& 
-		(Samplelist[index+3] < Samplelist[index+1])&& (Samplelist[index+3] < Samplelist[index+5]) &&
-		(Samplelist[index+3] < Samplelist[index+2])&& (Samplelist[index+3] < Samplelist[index+4]))
+		else if( (Samplelist[index+2] < Samplelist[index+0]) && (Samplelist[index+2] < Samplelist[index+4])&& 
+		(Samplelist[index+2] < Samplelist[index+1])&& (Samplelist[index+2] < Samplelist[index+3]) )
 		{
-			minvalue[k] = Samplelist[index+3];
+			minvalue[k] = Samplelist[index+2];
 			k++;
-			index +=4;
+			index +=3;
+			if(k>= pp_num)
+				break;
 		}
 	}
 	//处理minvalue和maxvalue
@@ -183,55 +171,39 @@ float sortandaverage(float * valuelist,const unsigned char longnum)
 /*************************************************************
  * 函数功能： 计算烧结料水分含量
  * 入口参数： 测量通道，参比通道1，参比通道2的信号,及size, 拟合方式
- * 返回值：   烧结料的水分百分含量
+ * 返回值：   烧结料的水分瞬时水分百分含量
  ****************************************************/
-float Moisture_FITcalcu(float* MeasureDal,Uint16 Buf_size1,float* Refer1Dal,Uint16 Buf_size2,float* Refer2Dal,Uint16 Buf_size3,char FIT_Mode)
+float Moisture_FITcalcu(float Tdata, Fit_Param* Param, const char FIT_Mode)
 {
-	float Measure_Amp,Refer1_Amp,Refer2_Amp,Ratio,water_content;
-	water_content = 0;
-//	Measure_Amp = Single_AmpValue(MeasureDal,Buf_size1);
-//	Refer1_Amp = Single_AmpValue(Refer1Dal,Buf_size2);
-//	Refer2_Amp = Single_AmpValue(Refer2Dal,Buf_size3);
-//	Ratio = Measure_Amp/(Refer1_Amp+Refer2_Amp);
-	
-//	Print_data[0]=(unsigned char)((Uint16)(Measure_Amp*100)>>8);
-//	Print_data[1]=(unsigned char)((Uint16)(Measure_Amp*100)&0x00ff);
-//	Print_data[2]=(unsigned char)((Uint16)(Refer1_Amp*100)>>8);
-//	Print_data[3]=(unsigned char)((Uint16)(Refer1_Amp*100)&0x00ff);
-//	Print_data[4]=(unsigned char)((Uint16)(Refer2_Amp*100)>>8);
-//	Print_data[5]=(unsigned char)((Uint16)(Refer2_Amp*100)&0x00ff);
-//	Print_data[6]=(unsigned char)((Uint16)(Ratio*100)>>8);
-//	Print_data[7]=(unsigned char)((Uint16)(Ratio*100)&0x00ff);
-	
+	float water_content = 0;
+
 	switch(FIT_Mode)
 	{
 		case '1':  // 三次拟合
+			water_content = (Param->Fit_a)*pow(Tdata,3) + (Param->Fit_b)*Tdata*Tdata +
+							(Param->Fit_c)*Tdata + Param->Fit_d; 
 			break;
 		case '2':  // 分段线性拟合
-			break;
-		case '3':  // 指数拟合	
+			//break;
+		case '3':  // 指数拟合
+		    //water_content = 9040*pow(2.71828,-22.09*Tdata)+3.303;	
 			break;
 		default :
 			break;
 	}
 	return water_content;
 }
-/****************************************************
- * 函数功能: DATA trans
- * 入口参数: DAL_OutPut,
+
+/*************************************************************
+ * 函数功能： 根据修正系数算实际的水分值
+ * 入口参数： 物料测量水分值
+ * 			修正系数，斜率和截距
+ * 返回值：   现场的水分值
  ****************************************************/
- void Data_Trans(float * Trans_data,Uint16 Buf_size,char * Trans_result)
- {
- 	register int i,j;
-
-	for(i=0;i<Buf_size;i++)
-	{
-		j=2*i;
-		Trans_result[j]=(unsigned char)((Uint16)(Trans_data[i]*10)>>8);
-		Trans_result[j+1]=(unsigned char)((Uint16)(Trans_data[i]*10)&0x00ff);	
-	}
- }
-
+float Correct_Moisture(float measuvalue, float corr_k, float corr_b)
+{
+	return corr_k*measuvalue + corr_b;
+}
 
 //-------------------------------------------------
 //no more

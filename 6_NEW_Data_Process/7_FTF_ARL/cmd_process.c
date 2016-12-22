@@ -77,7 +77,11 @@ void NotifyTouchXY(uint8 press,uint16 x,uint16 y)
 {
 	//TODO: 添加用户代码
 }
-
+//**************************
+/*函数功能： 将浮点数转换为SCII码，用于在触摸屏显示
+ * 输入： 浮点数
+ * 约束： 针对格式为XX.XXX
+ **/
 void FloatToISCII(float floatnum, uint8 *iscii)
 {
 	uint16 float_int = 0;
@@ -103,36 +107,72 @@ void FloatToISCII(float floatnum, uint8 *iscii)
 		iscii[5]='\0';
 	}
 }
-
+//**************************
+/*函数功能： 将浮点数转换为SCII码，用于在触摸屏显示
+ * 输入： 浮点数
+ * 约束： 针对格式为XX.XXX
+ **/
+void Float2ISCII(float floatnum, uint8 *iscii)
+{
+	uint16 float_int = 0;
+	float_int = (unsigned int)(floatnum * 1000);
+	iscii[0]=(float_int/10000)%10+0x30;	   //得到浮点数的整数部分十位
+	if(iscii[0]!=0x30)
+	{
+		iscii[1]=(float_int/1000)%10+0x30;	//整数部分的个位
+		iscii[2]='.';
+		iscii[3]=(float_int/100)%10+0x30;	//小数部分的十位
+		iscii[4]=(float_int/10)%10+0x30;	      //小数部分的个位
+		iscii[5]=float_int%10+0x30;	      //小数部分的个位
+		iscii[6]='\0';	
+		return;		
+	}
+	else
+	{	
+		iscii[0]=(float_int/1000)%10 + 0x30;	//整数部分的个位
+		iscii[1]='.';
+		iscii[2]=(float_int/100)%10 + 0x30;	//整数部分的个位
+		iscii[3]=(float_int/10)%10+0x30;	//小数部分的十位
+		iscii[4]=float_int%10+0x30;	        //小数部分的个位
+		iscii[5]='\0';
+	}
+}
+//初始化UI，
 void InitUI(Water_Param *InterfaceParam)
 {
-	uint8 TEMdat[6] = {0};
+	uint8 TEMdat[7] = {0};
 	FloatToISCII(InterfaceParam->Water_b, TEMdat);
-	SetTextValue( 1, 3,TEMdat);	//当前截距（画面1控件3）
+	SetTextValue( 1, 4,TEMdat);	//当前截距（画面1控件3）
 	
 	FloatToISCII(InterfaceParam->Water_k, TEMdat);
-	SetTextValue( 1, 4,TEMdat);	//当前斜率（画面1控件4）
+	SetTextValue( 1, 3,TEMdat);	//当前斜率（画面1控件4）
 	
 	FloatToISCII(InterfaceParam->PID_Kp, TEMdat);
-	SetTextValue( 1, 7,TEMdat);	//当前kp（画面1控件7）
+	SetTextValue( 1, 6,TEMdat);	//当前kp（画面1控件7）
 	
 	FloatToISCII(InterfaceParam->PID_Ki, TEMdat);
-	SetTextValue( 1, 6,TEMdat);	//当前ki（画面1控件7）
+	SetTextValue( 1, 7,TEMdat);	//当前ki（画面1控件7）
 	
 	FloatToISCII(InterfaceParam->PID_Kd, TEMdat);
 	SetTextValue( 1, 8,TEMdat);	//当前kd（画面1控件7）
 	
+	//添加曲线控件数据通道
+	GraphChannelAdd(2,2,0,0x07E0);
+	
 }
 //更新界面控件显示
-void UpdateUI(Water_Value * InterfaceValue)
+void UpdateUI(Water_Value * InterfaceValue, float debug_T)
 {
 	uint8 water_curve = 0;
-	uint8 TEMdat[6] = {0};
+	uint8 TEMdat[7] = {0};
+	//更新曲线控件
+	water_curve = (uint8)((InterfaceValue->WaterValue)*28.33-28.33);  //转换：把坐标范围转换到曲线控件的高度范围内（界面高度是1-10,255）
+	GraphChannelDataAdd(2,2,0,&water_curve,1); //添加水分曲线的数据（依次为 屏幕ID，控件ID，通道号，数据，数据长度）
 	
 	FloatToISCII(InterfaceValue->WaterValue, TEMdat);
 	//更新文本显示控件
     SetTextValue( 0, 3,TEMdat);	//当前物料水分（画面0控件3）
-    SetTextValue( 3, 6,TEMdat);	//当前物料水分（画面3控件6）
+    //SetTextValue( 3, 6,TEMdat);	//当前物料水分（画面3控件6）
     
 	FloatToISCII(InterfaceValue->SoonWaterValue, TEMdat);
 	//更新文本显示控件
@@ -140,15 +180,24 @@ void UpdateUI(Water_Value * InterfaceValue)
 	SetTextValue( 3, 5,TEMdat);	//瞬时水分（画面3控件5）
 	
 	FloatToISCII(InterfaceValue->temperature, TEMdat);
-	TEMdat[4]= '\0'; //温度只显示以为小数
+	TEMdat[4]= '\0'; //温度只显示1位小数
 	TEMdat[5]= '\0';
+   
    //更新文本显示控件
     SetTextValue( 0, 4,TEMdat);	//实时温度（画面0控件4）
 	SetTextValue( 3, 4,TEMdat);	//实时温度（画面3控件4）
 
-	//更新曲线控件
-	water_curve = (uint8)((InterfaceValue->WaterValue)*280/10);  //转换：把坐标范围转换到曲线控件的高度范围内
-	GraphChannelDataAdd(2,2,0,&water_curve,1); //添加水分曲线的数据(128个点(画面1，控件2,通道0))
+	//用于触摸屏调试模式
+	if(debug_T == 0)
+	{
+		return;
+	}
+	else
+	{
+		Float2ISCII(debug_T, TEMdat);
+		//更新文本显示控件
+    	SetTextValue( 3, 6,TEMdat);	//当前物料水分（画面3控件6）
+	}
 	return;
 }
 
@@ -161,16 +210,59 @@ void UpdateUI(Water_Value * InterfaceValue)
  */
 void NotifyButton(uint16 screen_id, uint16 control_id, uint8 state)
 {
+	//TODO: 添加用户代码
+	if (screen_id == 1&& control_id == 1) //设置页面的保存按钮被按下
+	{  
+		if(0x01 == state)     //按钮被按下
+		{
+			//获取修正参数-斜率和截距
+			GetControlValue(1,3);
+			GetControlValue(1,4);
+		} 
+
+	}
+	
 	return;
 }
 
+//******************
+/* 函数功能：将 string 转换为浮点数
+ * 参数： 浮点数
+ * 约束： 适用于XX.XX
+ */
 float StrToFloat(uint8 *str)
 {
 	uint8  i = 0;
-	uint8 text_recevice[5] = {0};
-	if (str[2] == 0x2e) //如果第三位是“.”
+	uint8 text_recevice[6] = {0};
+	if(str[0] == 0x2d)   //表示有负数
+	{  
+		if (str[3] == 0x2e) 	//如果第三位是“.”
 	{
-		while(str[i])
+		str[3] = 0x30;
+		for(i = 1; i < 6; i++ )
+		{
+			text_recevice[i] = str[i] - 0x30;
+			i++;
+		}
+		return (-1)*(text_recevice[1]*10 + text_recevice[2]+ text_recevice[4]*0.1 + text_recevice[5]*0.01);
+	}
+	else
+	{
+		str[2] = 0x30;
+		for(i = 1; i <6;i++ )
+		{
+			text_recevice[i] = str[i] - 0x30;
+			i++;
+		}
+		return (-1)*(text_recevice[1] + text_recevice[3]*0.1 + text_recevice[4]*0.01);
+	}
+	}
+	else
+	{
+	if (str[2] == 0x2e) 	//如果第三位是“.”
+	{
+		str[2] = 0x30;
+		for(i = 0; i < 5; i++ )
 		{
 			text_recevice[i] = str[i] - 0x30;
 			i++;
@@ -179,12 +271,14 @@ float StrToFloat(uint8 *str)
 	}
 	else
 	{
-		while(str[i])
+		str[1] = 0x30;
+		for(i = 0; i <5;i++ )
 		{
 			text_recevice[i] = str[i] - 0x30;
 			i++;
 		}
 		return (text_recevice[0] + text_recevice[2]*0.1 + text_recevice[3]*0.01);
+	}
 	}
 }
 /*! 
@@ -197,26 +291,26 @@ float StrToFloat(uint8 *str)
 void NotifyText(uint16 screen_id, uint16 control_id, uint8 *str, Water_Param *InterfaceParam)
 {
 	//TODO: 添加用户代码
-	if (screen_id == 1&& control_id == 3) //更新设置页面的截距
+	if (screen_id == 1&& control_id == 3) //更新设置页面的斜率
 	{       
-		InterfaceParam->Water_b = StrToFloat(str);
-		return;
-	}
-	else if (screen_id == 1&& control_id == 4) //更新设置页面的斜率
-	{
 		InterfaceParam->Water_k = StrToFloat(str);
 		return;
 	}
+	else if (screen_id == 1&& control_id == 4) //更新设置页面的截距
+	{
+		InterfaceParam->Water_b = StrToFloat(str);
+		return;
+	}/*
 	else if (screen_id == 1&& control_id == 5) //更新设置页面的量程
 	{
 		return;
-	}
-	else if (screen_id == 1&& control_id == 6) //更新设置页面的 KI
+	}*/
+	else if (screen_id == 1&& control_id == 7) //更新设置页面的 KI
 	{       
 		InterfaceParam->PID_Ki = StrToFloat(str);
 		return;
 	}
-	else if (screen_id == 1&& control_id == 7) //更新设置页面的 Kp
+	else if (screen_id == 1&& control_id == 6) //更新设置页面的 Kp
 	{        
 		InterfaceParam->PID_Kp = StrToFloat(str);
 		return;

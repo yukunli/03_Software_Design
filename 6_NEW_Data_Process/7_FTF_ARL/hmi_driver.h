@@ -15,8 +15,6 @@
 
 #include "hmi_user_uart.h"
 
-
-
 /*! 
  *  \brief  锁定设备配置，锁定之后需要解锁，才能修改波特率、触摸屏、蜂鸣器工作方式
  */
@@ -292,7 +290,7 @@ void GraphChannelDel(uint16 screen_id,uint16 control_id,uint8 channel);
  *  \param  pData 曲线数据
  *  \param  nDataLen 数据个数
  */
-void GraphChannelDataAdd(uint16 screen_id,uint16 control_id,uint8 channel,uint8 *pData,uint16 nDataLen);
+void GraphChannelDataAdd(uint16 screen_id,uint16 control_id,uint8 channel,uint8* pData,uint16 nDataLen);
 
 /*! 
  *  \brief     曲线控件-清除数据

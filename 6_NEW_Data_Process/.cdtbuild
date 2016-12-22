@@ -80,6 +80,15 @@
 <option id="com.ti.ccstudio.buildDefinitions.C2000_5.2.compilerID.FLOAT_SUPPORT.418541500" superClass="com.ti.ccstudio.buildDefinitions.C2000_5.2.compilerID.FLOAT_SUPPORT" value="com.ti.ccstudio.buildDefinitions.C2000_5.2.compilerID.FLOAT_SUPPORT.fpu32" valueType="enumerated"/>
 <option id="com.ti.ccstudio.buildDefinitions.C2000_5.2.compilerID.INCLUDE_PATH.1820356026" superClass="com.ti.ccstudio.buildDefinitions.C2000_5.2.compilerID.INCLUDE_PATH" valueType="includePath">
 <listOptionValue builtIn="false" value="&quot;${CG_TOOL_ROOT}/include&quot;"/>
+<listOptionValue builtIn="false" value="&quot;E:\01_Master_project\Water_Detection_Project\04_Software_Design\6_NEW_Data_Process\1_AD7656_ARL&quot;"/>
+<listOptionValue builtIn="false" value="&quot;E:\01_Master_project\Water_Detection_Project\04_Software_Design\6_NEW_Data_Process\2_AD9833_ARL&quot;"/>
+<listOptionValue builtIn="false" value="&quot;E:\01_Master_project\Water_Detection_Project\04_Software_Design\6_NEW_Data_Process\4_DataPro_ARL&quot;"/>
+<listOptionValue builtIn="false" value="&quot;E:\01_Master_project\Water_Detection_Project\04_Software_Design\6_NEW_Data_Process\5_LED_ARL&quot;"/>
+<listOptionValue builtIn="false" value="&quot;E:\01_Master_project\Water_Detection_Project\04_Software_Design\6_NEW_Data_Process\6_TempCtrl_ARL&quot;"/>
+<listOptionValue builtIn="false" value="&quot;E:\01_Master_project\Water_Detection_Project\04_Software_Design\6_NEW_Data_Process\7_FTF_ARL&quot;"/>
+<listOptionValue builtIn="false" value="&quot;E:\01_Master_project\Water_Detection_Project\04_Software_Design\6_NEW_Data_Process\A_MAIN&quot;"/>
+<listOptionValue builtIn="false" value="&quot;E:\01_Master_project\Water_Detection_Project\04_Software_Design\6_NEW_Data_Process\INCLUDE&quot;"/>
+<listOptionValue builtIn="false" value="&quot;E:\01_Master_project\Water_Detection_Project\04_Software_Design\6_NEW_Data_Process\3_SCI_ARL&quot;"/>
 </option>
 </tool>
 <tool id="com.ti.ccstudio.buildDefinitions.C2000_5.2.exe.linkerRelease.132627566" name="C2000 Linker" superClass="com.ti.ccstudio.buildDefinitions.C2000_5.2.exe.linkerRelease">
@@ -92,7 +101,13 @@
 <listOptionValue builtIn="false" value="&quot;${CG_TOOL_ROOT}/lib&quot;"/>
 <listOptionValue builtIn="false" value="&quot;${CG_TOOL_ROOT}/include&quot;"/>
 </option>
+<option id="com.ti.ccstudio.buildDefinitions.C2000_5.2.linkerID.generatedLinkerCommandFiles.1676113607" superClass="com.ti.ccstudio.buildDefinitions.C2000_5.2.linkerID.generatedLinkerCommandFiles" valueType="libs">
+<listOptionValue builtIn="false" value="&quot;$(GEN_CMDS_QUOTED)&quot;"/>
+</option>
+<option id="com.ti.ccstudio.buildDefinitions.C2000_5.2.linkerID.STACK_SIZE.1412113678" superClass="com.ti.ccstudio.buildDefinitions.C2000_5.2.linkerID.STACK_SIZE" value="1000" valueType="string"/>
+<option id="com.ti.ccstudio.buildDefinitions.C2000_5.2.linkerID.HEAP_SIZE.1852499737" superClass="com.ti.ccstudio.buildDefinitions.C2000_5.2.linkerID.HEAP_SIZE" value="1000" valueType="string"/>
 </tool>
+<macros expandEnvironmentMacros="true"/>
 </toolChain>
 </configuration>
 </project>

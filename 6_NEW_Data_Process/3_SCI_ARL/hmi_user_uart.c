@@ -1,24 +1,23 @@
 
-
 #include "hmi_user_uart.h"
+
 /****************************************************************************
-* 名    称： UartInit()
-* 功    能： 串口初始化
+* 名    称： UartCInit()
+* 功    能： 串口初始化C
 * 入口参数： 无
 * 出口参数： 无
 ****************************************************************************/
-
-void UartInit(uint32 BaudRate)
+void UartCInit(uint32 BaudRate)
 {
     InitScicGpio();
-    ScicRegs.SCICCR.all =0x0007;   // 1 stop bit,  No loopback
+    ScicRegs.SCICCR.all = 0x0007;   // 1 stop bit,  No loopback
                                    // No parity,8 char bits,
                                    // async mode, idle-line protocol
-	ScicRegs.SCICTL1.all =0x0003;  // enable TX, RX, internal SCICLK,
+	ScicRegs.SCICTL1.all = 0x0003;  // enable TX, RX, internal SCICLK,
                                    // Disable RX ERR, SLEEP, TXWAKE
-	ScicRegs.SCICTL2.all =0x0003;
+	ScicRegs.SCICTL2.all = 0x0003;
 	ScicRegs.SCICTL2.bit.TXINTENA = 1;
-	ScicRegs.SCICTL2.bit.RXBKINTENA =1;
+	ScicRegs.SCICTL2.bit.RXBKINTENA = 1;
 	switch(BaudRate)
 	{
 		case 9600 :  
@@ -42,9 +41,49 @@ void UartInit(uint32 BaudRate)
 	ScicRegs.SCICTL1.all =0x23;  // Relinquish SCI from Reset
 }
 
+/****************************************************************************
+* 名    称： UartBInit()
+* 功    能： 串口初始化B
+* 入口参数： 无
+* 出口参数： 无
+****************************************************************************/
+
+void UartBInit(uint32 BaudRate)
+{
+    InitScibGpio();
+    ScibRegs.SCICCR.all = 0x0007;   // 1 stop bit,  No loopback
+                                   // No parity,8 char bits,
+                                   // async mode, idle-line protocol
+	ScibRegs.SCICTL1.all = 0x0003;  // enable TX, RX, internal SCICLK,
+                                   // Disable RX ERR, SLEEP, TXWAKE
+	ScibRegs.SCICTL2.all = 0x0003;
+	//ScibRegs.SCICTL2.bit.TXINTENA = 1;
+	//ScibRegs.SCICTL2.bit.RXBKINTENA = 1;
+	switch(BaudRate)
+	{
+		case 9600 :  
+			ScibRegs.SCIHBAUD    =0x0001;  // 9600 baud @LSPCLK = 37.5MHz.
+	      	ScibRegs.SCILBAUD    =0x00E7;
+	      	break;
+		case 19200 :
+			ScibRegs.SCIHBAUD    =0x0000;  // 19200 baud,actual baud=19211,Error=0.06% @LSPCLK = 37.5MHz.
+	      	ScibRegs.SCILBAUD    =0x00F3;
+	      	break;
+	    case 115200 :
+	    	ScibRegs.SCIHBAUD    =0x0000;  // 115200 baud,actual baud=19211,Error=0.75% @LSPCLK = 37.5MHz.
+	      	ScibRegs.SCILBAUD    =0x0028;
+	      	break;
+	    case 256000 :
+	    	ScibRegs.SCIHBAUD    =0x0000;  // 115200 baud,actual baud=19211,Error=0.75% @LSPCLK = 37.5MHz.
+	      	ScibRegs.SCILBAUD    =0x0012;
+	      	break;
+	    default : break;
+	}
+	ScibRegs.SCICTL1.all =0x23;  // Relinquish SCI from Reset
+}
 /*****************************************************************
 * 名    称： SendChar()
-* 功    能： 发送1个字节
+* 功    能： 发送1个字节, 配置 sciC
 * 入口参数： t  发送的字节
 * 出口参数： 无
  *****************************************************************/
@@ -64,6 +103,29 @@ void Send_msg(char *msg)
         i++;
     }
 }
+
+/*****************************************************************
+* 名    称： Send_uartb_Char()
+* 功    能： 发送1个字节, 配置 scib
+* 入口参数： t  发送的字节
+* 出口参数： 无
+ *****************************************************************/
+void  Send_Uartb_Char(uchar t)
+{
+    while (ScibRegs.SCICTL2.bit.TXRDY == 0) {}
+    ScibRegs.SCITXBUF = t;
+}
+
+void Send_Uartb_msg(char *msg)
+{
+    unsigned int i=0;
+
+    while(msg[i] != '\0')
+    {
+        Send_Uartb_Char(msg[i]);
+        i++;
+    }
+}
 /*******************************************************************
  * 函数名称:SendValuetoLabview()
  * 功能：将计算得到的模拟量值发送给Labview
@@ -72,30 +134,30 @@ void Send_msg(char *msg)
  *            1.23， 则依次发送 1 2 3 0
  *            12.33，则依次发送12 3 3 0 
  * ***************************************************************/
-void SendValuetoLabview(LabView_Data* Test_LabviewData)
+void SendValuetoLabview(Instant_Data* Test_InstantData)
 {
 	unsigned long int_value = 0;
 	int k = 0;
 	uchar aa[20] = {0};	
-	int_value = Test_LabviewData->L17Value*1000; //数值的最小分辨率为1mv
+	int_value = Test_InstantData->L17Value*1000; //数值的最小分辨率为1mv
 	aa[1] = int_value/1000 +0x30;
 	aa[2] = (int_value/100)%10 +0x30;
 	aa[3] = (int_value/10)%10 +0x30;
 	aa[4] = int_value%10 +0x30;
 	aa[0] = ' ';
-	int_value = Test_LabviewData->L19Value*1000; //数值的最小分辨率为1mv
+	int_value = Test_InstantData->L19Value*1000; //数值的最小分辨率为1mv
 	aa[6] = int_value/1000 +0x30;
 	aa[7] = (int_value/100)%10 +0x30;
 	aa[8] = (int_value/10)%10 +0x30;
 	aa[9] = int_value%10 +0x30;
 	aa[5] = ' ';
-	int_value = Test_LabviewData->L22Value*1000; //数值的最小分辨率为1mv
+	int_value = Test_InstantData->L22Value*1000; //数值的最小分辨率为1mv
 	aa[11] = int_value/1000 +0x30;
 	aa[12] = (int_value/100)%10 +0x30;
 	aa[13] = (int_value/10)%10 +0x30;
 	aa[14] = int_value%10 +0x30;
 	aa[10] = ' ';
-	int_value = Test_LabviewData->temperature*1000; //数值的最小分辨率为1度
+	int_value = Test_InstantData->temperature*1000; //数值的最小分辨率为1度
 	aa[16] = int_value/1000 +0x30;
 	aa[17] = (int_value/100)%10 +0x30;
 	aa[18] = (int_value/10)%10 +0x30;
@@ -105,47 +167,6 @@ void SendValuetoLabview(LabView_Data* Test_LabviewData)
 	{
 		SendChar(aa[k]);
 	}
+	SendChar('\n');
 }
-
-void SendValuetoPython(STRSampleValue* Test_Pyton)
-{
-	int int_value = 0;
-	int k = 0;
-	int i = 0;
-	uchar aa[6] = {0};
-	for (i = 0;i<BUF_SIZE1;i++)
-	{
-		int_value = Test_Pyton->SamValue1[i]*1000; //数值的最小分辨率为1mv
-		aa[0] = int_value&0x00ff;
-		aa[1] = (int_value&0xff00)>>8;
-		if(i>BUF_SIZE2)
-		{ 
-			aa[2] = 0x00;
-			aa[3] = 0x00;
-		} 
-		else
-		{ 
-			int_value = Test_Pyton->SamValue2[i]*1000; //数值的最小分辨率为1mv
-			aa[2] = int_value&0x00ff;
-			aa[3] = (int_value&0xff00)>>8;
-		} 
-		if(i>BUF_SIZE3)
-		{
-			aa[4] = 0x00;
-			aa[5] = 0x00;
-		}
-		else
-		{
-			int_value = Test_Pyton->SamValue3[i]*1000; //数值的最小分辨率为1mv
-			aa[4] = int_value & 0x00ff;
-			aa[5] = (int_value & 0xff00)>>8;
-		}
-		for(k=0;k<6;k++)
-		{
-			SendChar(aa[k]);
-		}
-		SendChar('\n');
-	}
-}
-
 //no more

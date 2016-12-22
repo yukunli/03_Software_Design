@@ -53,7 +53,7 @@ void ProcessMessage( PCTRL_MSG msg, uint16 size, Water_Param *InterfaceParam );
 
 void InitUI(Water_Param *InterfaceParam);
 
-void UpdateUI(Water_Value * InterfaceValue);
+void UpdateUI(Water_Value * InterfaceValue, float debug_T);
 
 void NotifyScreen(uint16 screen_id);
 

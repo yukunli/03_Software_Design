@@ -496,19 +496,18 @@ void GraphChannelDel(uint16 screen_id,uint16 control_id,uint8 channel)
 	END_CMD();
 }
 
-void GraphChannelDataAdd(uint16 screen_id,uint16 control_id,uint8 channel,uint8 *pData,uint16 nDataLen)
+void GraphChannelDataAdd(uint16 screen_id,uint16 control_id,uint8 channel,uint8* pData,uint16 nDataLen)
 {
 	BEGIN_CMD();
 	TX_8(0xB1);
 	TX_8(0x32);
 	TX_16(screen_id);
 	TX_16(control_id);
-	TX_8(channel);
+	TX_8(channel);	
 	TX_16(nDataLen);
-	TX_8N(pData,nDataLen);
+	TX_8N(pData,nDataLen);   
 	END_CMD();
 }
-
 void GraphChannelDataClear(uint16 screen_id,uint16 control_id,uint8 channel)
 {
 	BEGIN_CMD();

@@ -1,9 +1,0 @@
-------------------------------  SCI.pjt - Debug  ------------------------------
-[SCI.c] "C:\CCStudio_v3.3\C2000\cgtools\bin\cl2000" -g -pdsw225 -fr"C:/CCStudio_v3.3/MyProjects/335a/lab23-SCIC/Debug" -i"../include" -d"_DEBUG" -d"LARGE_MODEL" -ml -v28 --float_support=fpu32 -@"../Debug.lkf" "SCI.c"
-
-[Linking...] "C:\CCStudio_v3.3\C2000\cgtools\bin\cl2000" -@"Debug.lkf"
-<Linking>
->> warning: entry point other than _c_int00 specified
-
-Build Complete,
-  0 Errors, 1 Warnings, 0 Remarks.
